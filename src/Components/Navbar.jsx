@@ -1,5 +1,6 @@
 import React from "react";
 import './Navbar.css'
+import {Link} from 'react-router-dom';
 
 function Navbar() {
   return (
@@ -21,26 +22,26 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a className="nav-link active" aria-current="page" href="#">
+            <Link to="home" className="nav-link active" aria-current="page">
               Home
-            </a>
-            <a className="nav-link" href="#">
+            </Link>
+            <Link to="/electronics" className="nav-link">
               Electronics
-            </a>
-            <a className="nav-link" href="#">
+            </Link>
+            <Link  to="/toys" className="nav-link">
               Toys
-            </a>
-            <a className="nav-link" href="#">
+            </Link>
+            <Link to="/cart" className="nav-link">
              Cart
-            </a>
+            </Link>
           </div>
           <div className="navbar-nav ms-auto">
-            <a className="btn btn-outline-light me-2" href="#">
+            <Link to="/signin" className="btn btn-outline-light me-2">
               Sign In
-            </a>
-            <a className="btn btn-light" href="#">
+            </Link>
+            <Link to="/signup" className="btn btn-light">
               Sign Up
-            </a>
+            </Link>
           </div>
         </div>
       </div>
