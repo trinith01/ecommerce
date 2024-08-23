@@ -1,0 +1,14 @@
+/* styles.css */
+
+#background {
+    background-image: url('./blackcart.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    pad: 0;
+   
+  }
+  
+  
+  
