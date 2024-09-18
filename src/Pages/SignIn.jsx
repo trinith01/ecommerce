@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import './CSS/Signup.css';
 
-
 function SignIn() {
   return (
     <div className="d-flex align-items-center justify-content-center vh-100 " id="background">
