@@ -56,6 +56,17 @@ function Signup() {
           />
         </div>
 
+        <div className="mb-2">
+          <label htmlFor="number" className="form-label">
+            Phone Number
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            
+          />
+        </div>
+
         <div className="mb-2 form-check">
           <Link to="/signin">I already have an account</Link>
         </div>
