@@ -20,7 +20,9 @@ function SignIn() {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Sign in successful');
+        // alert('Sign in successful');
+        window.location.href='electronics'
+
         // Redirect or handle successful sign-in
       } else {
         alert(data.message);

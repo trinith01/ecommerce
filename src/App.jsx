@@ -10,6 +10,7 @@ import Home from './Pages/Home';
 import Product from './Pages/Product';
 import ShopCategory from './Pages/ShopCategory';
 import Cart from './Pages/Cart';
+import ProductList from './Components/productList';
 
 function App() {
   return (
@@ -20,11 +21,13 @@ function App() {
           <Route path="/" element={<Home />} />
           {/* <Route path="/electronics" element={<Electronics />} />
           <Route path="/toys" element={<Toys />} /> */}
-          <Route path='/electronics' element={<ShopCategory category="electronics" />} />
+          <Route path='/Electronics' element={<ShopCategory category="electronics" />} />
           <Route path='/toys' element={<ShopCategory category="toys" />} />
           <Route path='/cart' element={<Cart />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/shopcategory" element={<ShopCategory />} />
+          <Route path="/products" element={<ProductList />} />
           <Route path='/product'>
             <Route path=':productId' element={<Product />} />
           </Route>

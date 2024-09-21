@@ -18,10 +18,9 @@ function SignUp() {
       [name]: value
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
@@ -30,11 +29,12 @@ function SignUp() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         alert(data.message);
-        // Redirect or handle successful sign-up
+        // navigate('signin'); // Redirect after successful sign-up
+        window.location.href='signin'
       } else {
         alert(data.message);
       }
@@ -42,6 +42,7 @@ function SignUp() {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div className="d-flex align-items-center justify-content-center vh-100" id="background">
