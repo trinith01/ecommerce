@@ -1,0 +1,81 @@
+.home {
+    font-family: Arial, sans-serif;
+    background-color: #cb8d8d;
+    color: #333;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header {
+    background-color: #000000;
+    color: white;
+    padding: 20px;
+  }
+  
+  .main-content {
+    margin: 20px 0;
+  }
+  
+  .hero {
+    background-color: #8a8787;
+    padding: 40px;
+    margin: 20px 0;
+  }
+  
+  .shop-now-button {
+    background-color: #172118;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .featured-products {
+    margin: 20px 0;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    transition: transform 0.2s;
+    text-decoration: none;
+
+  }
+  .product-card:hover {
+    transform: scale(1.1);
+    color: rgb(250, 250, 250);
+    background-color: black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    cursor:pointer;
+  }
+  
+ 
+  
+  .footer {
+    background-color: #000000;
+    color: white;
+    padding: 10px;
+  }
+  
+.home {
+  background-image: url('./blackcart.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0;
+  pad: 0;
+  
+ 
+}
+  

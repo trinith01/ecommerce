@@ -20,6 +20,7 @@ const Product = () => {
 
   return (
     <div className='product'>
+      hi
       <ProductDisplay product={product}/>
       <RelatedProducts product={product}/>
     </div>
