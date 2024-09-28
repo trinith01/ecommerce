@@ -1,0 +1,59 @@
+/* General page styling */
+.category-page {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.category-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.category-header h1 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  transition: transform 0.2s ease-in-out;
+  text-align: center;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-card h3 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #2c3e50;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.5rem;
+  color: red;
+  margin-top: 20px;
+}

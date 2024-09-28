@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const authRoutes = require('./routes/auth'); // Import routes
 const featuredProductRoutes=require('./routes/featuredproducts')
+const categories=require('./routes/categories')
 const db = require('./dbconnection');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Use routes
 app.use('/api', authRoutes);
+app.use('/api',categories)
 app.use('/api',featuredProductRoutes);
 
 

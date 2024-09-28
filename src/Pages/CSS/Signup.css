@@ -4,7 +4,7 @@
     background-image: url('../../Components/Assets/blackcart.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     margin: 0;
     pad: 0;
    

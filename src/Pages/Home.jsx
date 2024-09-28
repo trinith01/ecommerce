@@ -39,7 +39,7 @@ const Home = () => {
       <main className="main-content">
         <section className="hero">
           <h2>Discover the Latest Trends</h2>
-          <button className="shop-now-button">Shop Now</button>
+          <Link to="/categories" className="shop-now-button">Shop Now</Link> {/* Navigation to category page */}
         </section>
 
         <section className="featured-products">
@@ -49,9 +49,9 @@ const Home = () => {
           ) : (
             <div className="product-grid">
               {products.map((product) => (
-                <Link to={`/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
-                  <img src={product.image_url} alt={product.name} />
-                  <h3>{product.name}</h3>
+                <Link to={`/${product.category}/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
+                  <img src='/OIP.jpg' alt={product.name} />
+                  <h3 style={{color: 'red'}}>{product.name}</h3>
                   <p>${product.price}</p>
                 </Link>
               ))}

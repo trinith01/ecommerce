@@ -21,7 +21,7 @@ function SignIn() {
       const data = await response.json();
       if (response.ok) {
         // alert('Sign in successful');
-        window.location.href='electronics'
+        window.location.href='Home'
 
         // Redirect or handle successful sign-in
       } else {
