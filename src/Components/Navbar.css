@@ -1,32 +1,26 @@
-.navbar-transparent {
-  background-color: rgba(0, 0, 0, 0.6) !important; /* Dark background with 60% opacity */
-  backdrop-filter: blur(8px); /* Apply blur effect */
-  -webkit-backdrop-filter: blur(8px); /* For Safari */
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-right: 1rem; /* Adjust spacing */
 }
 
-.navbar-dark .navbar-nav .nav-link {
-  color: rgba(255, 255, 255, 0.9); /* Light color for nav links */
-  text-decoration: none; /* Remove default underline */
-  position: relative; /* For positioning the underline */
-  transition: color 0.3s ease; /* Smooth transition for color change */
+.nav-link {
+  color: white; /* Ensure the link text color is white */
+  text-decoration: none; /* Remove underline */
+  padding: 0.5rem 1rem; /* Add padding for clickable area */
 }
 
-.navbar-dark .navbar-nav .nav-link:hover {
-  color: rgba(255, 255, 255, 1); /* Change color on hover */
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Optional hover effect */
+  border-radius: 4px; /* Optional: rounded corners on hover */
+}
+.nav-link {
+  color: white; /* Ensure the link text color is white */
+  text-decoration: none; /* Remove underline */
+  padding: 0.5rem 1rem; /* Add padding for clickable area */
+  margin-right: 1rem; /* Add space to the right of each link */
 }
 
-.navbar-dark .navbar-nav .nav-link::after {
-  content: ""; /* Creates a pseudo-element */
-  position: absolute; /* Position it relative to the link */
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 2px; /* Thickness of the underline */
-  background-color: rgba(255, 255, 255, 0.9); /* Color of the underline */
-  transform: scaleX(0); /* Initially hide the underline */
-  transition: transform 0.3s ease; /* Smooth transition for underline */
-}
-
-.navbar-dark .navbar-nav .nav-link:hover::after {
-  transform: scaleX(1); /* Show the underline on hover */
+.nav-link:last-child {
+  margin-right: 0; /* Remove margin from the last link */
 }

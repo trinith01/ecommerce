@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Toaster, Position, Intent, Button } from '@blueprintjs/core';
+import '@blueprintjs/core/lib/css/blueprint.css';
 import './CSS/Signup.css';
+
+const toaster = Toaster.create({
+  position: Position.TOP,
+});
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -8,7 +14,8 @@ function SignUp() {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: ''
+    phone: '',
+    address:''
   });
 
   const handleChange = (e) => {
@@ -18,10 +25,9 @@ function SignUp() {
       [name]: value
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
@@ -30,18 +36,30 @@ function SignUp() {
         },
         body: JSON.stringify(formData),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
-        // Redirect or handle successful sign-up
+        // alert(data.message);
+        toaster.show({
+          intent: Intent.SUCCESS,
+          message: data.message,
+          timeout:3000
+          });
+        // navigate('signin'); // Redirect after successful sign-up
+        window.location.href='signin'
       } else {
-        alert(data.message);
+        // alert(data.message);
+        toaster.show({
+          intent: Intent.DANGER,
+          message: data.message,
+          timeout:3000
+          });
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
+  
 
   return (
     <div className="d-flex align-items-center justify-content-center vh-100" id="background">

@@ -1,6 +1,17 @@
 const express = require('express');
 const router = express.Router();
+var nodemailer = require('nodemailer');
 const db = require('../dbconnection'); // Import the database connection
+const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
+
+const saltRounds = 10; // Define the number of salt rounds for hashing
+var sender = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'selvavinu26816@gmail.com',
+    pass: 'iasj fdld hvyl ahxd'
+  }
+});
 
 // Route to handle sign-up
 router.post('/signup', async (req, res) => {
@@ -16,15 +27,41 @@ router.post('/signup', async (req, res) => {
   }
 
   try {
-    console.log("okokok");
-    // Insert the user data into the database
-    const query = 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)';
-    await db.query(query, [name, email, password, phone]);
-    console.log("ok");
-    
+    // Check if the email is already taken
+    const emailCheckQuery = 'SELECT email FROM users WHERE email = ?';
+    const [existingEmail] = await db.query(emailCheckQuery, [email]);
 
+    if (existingEmail.length > 0) {
+      // Email already exists
+      return res.status(409).json({ message: 'Email is already taken' }); // 409 Conflict
+    }
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    // Insert the user data into the database with the hashed password
+    const query = 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)';
+    await db.query(query, [name, email, hashedPassword, phone]);
+
+    // Compose the email to send after successful registration
+    var composemail = {
+      from: 'selvavinu26816@gmail.com',
+      to: email, // Send confirmation email to the user who signed up
+      subject: 'Registration Successful',
+      text: `Hello ${name},\n\nThank you for registering with our service!`
+    };
+
+    // Send the email
+    sender.sendMail(composemail, function (err, info) {
+      if (err) {
+        console.log('Error sending email:', err);
+      } else {
+        console.log('Registration email sent successfully: ' + info.response);
+      }
+    });
+
+    // Respond with success
     res.status(200).json({ message: 'Registration successful!' });
-    console.log("okok");
   } catch (error) {
     console.error('Database error:', error);
     res.status(500).json({ message: 'An error occurred during registration' });
@@ -41,15 +78,24 @@ router.post('/signin', async (req, res) => {
   }
 
   try {
-    // Check if the user exists and password matches
-    const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-    const [rows] = await db.query(query, [email, password]);
+    // Check if the user exists
+    const query = 'SELECT * FROM users WHERE email = ?';
+    const [rows] = await db.query(query, [email]);
 
     if (rows.length > 0) {
-      // Successful sign-in
-      res.status(200).json({ message: 'Sign-in successful!' });
+      const user = rows[0];
+
+      // Compare the hashed password with the one provided during sign-in
+      const match = await bcrypt.compare(password, user.password);
+      if (match) {
+        // Successful sign-in
+        res.status(200).json({ message: 'Sign-in successful!' });
+      } else {
+        // Invalid credentials
+        res.status(401).json({ message: 'Invalid email or password' });
+      }
     } else {
-      // Invalid credentials
+      // User not found
       res.status(401).json({ message: 'Invalid email or password' });
     }
   } catch (error) {

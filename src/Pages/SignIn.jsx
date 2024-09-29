@@ -1,10 +1,19 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Toaster, Position, Intent } from '@blueprintjs/core';
+import '@blueprintjs/core/lib/css/blueprint.css';
 import './CSS/Signup.css';
+
+const toaster = Toaster.create({
+  position: Position.TOP,
+});
 
 function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+  // Use useNavigate hook for programmatic navigation
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,13 +29,30 @@ function SignIn() {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Sign in successful');
-        // Redirect or handle successful sign-in
+        // Show success message
+        toaster.show({
+          message: 'Sign in successful',
+          intent: Intent.SUCCESS,
+          timeout: 3000
+        });
+
+        // Use navigate to redirect to the home page
+        navigate('/');
       } else {
-        alert(data.message);
+        // Show error message
+        toaster.show({
+          intent: Intent.DANGER,
+          message: data.message,
+          timeout: 3000
+        });
       }
     } catch (error) {
       console.error('Error:', error);
+      toaster.show({
+        intent: Intent.DANGER,
+        message: 'An error occurred during sign-in.',
+        timeout: 3000
+      });
     }
   };
 

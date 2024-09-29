@@ -1,0 +1,108 @@
+/* Container for the product list */
+.product-detail {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Spacing between products */
+    padding: 20px;
+    justify-items: center; /* Center align product cards */
+    align-items: center;
+  }
+  
+  /* Individual product card */
+  .product-card {
+    display: block;
+    background-color: #f9f9f9;
+    border: 1px solid #a42929;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add slight shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
+  }
+  
+  .product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  /* Product name */
+  .product-card h3 {
+    font-size: 1.2em;
+    margin-bottom: 8px;
+  }
+  
+  /* Old price (strikethrough) */
+  .product-card p:first-of-type {
+    text-decoration: line-through;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  
+  /* New price */
+  .product-card p:last-of-type {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #28a745;
+  }
+  
+  /* Hover effect for product card */
+  .product-card:hover {
+    transform: translateY(-5px); /* Lift effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+    text-decoration: none;
+  }
+  
+  /* Loading and error messages */
+  .loading, .error {
+    text-align: center;
+    font-size: 1.2em;
+    margin: 20px;
+    color: #666;
+  }
+  
+  /* No products message */
+  .product-detail p {
+    font-size: 1.2em;
+    color: #333;
+    margin-top: 20px;
+  }
+  .search-bar {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 80%;
+    max-width: 500px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  /* For the product image styling */
+.product-card img {
+  width: 100%;
+  max-width: 200px; /* Set a maximum width */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensures image scales well */
+}
+
+/* Ensure that the product cards are well-spaced */
+.product-card {
+  display: inline-block; /* Allow multiple cards per row */
+  margin: 10px;
+  text-align: center; /* Center the content */
+  width: 220px; /* Set a fixed width for the card */
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Align the cards in the center */
+}
+
+  

@@ -1,11 +1,61 @@
-/* styles.css */
+/* Signup.css */
 
 #background {
-    background-image: url('../../Components/Assets/blackcart.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin: 0;
-    pad: 0;
-   
-  }
+  background-image: url('../../Components/Assets/blackcart.jpg'); /* Ensure the image path is correct */
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat; /* Changed to prevent repeating on the y-axis */
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for the form */
+  border-radius: 10px; /* Rounded corners */
+  padding: 30px; /* Padding for the form */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Soft shadow effect */
+}
+
+h1 {
+  color: #fff; /* White text for the title */
+}
+
+.text-light {
+  color: #e0e0e0; /* Light text for form elements */
+}
+
+.btn-primary {
+  background-color: #0066cc; /* Custom primary button color */
+  border: none; /* Remove border */
+}
+
+.btn-primary:hover {
+  background-color: #005bb5; /* Darker shade on hover */
+}
+
+.link {
+  color: #0066cc; /* Link color */
+}
+
+.link:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.form-control {
+  background-color: #333; /* Dark background for inputs */
+  color: #fff; /* White text for inputs */
+  border: 1px solid #444; /* Border color */
+}
+
+.form-control::placeholder {
+  color: #bbb; /* Placeholder text color */
+}
+
+.form-label {
+  color: #fff; /* White text for labels */
+}
+.navbar {
+  position: relative; /* Change this if using absolute */
+}
