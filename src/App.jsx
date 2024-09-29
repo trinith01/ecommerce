@@ -1,23 +1,18 @@
 import React from 'react';
 import './App.css';
 import Navbar from './Components/Navbar';
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-// import Electronics from './Pages/Electronics';
-import Toys from './Pages/Toys';
-import CategoryDetail from './Pages/categorydetail';
+
+// Import your components/pages
 import SignIn from './Pages/SignIn';
 import Signup from './Pages/Signup';
 import Home from './Pages/Home';
-
-import Electronics from './Pages/Electronics';
-import ShopCategory from './Pages/ShopCategory';
 import CartPage from './Pages/CartPage';
-
-import ProductList from './Components/productList';
-
-import ProductDetailMain from './Pages/productdetailmain';
 import CategoryPage from './Pages/categorypage';
+import CategoryDetail from './Pages/categorydetail';
+import ProductDetailMain from './Pages/productdetailmain';
+import ProductList from './Components/productList';
+import CartItems from './Components/CartItems/CartItems';
 
 function App() {
   return (
@@ -25,26 +20,15 @@ function App() {
       <Navbar /> {/* Place the Navbar inside the Router to ensure links work properly */}
       <div className='root'>
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
-          {/* <Route path="/electronics" element={<Electronics />} />
-          <Route path="/toys" element={<Toys />} /> */}
-          {/* <Route path='/Electronics' element={<ShopCategory category="electronics" />} /> */}
-          <Route path='/toys' element={<ShopCategory category="toys" />} />
-          
           <Route path="/signin" element={<SignIn />} />
-          
-        
           <Route path="/signup" element={<Signup />} />
           <Route path="/categories" element={<CategoryPage />} />
-      <Route path="/categories/:name/products" element={<CategoryDetail />} /> {/* Corrected component name */}
-      <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
-    
-          <Route path="/products" element={<ProductList />} />
+          <Route path="/categories/:name/products" element={<CategoryDetail />} />
+          <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
           <Route path="/cart" element={<CartPage />} />
-          {/* <Route path="/" exact component={Home} /> */}
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/test" element={<CartItems />} />
           <Route path="/" element={<Home />} />
-        {/* <Route path="categories/:category/products/:id" element={<ProductDetail />} /> */}
-        {/* <Route path="/categories/:category" element={<ShopCategory />} /> */}
         </Routes>
       </div>
     </Router>

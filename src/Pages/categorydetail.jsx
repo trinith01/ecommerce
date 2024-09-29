@@ -67,7 +67,7 @@ const CategoryDetail = () => {
             </Link>
           ))
         ) : (
-          <p>No products found in this category.</p> // No products message
+          <p style={{color:'white'}}>No products found in this category.</p> // No products message
         )}
       </div>
     </div>

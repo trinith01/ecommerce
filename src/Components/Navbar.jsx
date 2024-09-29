@@ -1,52 +1,21 @@
-import React from "react";
-import './Navbar.css'
-import {Link} from 'react-router-dom';
+import React from 'react';
+import { Navbar, Alignment } from '@blueprintjs/core';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import './Navbar.css'; // Import the CSS file for additional styling
 
-function Navbar() {
+const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-transparent">
-      <div className="container-fluid">
-        <Link className="navbar-brand" to='/'>
-          C-Ex
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <Link to="home" className="nav-link active" aria-current="page">
-              Home
-            </Link>
-            <Link to="/electronics" className="nav-link">
-              Electronics
-            </Link>
-            <Link  to="/toys" className="nav-link">
-              Toys
-            </Link>
-            <Link to="/cart" className="nav-link">
-             Cart
-            </Link>
-          </div>
-          <div className="navbar-nav ms-auto">
-            <Link to="/signin" className="btn btn-outline-light me-2">
-              Sign In
-            </Link>
-            <Link to="/signup" className="btn btn-light">
-              Sign Up
-            </Link>
-          </div>
-        </div>
-      </div>
-    </nav>
+    <Navbar className="bp3-dark">
+      <Navbar.Group align={Alignment.LEFT}>
+        <div className="logo">C-Ex</div>
+        <Navbar.Divider />
+        <Link to="/signin" className="nav-link">Sign In</Link> {/* Updated to match route */}
+        <Link to="/signup" className="nav-link">Sign Up</Link> {/* Updated to match route */}
+        <Link to="/cart" className="nav-link">Cart</Link> {/* Updated to match route */}
+        <Link to="/categories" className="nav-link">Categories</Link> {/* Updated to match route */}
+      </Navbar.Group>
+    </Navbar>
   );
-}
+};
 
-export default Navbar;
+export default NavBar;
