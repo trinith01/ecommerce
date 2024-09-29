@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './CartPage.css'; 
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
-   
-    
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const fetchCartItems = async () => {
@@ -24,6 +23,10 @@ const CartPage = () => {
 
         fetchCartItems();
     }, []);
+
+    const handleProceedToCheckout = () => {
+        navigate('/payment'); // Navigate to payment page
+    };
 
     if (loading) return <div className="loading">Loading cart items...</div>;
     if (error) return <div className="error">{error}</div>;
@@ -44,6 +47,11 @@ const CartPage = () => {
                         </li>
                     ))}
                 </ul>
+            )}
+            {cartItems.length > 0 && (
+                <button onClick={handleProceedToCheckout} className="checkout-button">
+                    Proceed to Checkout
+                </button>
             )}
         </div>
     );

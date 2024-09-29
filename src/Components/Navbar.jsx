@@ -12,8 +12,13 @@ const NavBar = () => {
         <Link to="/signin" className="nav-link">Sign In</Link> {/* Updated to match route */}
         <Link to="/signup" className="nav-link">Sign Up</Link> {/* Updated to match route */}
         <Link to="/cart" className="nav-link">Cart</Link> {/* Updated to match route */}
+        
         {/* <Link to="/categories" className="nav-link">Categories</Link> Updated to match route */}
         <Link to="/categories" className="nav-link">Guest </Link> {/* Updated to match route */}
+        <div className="nav-container">
+        <Link to="/signin" className="nav-link">Sign Out</Link>
+    </div>
+
       </Navbar.Group>
     </Navbar>
   );

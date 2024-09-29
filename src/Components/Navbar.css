@@ -22,5 +22,17 @@
 }
 
 .nav-link:last-child {
-  margin-right: 0; /* Remove margin from the last link */
+  margin-right: 89; /* Remove margin from the last link */
 }
+/* Your CSS file */
+.nav-container {
+  text-align: right; /* Right-align text */
+  padding: 10px;    /* Add some padding if needed */
+}
+
+.nav-link {
+  text-decoration: none; /* Remove underline */
+  color: #3498db;       /* Change link color */
+  font-weight: bold;    /* Make the link bold */
+}
+

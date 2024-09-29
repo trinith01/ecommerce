@@ -37,7 +37,7 @@ function SignIn() {
         });
 
         // Use navigate to redirect to the home page
-        navigate('/');
+        navigate('/Home');
       } else {
         // Show error message
         toaster.show({

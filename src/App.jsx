@@ -12,7 +12,7 @@ import CategoryPage from './Pages/categorypage';
 import CategoryDetail from './Pages/categorydetail';
 import ProductDetailMain from './Pages/productdetailmain';
 import ProductList from './Components/productList';
-import CartItems from './Components/CartItems/CartItems';
+// import CartItems from './Components/CartItems/CartItems';
 import PaymentGateway from './Pages/PaymentGateway'; 
 
 function App() {
@@ -21,16 +21,17 @@ function App() {
       <Navbar /> {/* Place the Navbar inside the Router to ensure links work properly */}
       <div className='root'>
         <Routes>
+        <Route path="/Home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/categories/:name/products" element={<CategoryDetail />} />
           <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
-          {/* <Route path="/cart" element={<CartPage />} /> */}
+          <Route path="/cart" element={<CartPage />} />
           <Route path="/products" element={<ProductList />} />
-          <Route path="/cart" element={<CartItems />} />
+          {/* <Route path="/cart" element={<CartItems />} /> */}
           <Route path="/payment" element={<PaymentGateway />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<SignIn />} />
         </Routes>
       </div>
     </Router>
