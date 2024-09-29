@@ -15,6 +15,7 @@ import ShopCategory from './Pages/ShopCategory';
 import Cart from './Pages/Cart';
 import ProductList from './Components/productList';
 import ProductDetail from './Pages/productDetail';
+import ProductDetailMain from './Pages/productdetailmain';
 import CategoryPage from './Pages/categorypage';
 
 function App() {
@@ -34,11 +35,12 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/categories" element={<CategoryPage />} />
       <Route path="/categories/:name/products" element={<CategoryDetail />} /> {/* Corrected component name */}
+      <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
     
           <Route path="/products" element={<ProductList />} />
           {/* <Route path="/" exact component={Home} /> */}
-          <Route path="/Home" element={<Home />} />
-        <Route path="/:category/products/:id" element={<ProductDetail />} />
+          <Route path="/" element={<Home />} />
+        {/* <Route path="categories/:category/products/:id" element={<ProductDetail />} /> */}
         {/* <Route path="/categories/:category" element={<ShopCategory />} /> */}
         </Routes>
       </div>

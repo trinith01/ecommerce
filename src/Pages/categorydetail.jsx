@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // Import useParams hook
 
 // eslint-disable-next-line
@@ -33,12 +34,12 @@ const CategoryDetail = () => {
     <div className="product-detail">
       {products.length > 0 ? (
         products.map((product) => (
-          <div key={product.id} className="product-item">
-            <h2>{product.name}</h2>
-            <img src={product.image} alt={product.name} />
-            <p>${product.new_price}</p> {/* Assuming new_price is the current price */}
-            <p>{product.description}</p>
-          </div>
+          <Link to={`/categories/${product.category}/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
+          <img src='/OIP.jpg' alt={product.name} />
+          <h3 style={{color: 'Black'}}>{product.name}</h3>
+          <p style={{color: 'Black'}}>${product.old_price}</p>
+          <p style={{color: 'Black'}}>${product.new_price}</p>
+        </Link>
         ))
       ) : (
         <p>No products found in this category.</p> // No products message

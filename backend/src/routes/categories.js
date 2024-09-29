@@ -49,5 +49,24 @@ router.get('/categories/:name/products', async (req, res) => {
       res.status(500).send('Error fetching products');
     }
 });
+router.get('/categories/:name/products/:id', async (req, res) => {
+  const productId = req.params.id;
+
+  const sql = 'SELECT * FROM products WHERE id = ?'; // Assuming your product table has an 'id' column
+
+  try {
+    const [[product]] = await db.query(sql, [productId]);
+
+    if (product) {
+      res.json(product);
+    } else {
+      res.status(404).send('Product not found');
+    }
+  } catch (err) {
+    console.error('Error fetching product:', err);
+    res.status(500).send('Error fetching product');
+  }
+});
+
   
 module.exports = router;

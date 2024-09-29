@@ -49,10 +49,11 @@ const Home = () => {
           ) : (
             <div className="product-grid">
               {products.map((product) => (
-                <Link to={`/${product.category}/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
+                <Link to={`categories/${product.category}/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
                   <img src='/OIP.jpg' alt={product.name} />
-                  <h3 style={{color: 'red'}}>{product.name}</h3>
-                  <p>${product.price}</p>
+                  <h3 style={{color: 'Black'}}>{product.name}</h3>
+                  <p style={{color: 'Black'}}>${product.old_price}</p>
+                  <p style={{color: 'Black'}}>${product.new_price}</p>
                 </Link>
               ))}
             </div>
