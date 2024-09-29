@@ -12,7 +12,7 @@ import Home from './Pages/Home';
 
 import Electronics from './Pages/Electronics';
 import ShopCategory from './Pages/ShopCategory';
-import Cart from './Pages/Cart';
+import CartPage from './Pages/CartPage';
 
 import ProductList from './Components/productList';
 
@@ -30,8 +30,9 @@ function App() {
           <Route path="/toys" element={<Toys />} /> */}
           {/* <Route path='/Electronics' element={<ShopCategory category="electronics" />} /> */}
           <Route path='/toys' element={<ShopCategory category="toys" />} />
-          <Route path='/cart' element={<Cart />} />
+          
           <Route path="/signin" element={<SignIn />} />
+          
         
           <Route path="/signup" element={<Signup />} />
           <Route path="/categories" element={<CategoryPage />} />
@@ -39,6 +40,7 @@ function App() {
       <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
     
           <Route path="/products" element={<ProductList />} />
+          <Route path="/cart" element={<CartPage />} />
           {/* <Route path="/" exact component={Home} /> */}
           <Route path="/" element={<Home />} />
         {/* <Route path="categories/:category/products/:id" element={<ProductDetail />} /> */}

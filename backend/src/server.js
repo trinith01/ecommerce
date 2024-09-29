@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const authRoutes = require('./routes/auth'); // Import routes
 const featuredProductRoutes=require('./routes/featuredproducts')
+const cartRouterPost = require('./routes/cartpost');
+const cartRouterGet=require("./routes/cartget")
 const categories=require('./routes/categories')
 const db = require('./dbconnection');
 
@@ -17,6 +19,8 @@ app.use(express.json());
 app.use('/api', authRoutes);
 app.use('/api',categories)
 app.use('/api',featuredProductRoutes);
+app.use('/api', cartRouterPost);
+app.use('/api',cartRouterGet)
 
 
 // app.get('/api/products', async (req, res) => {

@@ -12,7 +12,7 @@
   .product-card {
     display: block;
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    border: 1px solid #a42929;
     border-radius: 10px;
     padding: 15px;
     text-align: center;
@@ -70,4 +70,39 @@
     color: #333;
     margin-top: 20px;
   }
+  .search-bar {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .search-input {
+    padding: 10px;
+    width: 80%;
+    max-width: 500px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  /* For the product image styling */
+.product-card img {
+  width: 100%;
+  max-width: 200px; /* Set a maximum width */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensures image scales well */
+}
+
+/* Ensure that the product cards are well-spaced */
+.product-card {
+  display: inline-block; /* Allow multiple cards per row */
+  margin: 10px;
+  text-align: center; /* Center the content */
+  width: 220px; /* Set a fixed width for the card */
+}
+
+.product-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Align the cards in the center */
+}
+
   

@@ -1,0 +1,49 @@
+.cart-page {
+    max-width: 800px;  /* Centering the content */
+    margin: 0 auto;    /* Center the cart */
+    padding: 20px;     /* Padding around the content */
+    background-color: #f9f9f9; /* Light background for the cart */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+}
+
+h2 {
+    text-align: center; /* Center the title */
+    color: #333;        /* Darker text color */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.loading, .error {
+    text-align: center; /* Center loading/error messages */
+    color: #666;        /* Medium text color */
+    font-size: 18px;    /* Font size for messages */
+}
+
+ul {
+    list-style-type: none; /* Remove bullet points */
+    padding: 0;            /* Remove default padding */
+}
+
+li {
+    padding: 15px;        /* Padding inside each list item */
+    border: 1px solid #ddd; /* Light border around items */
+    border-radius: 5px;   /* Rounded corners for items */
+    margin-bottom: 10px;  /* Space between items */
+    background-color: #fff; /* White background for items */
+}
+
+hr {
+    margin: 15px 0;       /* Space above and below the horizontal rule */
+    border: none;         /* Remove default border */
+    border-top: 1px solid #ddd; /* Subtle line for separation */
+}
+
+h3 {
+    margin: 0;            /* Remove margin for product title */
+    color: #555;          /* Darker text for product ID */
+}
+
+p {
+    margin: 5px 0;        /* Small margin for paragraphs */
+    color: #777;          /* Lighter text color for other details */
+}
