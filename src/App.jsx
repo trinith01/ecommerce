@@ -13,6 +13,7 @@ import Home from './Pages/Home';
 import Electronics from './Pages/Electronics';
 import ShopCategory from './Pages/ShopCategory';
 import Cart from './Pages/Cart';
+
 import ProductList from './Components/productList';
 
 import ProductDetailMain from './Pages/productdetailmain';
