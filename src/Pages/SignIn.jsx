@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Toaster, Position, Intent, Button } from '@blueprintjs/core';
+import '@blueprintjs/core/lib/css/blueprint.css';
 import './CSS/Signup.css';
+
+const toaster = Toaster.create({
+  position: Position.TOP,
+});
 
 function SignIn() {
   const [email, setEmail] = useState('');
@@ -21,11 +27,21 @@ function SignIn() {
       const data = await response.json();
       if (response.ok) {
         // alert('Sign in successful');
-        window.location.href='Home'
+        toaster.show({
+          message: 'Sign in successful',
+          intent: Intent.SUCCESS,
+          timeout:3000
+          });
+        window.location.href='/'
 
         // Redirect or handle successful sign-in
       } else {
-        alert(data.message);
+        // alert(data.message);
+        toaster.show({
+          intent: Intent.DANGER,
+          message: data.message,
+          timeout:3000
+          });
       }
     } catch (error) {
       console.error('Error:', error);

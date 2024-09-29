@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'; // Import useParams hook
+import './categorydetail.css'
 
 // eslint-disable-next-line
 const CategoryDetail = () => {
@@ -37,8 +38,8 @@ const CategoryDetail = () => {
           <Link to={`/categories/${product.category}/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
           <img src='/OIP.jpg' alt={product.name} />
           <h3 style={{color: 'Black'}}>{product.name}</h3>
-          <p style={{color: 'Black'}}>${product.old_price}</p>
-          <p style={{color: 'Black'}}>${product.new_price}</p>
+          <p style={{color: 'white'}}>${product.old_price}</p>
+          <p style={{color: 'white'}}>${product.new_price}</p>
         </Link>
         ))
       ) : (

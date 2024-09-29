@@ -9,12 +9,12 @@ import CategoryDetail from './Pages/categorydetail';
 import SignIn from './Pages/SignIn';
 import Signup from './Pages/Signup';
 import Home from './Pages/Home';
-import Product from './Pages/Product';
+
 import Electronics from './Pages/Electronics';
 import ShopCategory from './Pages/ShopCategory';
 import Cart from './Pages/Cart';
 import ProductList from './Components/productList';
-import ProductDetail from './Pages/productDetail';
+
 import ProductDetailMain from './Pages/productdetailmain';
 import CategoryPage from './Pages/categorypage';
 
@@ -31,7 +31,7 @@ function App() {
           <Route path='/toys' element={<ShopCategory category="toys" />} />
           <Route path='/cart' element={<Cart />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/plroduct" element={<Product />} />
+        
           <Route path="/signup" element={<Signup />} />
           <Route path="/categories" element={<CategoryPage />} />
       <Route path="/categories/:name/products" element={<CategoryDetail />} /> {/* Corrected component name */}

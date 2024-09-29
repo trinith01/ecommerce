@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom'; // Import useParams hook
+import './productdetailmain.css'
 
 const ProductDetailMain = () => {
     const { name } = useParams();
@@ -32,9 +33,14 @@ const ProductDetailMain = () => {
       {product ? (
         <>
           <h2>{product.name}</h2>
-          <img src={product.image_url} alt={product.name} />
-          <p>${product.price}</p>
-          <p>{product.description}</p> {/* Assuming there's a description field */}
+          <img src='/OIP.jpg' alt={product.name} />
+          <p style={{ color: 'white', textDecoration: 'line-through' }}>${product.old_price}</p>
+          <p style={{color: 'white'}}>${product.new_price}</p>
+          <p style={{color: 'white'}}>{product.description}</p> {/* Assuming there's a description field */}
+          <button type='button' style={{ borderRadius: '5px', backgroundColor: '#28a745', color: 'white', border: 'none', padding: '10px 15px', cursor: 'pointer' }}>
+  Add To Cart
+</button>
+
         </>
       ) : (
         <p>Product not found.</p>
