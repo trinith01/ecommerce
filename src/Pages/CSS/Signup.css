@@ -4,7 +4,7 @@
   background-image: url('../../Components/Assets/blackcart.jpg'); /* Ensure the image path is correct */
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; /* Changed to prevent repeating on the y-axis */
+  background-repeat: repeat; /* Changed to prevent repeating on the y-axis */
   height: 100vh; /* Full viewport height */
   display: flex;
   align-items: center;

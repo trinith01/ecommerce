@@ -13,6 +13,7 @@ import CategoryDetail from './Pages/categorydetail';
 import ProductDetailMain from './Pages/productdetailmain';
 import ProductList from './Components/productList';
 import CartItems from './Components/CartItems/CartItems';
+import PaymentGateway from './Pages/PaymentGateway'; 
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/products" element={<ProductList />} />
           <Route path="/cart" element={<CartItems />} />
+          <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </div>

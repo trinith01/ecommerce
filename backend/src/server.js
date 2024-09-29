@@ -6,6 +6,7 @@ const featuredProductRoutes=require('./routes/featuredproducts')
 const cartRouterPost = require('./routes/cartpost');
 const cartRouterGet=require("./routes/cartget")
 const categories=require('./routes/categories')
+const payment=require("./routes/payment")
 const db = require('./dbconnection');
 
 const app = express();
@@ -21,6 +22,7 @@ app.use('/api',categories)
 app.use('/api',featuredProductRoutes);
 app.use('/api', cartRouterPost);
 app.use('/api',cartRouterGet)
+app.use('/api',payment)
 
 
 // app.get('/api/products', async (req, res) => {
