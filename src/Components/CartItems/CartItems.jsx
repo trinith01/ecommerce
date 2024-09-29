@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './CartItems.css';
 import remove_icon from '../Assets/minusicon.png';
 import { Link } from 'react-router-dom';
-import all_product from '../Assets/all_product';
+import axios from 'axios'; // Import axios
 
 const CartItems = () => {
   const [cartItems, setCartItems] = useState({
@@ -12,6 +12,8 @@ const CartItems = () => {
     4: { q: 1, size: ['S'], color: ['blue'] },
     5: { q: 3, size: ['XL', 'M'], color: ['red', 'green'] },
   });
+
+  const [products, setProducts] = useState([]); // State to hold products from database
 
   const removeFromCartById = (id, index) => {
     setCartItems((prevCart) => {
@@ -40,6 +42,20 @@ const CartItems = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Fetch products from the database using axios
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/items'); // Replace with your API endpoint
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <div className='cartpg'>
       <div className='cartitems'>
@@ -55,12 +71,12 @@ const CartItems = () => {
               <p>Remove</p>
             </div>
             <hr />
-            {all_product.map((e) => {
+            {products.map((e) => {
               if (cartItems[e.id]?.q > 0) {
                 return (
                   <div key={e.id}>
                     <div className="cartitems-row">
-                      <img src={e.image} alt='' className='carticon-product-icon' />
+                      <img src='/OIP.jpg' alt='image' className='carticon-product-icon' />
                       <p>{e.name}</p>
                       <p>Rs.{e.new_price}</p>
                       <button className='cartitems-quantity'>{cartItems[e.id].q}</button>
@@ -97,7 +113,7 @@ const CartItems = () => {
           </>
         ) : (
           <>
-            {all_product.map((e) => {
+            {products.map((e) => {
               if (cartItems[e.id]?.q > 0) {
                 return (
                   <div key={e.id}>
@@ -111,7 +127,7 @@ const CartItems = () => {
                           <div className="cartitems-row-right-details-left">
                             <p>Rs.{e.new_price * cartItems[e.id].q}</p>
                             <label>Quantity
-                              <span class="cartitems-quantity">{cartItems[e.id].q}</span>
+                              <span className="cartitems-quantity">{cartItems[e.id].q}</span>
                             </label>
                           </div>
                           <div className="cartitems-remove-capsules">

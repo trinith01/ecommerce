@@ -25,9 +25,9 @@ function App() {
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/categories/:name/products" element={<CategoryDetail />} />
           <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
-          <Route path="/cart" element={<CartPage />} />
+          {/* <Route path="/cart" element={<CartPage />} /> */}
           <Route path="/products" element={<ProductList />} />
-          <Route path="/test" element={<CartItems />} />
+          <Route path="/cart" element={<CartItems />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
