@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link , useNavigate} from "react-router-dom";
 import { Toaster, Position, Intent, Button } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './CSS/Signup.css';
@@ -9,6 +9,7 @@ const toaster = Toaster.create({
 });
 
 function SignUp() {
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -45,8 +46,8 @@ function SignUp() {
           message: data.message,
           timeout:3000
           });
-        // navigate('signin'); // Redirect after successful sign-up
-        window.location.href='signin'
+        navigate('/signin'); // Redirect after successful sign-up
+        // window.location.href='signin'
       } else {
         // alert(data.message);
         toaster.show({
