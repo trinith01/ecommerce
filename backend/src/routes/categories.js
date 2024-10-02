@@ -7,8 +7,8 @@ router.get('/categories', async (req, res) => {
   const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100); // Limit to a maximum of 100
   const offset = Math.max(parseInt(req.query.offset) || 0, 0); // No negative offset
   
-  const categoriesSql = 'SELECT * FROM categories LIMIT ? OFFSET ?';
-  const countSql = 'SELECT COUNT(*) AS total FROM categories';
+  const categoriesSql = 'SELECT * FROM product_category LIMIT ? OFFSET ?';
+  const countSql = 'SELECT COUNT(*) AS total FROM product_category';
 
   try {
     // Get total count of categories

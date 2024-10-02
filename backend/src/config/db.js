@@ -8,7 +8,7 @@ console.log(process.env.DB_HOST);
 const connection = mysql.createConnection({
   host: 'localhost',        // Replace with your database host
   user: 'root',     // Replace with your database user
-  password: 'Password26816', // Replace with your database password
+  password: 'Kavi72*02', // Replace with your database password
   database: 'c_ecommerce' // Replace with your database name
 });
 
