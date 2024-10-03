@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
 
   try {
     // Check if the email is already taken
-    const emailCheckQuery = 'SELECT email FROM users WHERE email = ?';
+    const emailCheckQuery = 'SELECT email FROM customer WHERE email = ?';
     const [existingEmail] = await db.query(emailCheckQuery, [email]);
 
     if (existingEmail.length > 0) {
@@ -46,8 +46,8 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Insert the user data into the database with the hashed password
-    const query = 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)';
-    await db.query(query, [name, email, hashedPassword, phone]);
+    const query = 'INSERT INTO customer (customer_id, password_hash, name, email, phone_number, address_id, is_guest) VALUES (?, ?, ?, ?)';
+    await db.query(query, [customer_id, password_hash, name, email, phone_number, address_id, is_guest]);
 
     // Compose the email to send after successful registration
     // var composemail = {
@@ -89,7 +89,7 @@ router.post('/signin', async (req, res) => {
 
   try {
     // Check if the user exists
-    const query = 'SELECT * FROM users WHERE email = ?';
+    const query = 'SELECT * FROM customer WHERE email = ?';
     const [rows] = await db.query(query, [email]);
 
     if (rows.length > 0) {

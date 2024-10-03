@@ -9,7 +9,7 @@ router.get('/items', authenticateToken, async (req, res) => {
     console.log(email);
     
 
-    const sql = 'SELECT * FROM cart WHERE email = ?'; // Filter by user email
+    const sql = 'SELECT * FROM cart C join customer CU on C.customer_id=CU.customer_id WHERE CU.email = ?'; // Filter by user email
 
     try {
         // Pass the email as a parameter to the query
@@ -26,7 +26,7 @@ router.delete('/items/:id', authenticateToken, async (req, res) => {
     const itemId = req.params.id;
     const email = req.user.email; // Get email from authenticated user
 
-    const sql = 'DELETE FROM cart WHERE id = ? AND email = ?';
+    const sql = 'DELETE FROM cart WHERE id = ? AND customer_id = (SELECT customer_id FROM customer WHERE email = ?)';
 
     try {
         await db.query(sql, [itemId, email]);
