@@ -10,6 +10,7 @@ const cartRouterGet = require('./routes/cartget');
 const categories = require('./routes/categories');
 const payment = require('./routes/payment');
 const uploadRoutes = require('./routes/upload');
+// const guest =require('./routes/guest')
 
 const app = express();
 const port = 5000;
@@ -30,6 +31,7 @@ app.use('/api', cartRouterPost);
 app.use('/api', cartRouterGet);
 app.use('/api', payment);
 app.use('/api', uploadRoutes); // Image upload route
+// app.use('/api', guest);
 
 // Start the server
 app.listen(port, () => {

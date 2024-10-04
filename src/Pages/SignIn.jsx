@@ -24,7 +24,7 @@ function SignIn() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password })
       });
   
       const data = await response.json();

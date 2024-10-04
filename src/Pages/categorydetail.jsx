@@ -107,8 +107,8 @@ const CategoryDetail = () => {
       <Link to={`/categories/${product.category}/products/${product.id}`} key={product.id} className="product-card">
         <img src={`http://localhost:5000${product.image}`} alt={product.name} />
         <h3 style={{ color: 'Black' }}>{product.name}</h3>
-        <p style={{ color: 'white' }}>${product.old_price}</p>
-        <p style={{ color: 'white' }}>${product.new_price}</p>
+        <p >${product.old_price}</p>
+        <p >${product.new_price}</p>
       </Link>
     ))
   ) : (

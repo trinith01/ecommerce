@@ -42,7 +42,7 @@ const Home = () => {
     <div className="home">
       <header className="header">
         <h1>Welcome to Our Store</h1>
-        <p style={{color: 'white'}}>Your one-stop shop for everything colorful!</p>
+        <p >Your one-stop shop for everything colorful!</p>
       </header>
 
       <main className="main-content">
@@ -61,8 +61,8 @@ const Home = () => {
                 <Link to={`../categories/${product.category}/products/${product.id}`} key={product.id} className="product-card"> {/* Navigation to product detail page */}
                   <img src={`http://localhost:5000${product.image}`} alt={product.name} />
                   <h3 style={{color: 'Black'}}>{product.name}</h3>
-                  <p style={{color: 'white'}}>${product.old_price}</p>
-                  <p style={{color: 'white'}}>${product.new_price}</p>
+                  <p className='old'>${product.old_price}</p>
+                  <p >${product.new_price}</p>
                 </Link>
               ))}
             </div>
@@ -85,7 +85,7 @@ const Home = () => {
       </main>
 
       <footer className="footer">
-        <p style={{color: "white"}}>&copy; 2024 Our Store. All rights reserved.</p>
+        <p >&copy; 2024 Our Store. All rights reserved.</p>
       </footer>
     </div>
   );
