@@ -42,7 +42,7 @@ const ProductDetailMain = () => {
             await axios.post('http://localhost:5000/api/cartpost', {
                 productId: product.id,
                 color: selectedColor,
-                quantity,
+                quantity,                                                                                                                                                                  
                 email
             });
             // alert('Product added to cart!');
