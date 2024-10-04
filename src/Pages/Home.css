@@ -84,4 +84,28 @@
   
  
 }
+.button-container {
+  display: flex;
+  justify-content: center; /* Center the buttons */
+  margin-top: 20px; /* Space above the buttons */
+  
+}
+
+.show-more, .show-less {
+  background-color: #000000; /* Customize color */
+  color: white;
+  border: none;
+  padding: 12px 20px; /* Increase padding for a better look */
+  cursor: pointer;
+  margin: 0 10px; /* Add space between buttons */
+  border-radius: 5px;
+  font-size: 16px; /* Larger text size */
+  transition: background-color 0.3s; /* Smooth color transition */
+}
+
+.show-more:hover, .show-less:hover {
+  background-color: #ffffff; /* Darker shade on hover */
+  color:rgb(0, 0, 0);
+}
+
   

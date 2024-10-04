@@ -1,5 +1,5 @@
 const express = require('express');
-const multer = require('multer');
+
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
@@ -10,7 +10,6 @@ const cartRouterGet = require('./routes/cartget');
 const categories = require('./routes/categories');
 const payment = require('./routes/payment');
 const uploadRoutes = require('./routes/upload');
-const db = require('./dbconnection');
 
 const app = express();
 const port = 5000;
