@@ -84,7 +84,7 @@ const CartItems = () => {
         ))}
 
         {/* Show the checkout warning if multiple items */}
-        {cartHasMultipleItems && <h4>*You have to checkout each item separately!</h4>}
+        {cartHasMultipleItems && <h4>*You have to checkout each item carefully!</h4>}
         
         {/* Proceed to Checkout button */}
         {cartHasItems && (

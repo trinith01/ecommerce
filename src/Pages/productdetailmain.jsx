@@ -36,13 +36,14 @@ const ProductDetailMain = () => {
     const changeQuantity = (value) => {
         setQuantity((prev) => Math.max(1, prev + value)); // Ensure quantity doesn't go below 1
     };
-
+    const email = localStorage.getItem('email');
     const addToCart = async () => {
         try {
             await axios.post('http://localhost:5000/api/cartpost', {
                 productId: product.id,
                 color: selectedColor,
-                quantity,
+                quantity,                                                                                                                                                                  
+                email
             });
             // alert('Product added to cart!');
             toaster.show({
@@ -69,7 +70,7 @@ const ProductDetailMain = () => {
             {product ? (
                 <>
                     <h2 style={{ color: 'white' }}>{product.name}</h2>
-                    <img src='/OIP.jpg' alt={product.name} />
+                    <img src={`http://localhost:5000${product.image}`} alt={product.name} />
                     <p style={{ color: 'white', textDecoration: 'line-through' }}>${product.old_price}</p>
                     <p style={{ color: 'white' }}>${product.new_price}</p>
                     <p style={{ color: 'white' }}>{product.description}</p> {/* Assuming there's a description field */}

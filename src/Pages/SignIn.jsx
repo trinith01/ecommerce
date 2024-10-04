@@ -17,7 +17,7 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch('http://localhost:5000/api/signin', {
         method: 'POST',
@@ -26,7 +26,7 @@ function SignIn() {
         },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         // Show success message
@@ -35,9 +35,13 @@ function SignIn() {
           intent: Intent.SUCCESS,
           timeout: 3000
         });
-
+  
+        // Save the token in local storage
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('email', email);
+  
         // Use navigate to redirect to the home page
-        navigate('/');
+        navigate('/Home');
       } else {
         // Show error message
         toaster.show({
@@ -55,6 +59,7 @@ function SignIn() {
       });
     }
   };
+  
 
   return (
     <div className="d-flex align-items-center justify-content-center vh-100" id="background">

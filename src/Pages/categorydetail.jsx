@@ -17,7 +17,6 @@ const CategoryDetail = () => {
         // Fetch products by category name
         const response = await axios.get(`http://localhost:5000/api/categories/${name}/products`);
         setProducts(response.data); // Set products data
-        console.log(response.data); // Log response data for debugging
         setLoading(false); // Set loading to false
       } catch (error) {
         setError('Error fetching products'); // Set error message
@@ -59,8 +58,8 @@ const CategoryDetail = () => {
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (
             <Link to={`/categories/${product.category}/products/${product.id}`} key={product.id} className="product-card">
-              {/* Navigation to product detail page */}
-              <img src='/OIP.jpg' alt={product.name} />
+              {/* Dynamically load images from database */}
+              <img src={`http://localhost:5000${product.image}`} alt={product.name} />
               <h3 style={{ color: 'Black' }}>{product.name}</h3>
               <p style={{ color: 'white' }}>${product.old_price}</p>
               <p style={{ color: 'white' }}>${product.new_price}</p>

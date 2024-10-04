@@ -4,12 +4,13 @@ const db = require('../dbconnection');
 
 // Route to add product to cart
 router.post('/cartpost', async (req, res) => {
-    const { productId, color, quantity } = req.body;
+    const { productId, color, quantity,email } = req.body;
+    
 
-    const sql = 'INSERT INTO cart (product_id, color, quantity) VALUES (?, ?, ?)';
+    const sql = 'INSERT INTO cart (product_id,email, color, quantity) VALUES (?,?, ?, ?)';
 
     try {
-        const [result] = await db.query(sql, [productId, color, quantity]);
+        const [result] = await db.query(sql, [productId,email, color, quantity]);
         
         if (result.affectedRows > 0) {
             res.json({ message: 'Product added to cart' });
