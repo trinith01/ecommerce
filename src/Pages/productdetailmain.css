@@ -1,85 +1,81 @@
-.product-detail {
-  max-width: 600px; /* Limit the width of the product detail */
-  margin: 20px auto; /* Center the component */
-  padding: 20px; /* Add some padding */
-  background-color: #000000; /* Dark background for better contrast */
-  border-radius: 8px; /* Rounded corners */
-  color: white; /* Text color */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+.product-detail-container {
   display: flex;
-  flex-direction: column; /* Stack elements vertically */
-  align-items: center; /* Center align children */
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #1e1e1e; /* Adjust as needed */
+  color: rgb(255, 255, 255); /* Text color */
 }
 
-.product-detail h2 {
-  font-size: 24px; /* Heading size */
-  margin-bottom: 10px; /* Space below the heading */
-  text-align: center; /* Center align heading */
+.product-detail {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #282c34; /* Background color */
 }
 
-.product-detail img {
-  width: 100%; /* Responsive image */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 5px; /* Slightly rounded corners for the image */
+.product-image {
+  flex: 1;
+  padding: 20px;
 }
 
-.product-detail p {
-  margin: 10px 0; /* Space between paragraphs */
-  font-size: 18px; /* Font size for product details */
-  text-align: center; /* Center align paragraphs */
+.product-image img {
+  max-width: 100%;
+  border-radius: 10px;
 }
 
-.loading, .error {
-  text-align: center; /* Center align loading and error messages */
-  font-size: 20px; /* Larger text for visibility */
-  color: #e74c3c; /* Red color for error message */
-}
-
-.error {
-  color: #e74c3c; /* Error message color */
-}
-
-.loading {
-  color: #f39c12; /* Loading message color */
-}
-
-.color-quantity-section {
+.product-info {
+  flex: 2;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align color and quantity sections */
-  margin: 20px 0; /* Space between sections */
 }
 
-.color-quantity-section label {
-  margin-bottom: 10px; /* Space below labels */
-  color: white; /* Label color */
+.old-price {
+  text-decoration: line-through;
+  color: #999; /* Old price color */
 }
 
-.quantity-controls {
-  display: flex;
-  align-items: center; /* Center align quantity controls */
+.new-price {
+  color: #28a745; /* New price color */
+  font-size: 1.5em; /* Larger size for new price */
+  margin: 10px 0;
 }
 
-.quantity-controls button {
-  background-color: transparent; /* Transparent button */
-  color: white; /* Button color */
-  border: none; /* Remove border */
-  font-size: 20px; /* Font size */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin: 0 5px; /* Space between buttons */
+.color-selection, .quantity-selection, .action-buttons {
+  margin: 10px 0;
 }
 
-.add-to-cart-button {
-  border-radius: 5px; 
-  background-color: #28a745; /* Green background */
-  color: white; /* White text */
-  border: none; /* Remove border */
-  padding: 10px 15px; /* Padding */
-  cursor: pointer; /* Pointer cursor on hover */
-  margin-top: 10px; /* Space above button */
-  transition: background-color 0.3s; /* Transition for hover effect */
+button {
+  border: none;
+  background-color: #000000; /* Button color */
+  color: white;
+  padding: 10px;
+  margin-right: 5px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.add-to-cart-button:hover {
-  background-color: #218838; /* Darker green on hover */
+button:hover {
+  background-color: #ffffff; /* Darker blue on hover */
+  color:black;
+}
+
+input[type="number"] {
+  width: 50px;
+  text-align: center;
+  margin: 0 5px;
+  border: 1px solid #000000; /* Input border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: black;
+  color:white;;
+}
+option{
+  color:black;
+}
+.select{
+  background-color: black;
+  color:white;
 }

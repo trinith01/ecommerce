@@ -16,7 +16,10 @@ const verifyToken = (req, res, next) => {
         // Save the decoded user data to the request object
         req.user = {
             userId: decoded.userId,
-            email: decoded.email, // Add email to req.user
+            email: decoded.email
+            // password:decoded.password
+             // Add email to req.user
+
         };
         next();
     });

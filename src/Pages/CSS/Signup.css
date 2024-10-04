@@ -7,16 +7,15 @@
   display: flex; /* Use Flexbox */
   /* align-items: center; Center items vertically */
   justify-content: center; /* Center items horizontally */
-  border-radius:10px;
-  border-color: #ffffff;
-  border-style: solid;
+  
+  
 }
 
 /* Form styles */
 form {
   background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for the form */
   border-radius: 10px; /* Rounded corners */
-  padding: 40px; /* Increased padding for a more spacious look */
+  padding: 30px; /* Increased padding for a more spacious look */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); /* Soft shadow effect */
   width: 400px; /* Fixed width for better alignment */
   margin: 0 auto; /* Center the form */

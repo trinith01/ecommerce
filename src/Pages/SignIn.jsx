@@ -39,6 +39,7 @@ function SignIn() {
         // Save the token in local storage
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', email);
+        // localStorage.setItem('password', password);
   
         // Use navigate to redirect to the home page
         navigate('/Home');
@@ -63,7 +64,7 @@ function SignIn() {
 
   return (
     <div className="d-flex align-items-center justify-content-center vh-100" id="background">
-      <form className="border p-4 rounded shadow-lg text-light" onSubmit={handleSubmit}>
+      <form className="border p-4 rounded-2xl shadow-lg text-light" onSubmit={handleSubmit}>
         <h1 className="text-center text-light">Sign In</h1>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
@@ -71,6 +72,7 @@ function SignIn() {
             type="email"
             className="form-control"
             id="exampleInputEmail1"
+            placeholder="Enter your email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             aria-describedby="emailHelp"
@@ -85,12 +87,13 @@ function SignIn() {
             type="password"
             className="form-control"
             id="exampleInputPassword1"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div className="mb-3 form-check">
-          <Link to="/signup">Create an Account</Link>
+          <Link to="/signup" style={{ textDecoration: 'none' }}>Create an Account</Link>
         </div>
         <div className="d-flex justify-content-center">
           <button type="submit" className="btn btn-primary">Sign In</button>

@@ -15,8 +15,8 @@ function SignUp() {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
-    address: ''
+    phone: ''
+    
   });
 
   const handleChange = (e) => {
@@ -61,7 +61,7 @@ function SignUp() {
 
   return (
     <div id="background">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ border: '1px solid #ffffff', borderRadius: '10px' }}>
         <h1 style={{color:"white"}}>Sign Up</h1>
         <div className="mb-2">
           <label htmlFor="name" className="form-label">Name</label>
@@ -127,7 +127,7 @@ function SignUp() {
           />
         </div>
         <div className="mb-2 form-check">
-          <Link to="/signin" className="link">I already have an account</Link>
+          <Link to="/signin" className="link" style={{ textDecoration: 'none' }}>I already have an account</Link>
         </div>
         <div className="d-flex justify-content-center">
           <button type="submit" className="btn btn-primary">Register</button>
