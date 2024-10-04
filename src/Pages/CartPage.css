@@ -1,49 +1,87 @@
 .cart-page {
-    max-width: 800px;  /* Centering the content */
-    margin: 0 auto;    /* Center the cart */
-    padding: 20px;     /* Padding around the content */
-    background-color: #ffffff; /* Light background for the cart */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9; /* Slightly darker background */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif; /* Font for a cleaner look */
+    /* background-image: url('./blackcart.jpg'); */
 }
 
 h2 {
-    text-align: center; /* Center the title */
-    color: #333;        /* Darker text color */
-    margin-bottom: 20px; /* Space below the title */
+    text-align: center;
+    color: #2c3e50; /* Darker text color for contrast */
+    margin-bottom: 20px;
+    font-size: 24px; /* Larger font size for title */
 }
 
 .loading, .error {
-    text-align: center; /* Center loading/error messages */
-    color: #666;        /* Medium text color */
-    font-size: 18px;    /* Font size for messages */
+    text-align: center;
+    color: #e74c3c; /* Red color for error messages */
+    font-size: 18px;
 }
 
 ul {
-    list-style-type: none; /* Remove bullet points */
-    padding: 0;            /* Remove default padding */
+    list-style-type: none;
+    padding: 0;
 }
 
-li {
-    padding: 15px;        /* Padding inside each list item */
-    border: 1px solid #ddd; /* Light border around items */
-    border-radius: 5px;   /* Rounded corners for items */
-    margin-bottom: 10px;  /* Space between items */
-    background-color: #fff; /* White background for items */
+.cart-item {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease; /* Smooth shadow effect */
+}
+
+.cart-item:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }
 
 hr {
-    margin: 15px 0;       /* Space above and below the horizontal rule */
-    border: none;         /* Remove default border */
-    border-top: 1px solid #ddd; /* Subtle line for separation */
+    margin: 15px 0;
+    border: none;
+    border-top: 1px solid #ddd;
 }
 
 h3 {
-    margin: 0;            /* Remove margin for product title */
-    color: #555;          /* Darker text for product ID */
+    margin: 0;
+    color: #34495e; /* Slightly lighter color for product ID */
 }
 
 p {
-    margin: 5px 0;        /* Small margin for paragraphs */
-    color: #777;          /* Lighter text color for other details */
+    margin: 5px 0;
+    color: #555; /* Darker text for details */
+}
+
+.remove-button {
+    background-color: #e74c3c; /* Red button for removal */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth background color change */
+}
+
+.remove-button:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+
+.checkout-button {
+    display: block; /* Block to center the button */
+    width: 100%;
+    padding: 15px;
+    background-color: #3498db; /* Blue button for checkout */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.checkout-button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
 }

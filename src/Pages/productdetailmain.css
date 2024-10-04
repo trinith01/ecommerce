@@ -1,42 +1,85 @@
-/* ProductDetailMain.css */
-
 .product-detail {
-    max-width: 600px; /* Limit the width of the product detail */
-    margin: 20px auto; /* Center the component */
-    padding: 20px; /* Add some padding */
-    background-color: #000000; /* Dark background for better contrast */
-    border-radius: 8px; /* Rounded corners */
-    color: white; /* Text color */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
-  }
-  
-  .product-detail h2 {
-    font-size: 24px; /* Heading size */
-    margin-bottom: 10px; /* Space below the heading */
-  }
-  
-  .product-detail img {
-    width: 100%; /* Responsive image */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 5px; /* Slightly rounded corners for the image */
-  }
-  
-  .product-detail p {
-    margin: 10px 0; /* Space between paragraphs */
-    font-size: 18px; /* Font size for product details */
-  }
-  
-  .loading, .error {
-    text-align: center; /* Center align loading and error messages */
-    font-size: 20px; /* Larger text for visibility */
-    color: #e74c3c; /* Red color for error message */
-  }
-  
-  .error {
-    color: #e74c3c; /* Error message color */
-  }
-  
-  .loading {
-    color: #f39c12; /* Loading message color */
-  }
-  
+  max-width: 600px; /* Limit the width of the product detail */
+  margin: 20px auto; /* Center the component */
+  padding: 20px; /* Add some padding */
+  background-color: #000000; /* Dark background for better contrast */
+  border-radius: 8px; /* Rounded corners */
+  color: white; /* Text color */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+  display: flex;
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center align children */
+}
+
+.product-detail h2 {
+  font-size: 24px; /* Heading size */
+  margin-bottom: 10px; /* Space below the heading */
+  text-align: center; /* Center align heading */
+}
+
+.product-detail img {
+  width: 100%; /* Responsive image */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Slightly rounded corners for the image */
+}
+
+.product-detail p {
+  margin: 10px 0; /* Space between paragraphs */
+  font-size: 18px; /* Font size for product details */
+  text-align: center; /* Center align paragraphs */
+}
+
+.loading, .error {
+  text-align: center; /* Center align loading and error messages */
+  font-size: 20px; /* Larger text for visibility */
+  color: #e74c3c; /* Red color for error message */
+}
+
+.error {
+  color: #e74c3c; /* Error message color */
+}
+
+.loading {
+  color: #f39c12; /* Loading message color */
+}
+
+.color-quantity-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center align color and quantity sections */
+  margin: 20px 0; /* Space between sections */
+}
+
+.color-quantity-section label {
+  margin-bottom: 10px; /* Space below labels */
+  color: white; /* Label color */
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center; /* Center align quantity controls */
+}
+
+.quantity-controls button {
+  background-color: transparent; /* Transparent button */
+  color: white; /* Button color */
+  border: none; /* Remove border */
+  font-size: 20px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin: 0 5px; /* Space between buttons */
+}
+
+.add-to-cart-button {
+  border-radius: 5px; 
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  padding: 10px 15px; /* Padding */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-top: 10px; /* Space above button */
+  transition: background-color 0.3s; /* Transition for hover effect */
+}
+
+.add-to-cart-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}

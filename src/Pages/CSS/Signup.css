@@ -1,27 +1,39 @@
-/* Signup.css */
-
+/* Background styles */
 #background {
   background-image: url('../../Components/Assets/blackcart.jpg'); /* Ensure the image path is correct */
   background-size: cover;
   background-position: center;
-  background-repeat: repeat; /* Changed to prevent repeating on the y-axis */
-  height: 100vh; /* Full viewport height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 700px; /* Full viewport height */
+  display: flex; /* Use Flexbox */
+  /* align-items: center; Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  border-radius:10px;
+  border-color: #ffffff;
+  border-style: solid;
 }
 
+/* Form styles */
 form {
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for the form */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background for the form */
   border-radius: 10px; /* Rounded corners */
-  padding: 30px; /* Padding for the form */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Soft shadow effect */
+  padding: 40px; /* Increased padding for a more spacious look */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); /* Soft shadow effect */
+  width: 400px; /* Fixed width for better alignment */
+  margin: 0 auto; /* Center the form */
+  display: flex; /* Use Flexbox for form elements */
+  flex-direction: column; /* Stack form elements vertically */
+  border-style: solid;
+  border-radius:30px;
+  border-color: rgb(255, 250, 250);
 }
 
+/* Optional: Center the title */
 h1 {
+  text-align: center; /* Center text for the title */
   color: #fff; /* White text for the title */
 }
 
+/* Other styles remain the same */
 .text-light {
   color: #e0e0e0; /* Light text for form elements */
 }
@@ -29,33 +41,21 @@ h1 {
 .btn-primary {
   background-color: #0066cc; /* Custom primary button color */
   border: none; /* Remove border */
+  margin-top: 10px; /* Space above button */
 }
 
 .btn-primary:hover {
   background-color: #005bb5; /* Darker shade on hover */
 }
 
-.link {
-  color: #0066cc; /* Link color */
-}
-
-.link:hover {
-  text-decoration: underline; /* Underline on hover */
-}
-
+/* Additional form styles */
 .form-control {
   background-color: #333; /* Dark background for inputs */
   color: #fff; /* White text for inputs */
   border: 1px solid #444; /* Border color */
-}
-
-.form-control::placeholder {
-  color: #bbb; /* Placeholder text color */
+  margin-bottom: 15px; /* Space between inputs */
 }
 
 .form-label {
   color: #fff; /* White text for labels */
-}
-.navbar {
-  position: relative; /* Change this if using absolute */
 }
