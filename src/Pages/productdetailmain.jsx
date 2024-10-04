@@ -98,6 +98,14 @@ const ProductDetailMain = () => {
                     >
                         Add To Cart
                     </button>
+
+                    <button
+                        type='button'
+                        onClick={addToCart}
+                        style={{ borderRadius: '5px', backgroundColor: '#28a745', color: 'white', border: 'none', padding: '10px 15px', cursor: 'pointer' }}
+                    >
+                        Buy Now
+                    </button>
                 </>
             ) : (
                 <p>Product not found.</p>

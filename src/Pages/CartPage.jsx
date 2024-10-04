@@ -1,48 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import './CartPage.css'; 
+import { useNavigate } from 'react-router-dom';
+import './CartPage.css';
 
 const CartPage = () => {
     const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCartItems = async () => {
-            const token = localStorage.getItem('token'); // Retrieve the token from local storage
-
+            const token = localStorage.getItem('token');
             try {
-                // Make a GET request with the authorization header
                 const response = await axios.get('http://localhost:5000/api/items', {
                     headers: {
-                        'Authorization': `Bearer ${token}` // Include the token
+                        'Authorization': `Bearer ${token}`
                     },
                 });
-                setCartItems(response.data); // Set the cart items from the response
+                setCartItems(response.data);
                 setLoading(false);
             } catch (error) {
-                setError('Error fetching cart items'); // Handle errors
+                setError('Error fetching cart items');
                 setLoading(false);
             }
         };
 
-        fetchCartItems(); // Call the function to fetch cart items
-    }, []); // Empty dependency array to run once on component mount
+        fetchCartItems();
+    }, []);
 
-    // Function to handle removing an item from the cart
     const removeCartItem = async (id) => {
-        const token = localStorage.getItem('token'); // Retrieve token
-
+        const token = localStorage.getItem('token');
         try {
             await axios.delete(`http://localhost:5000/api/items/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}` // Include token in the header
+                    'Authorization': `Bearer ${token}`
                 },
             });
-
-            // Remove the item from the cartItems state after successful deletion
             setCartItems(cartItems.filter((item) => item.id !== id));
         } catch (error) {
             console.error('Error removing item from cart:', error);
@@ -51,11 +45,11 @@ const CartPage = () => {
     };
 
     const handleProceedToCheckout = () => {
-        navigate('/payment'); // Navigate to payment page
+        navigate('/payment');
     };
 
-    if (loading) return <div className="loading">Loading cart items...</div>; // Show loading state
-    if (error) return <div className="error">{error}</div>; // Show error state
+    if (loading) return <div className="loading">Loading cart items...</div>;
+    if (error) return <div className="error">{error}</div>;
 
     return (
         <div className="cart-page">
@@ -65,7 +59,7 @@ const CartPage = () => {
             ) : (
                 <ul>
                     {cartItems.map((item) => (
-                        <li key={item.id}>
+                        <li key={item.id} className="cart-item">
                             <h3>Product ID: {item.product_id}</h3>
                             <p>Color: {item.color}</p>
                             <p>Quantity: {item.quantity}</p>
