@@ -38,6 +38,7 @@ ul {
 
 .cart-item:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+    color:white;
 }
 
 hr {
@@ -53,11 +54,16 @@ h3 {
 
 p {
     margin: 5px 0;
-    color: #555; /* Darker text for details */
+    color: #ffffff; /* Darker text for details */
+}
+
+p:hover{
+    background-color: white;
+    color:black
 }
 
 .remove-button {
-    background-color: #e74c3c; /* Red button for removal */
+    background-color: #ff1900; /* Red button for removal */
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -84,4 +90,9 @@ p {
 
 .checkout-button:hover {
     background-color: #2980b9; /* Darker blue on hover */
+}
+.error {
+    color: red; /* Set text color to red */
+    font-weight: bold; /* Optional: makes the text bold */
+    margin-top: 10px; /* Optional: adds space above the error message */
 }

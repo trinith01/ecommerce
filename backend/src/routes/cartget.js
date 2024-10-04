@@ -8,7 +8,7 @@ router.get('/items', authenticateToken, async (req, res) => {
     const email = req.user.email; // Get email from the authenticated user
     // const password=req.user.password;
     // console.log(password);
-    console.log(email);
+    // console.log(email);
     
 
     const sql = 'SELECT * FROM cart WHERE email = ?'; // Filter by user email
@@ -38,6 +38,19 @@ router.delete('/items/:id', authenticateToken, async (req, res) => {
         res.status(500).send('Error deleting item from cart');
     }
 });
+router.delete('/items', authenticateToken, async (req, res) => {
+    // const itemId = req.params.id;
+    const email = req.user.email; // Get email from authenticated user
 
+    const sql = 'DELETE FROM cart WHERE email = ?';
+
+    try {
+        await db.query(sql, [ email]);
+        res.status(200).json({ message: 'Items are removed from cart' });
+    } catch (err) {
+        console.error('Error deleting item from cart:', err);
+        res.status(500).send('Error deleting item from cart');
+    }
+});
 
 module.exports = router;

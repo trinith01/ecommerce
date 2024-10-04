@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { Toaster, Position, Intent, Button } from '@blueprintjs/core';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
+import { Toaster, Position, Intent } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
-import './productdetailmain.css'; // Make sure to create this CSS file
+import './productdetailmain.css';
 
 const toaster = Toaster.create({
   position: Position.TOP,
 });
 
 const ProductDetailMain = () => {
-    const navigate=useNavigate();
-  const { name } = useParams();
-  const { id } = useParams(); // Get the product ID from the URL parameters
+  const navigate = useNavigate();
+  const { name, id } = useParams(); // Get product name and ID from URL
   const [product, setProduct] = useState(null); // State to store product details
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
   const [quantity, setQuantity] = useState(1); // State for product quantity
-  const [selectedColor, setSelectedColor] = useState(''); // State for selected color
+  const [selectedColor, setSelectedColor] = useState('gold'); // State for selected color
+  const [isGuest, setIsGuest] = useState(false); // Guest state
+  const [guestEmail, setGuestEmail] = useState(''); // Guest email input
+  const [guestName, setGuestName] = useState(''); // Guest name input
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -39,33 +40,79 @@ const ProductDetailMain = () => {
     setQuantity((prev) => Math.max(1, prev + value)); // Ensure quantity doesn't go below 1
   };
 
-  const email = localStorage.getItem('email');
   const addToCart = async () => {
+    const email = localStorage.getItem('email');
+    
     try {
+      if (!email) {
+        setIsGuest(true); // If no email is found, show guest input form
+        return;
+      }
+
+      // Adding product to the cart for logged-in user
       await axios.post('http://localhost:5000/api/cartpost', {
         productId: product.id,
         color: selectedColor,
         quantity,
-        email
+        email,
       });
       toaster.show({
         intent: Intent.SUCCESS,
         message: "Product added to cart!",
-        timeout: 3000
+        timeout: 3000,
       });
     } catch (error) {
       console.error('Error adding to cart:', error);
       toaster.show({
         intent: Intent.DANGER,
         message: "Failed to add product to cart",
-        timeout: 3000
+        timeout: 3000,
       });
     }
   };
-const buyNow=()=>{
-    navigate("/payment");
-}
 
+  const handleGuestCheckout = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/guest-cart', {
+        name: guestName,
+        email: guestEmail,
+        productId: product.id,
+        color: selectedColor,
+        quantity,
+      });
+
+      if (response.status === 200) {
+        const data = response.data; // Correctly access the data
+        // Save the token and email to local storage if provided
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+        }
+        localStorage.setItem('email', guestEmail); // Save guest email
+
+        toaster.show({
+          intent: Intent.SUCCESS,
+          message: "Product added to cart for guest!",
+          timeout: 3000,
+        });
+
+        // Optionally navigate to another page after successful checkout
+        // navigate('/payment');
+      } else {
+        toaster.show({
+          intent: Intent.DANGER,
+          message: "Failed to add product to cart for guest",
+          timeout: 3000,
+        });
+      }
+    } catch (error) {
+      console.error('Error during guest checkout:', error);
+      toaster.show({
+        intent: Intent.DANGER,
+        message: "Error during guest checkout",
+        timeout: 3000,
+      });
+    }
+  };
 
   if (loading) return <div className="loading">Loading product...</div>;
   if (error) return <div className="error">{error}</div>;
@@ -85,10 +132,10 @@ const buyNow=()=>{
 
             <div className="color-selection">
               <label>Choose Color: </label>
-              <select  className="select" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
-                <option  style={{ color:"white"}} value="gold">Gold</option>
-                <option style={{ color:"white"}}  value="silver">Silver</option>
-                <option style={{ color:"white"}}  value="black">Black</option>
+              <select className="select" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
+                <option value="gold">Gold</option>
+                <option value="silver">Silver</option>
+                <option value="black">Black</option>
               </select>
             </div>
 
@@ -101,7 +148,24 @@ const buyNow=()=>{
 
             <div className="action-buttons">
               <button type="button" onClick={addToCart}>Add To Cart</button>
-              <button type="button" onClick={buyNow}>Buy Now</button>
+              {isGuest && (
+                <div className="guest-checkout">
+                  <h3>Guest Checkout</h3>
+                  <input
+                    type="text"
+                    placeholder="Enter your name"
+                    value={guestName}
+                    onChange={(e) => setGuestName(e.target.value)} // Allow typing in input
+                  />
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={guestEmail}
+                    onChange={(e) => setGuestEmail(e.target.value)} // Allow typing in input
+                  />
+                  <button onClick={handleGuestCheckout}>Continue as Guest</button>
+                </div>
+              )}
             </div>
           </div>
         </div>
