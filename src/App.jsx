@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+// import Dashboard from './Pages/dashboard';
 // Import your components/pages
 import SignIn from './Pages/SignIn';
 import Signup from './Pages/Signup';
@@ -31,6 +31,7 @@ function App() {
           <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" element={<ProductList />} />
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           {/* <Route path="/cart" element={<CartItems />} /> */}
           <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/profile" element={<Profile />} />
