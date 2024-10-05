@@ -133,9 +133,9 @@ const ProductDetailMain = () => {
             <div className="color-selection">
               <label>Choose Color: </label>
               <select className="select" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
-                <option value="gold">Gold</option>
-                <option value="silver">Silver</option>
-                <option value="black">Black</option>
+                <option style={{color:'white'}}value="gold">Gold</option>
+                <option  style={{color:'white'}} value="silver">Silver</option>
+                <option style={{color:'white'}}  value="black">Black</option>
               </select>
             </div>
 

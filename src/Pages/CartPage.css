@@ -94,5 +94,6 @@ p:hover{
 .error {
     color: red; /* Set text color to red */
     font-weight: bold; /* Optional: makes the text bold */
-    margin-top: 10px; /* Optional: adds space above the error message */
+    font-size: large;
+    margin-top: 100px; /* Optional: adds space above the error message */
 }

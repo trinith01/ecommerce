@@ -1,20 +1,27 @@
 import React from 'react';
 import { Navbar, Alignment } from '@blueprintjs/core';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faSignOutAlt, faShoppingCart, faHome } from '@fortawesome/free-solid-svg-icons';
-import './Navbar.css'; // Import the CSS file for additional styling
+import './Navbar.css';
 
 const NavBar = () => {
+  const navigate = useNavigate();
+  const email = localStorage.getItem('email'); // Retrieve the name from localStorage
+
+  const handleSignOut = () => {
+    localStorage.removeItem('email');
+    localStorage.removeItem('token');
+    // localStorage.removeItem('name'); // Clear name from localStorage
+    navigate('/signin');
+  };
+
   return (
     <Navbar className="bp3-dark">
-      <Navbar.Group align={Alignment.CENTER}>
-        {/* Logo with home link */}
-        <FontAwesomeIcon icon={faHome} />
-        <Link to="/home" className="logo"> &nbsp;C-Ex</Link>
+      <Navbar.Group align={Alignment.LEFT}>
+        
+        <Link to="/home" className="logo"> <FontAwesomeIcon icon={faHome} />&nbsp;C-Ex</Link>
         <Navbar.Divider />
-
-        {/* Navigation links with icons */}
         <Link to="/signin" className="nav-link" title="Sign In">
           <FontAwesomeIcon icon={faUser} />Sign In
         </Link>
@@ -27,12 +34,21 @@ const NavBar = () => {
           <FontAwesomeIcon icon={faShoppingCart} />Cart
         </Link>
         <Navbar.Divider />
-      
-        <div className="nav-container">
-          <Link to="/signin" className="nav-link" title="Sign Out">
-            <FontAwesomeIcon icon={faSignOutAlt} />Sign out
-          </Link>
-        </div>
+      </Navbar.Group>
+
+      <Navbar.Group align={Alignment.RIGHT}>
+        {/* Display user greeting with name */}
+        <Link to="/profile" className="nav-link" title="Profile">
+        {email && (
+          <span className="nav-link user-greeting">
+            <FontAwesomeIcon icon={faUser} /> Hello, {email}!
+          </span>
+          
+        )}
+        </Link>
+        <button className="nav-link signout-button" title="Sign Out" onClick={handleSignOut}>
+          <FontAwesomeIcon icon={faSignOutAlt} /> Sign out
+        </button>
       </Navbar.Group>
     </Navbar>
   );

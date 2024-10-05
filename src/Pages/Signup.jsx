@@ -38,6 +38,7 @@ function SignUp() {
         },
         body: JSON.stringify(formData),
       });
+      // localStorage.setItem('name', formData.name);
   
       const data = await response.json();
       if (response.ok) {
@@ -46,6 +47,7 @@ function SignUp() {
           message: data.message,
           timeout: 3000
         });
+        
         navigate('/signin'); // Redirect after successful sign-up
       } else {
         toaster.show({

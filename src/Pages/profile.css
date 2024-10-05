@@ -1,0 +1,38 @@
+/* Profile.css */
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; /* Full height */
+    background-color: #f0f0f0; /* Light background color */
+    padding: 20px;
+  }
+  
+  .profile-container h1 {
+    font-size: 2rem;
+    color: #333; /* Dark text color */
+    margin-bottom: 20px;
+  }
+  
+  .profile-container p {
+    font-size: 1.2rem;
+    color: #666; /* Gray text color */
+  }
+  
+  .profile-container button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #3498db; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .profile-container button:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+  }
+  
