@@ -14,6 +14,7 @@ import ProductDetailMain from './Pages/productdetailmain';
 import ProductList from './Components/productList';
 // import CartItems from './Components/CartItems/CartItems';
 import PaymentGateway from './Pages/PaymentGateway'; 
+import Profile from './Pages/profile';
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
           <Route path="/products" element={<ProductList />} />
           {/* <Route path="/cart" element={<CartItems />} /> */}
           <Route path="/payment" element={<PaymentGateway />} />
-          <Route path="/" element={<SignIn />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<Home />} />
         </Routes>
       </div>
     </Router>

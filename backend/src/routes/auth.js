@@ -96,6 +96,10 @@ router.post('/signin', async (req, res) => {
       const user = rows[0];
 
       // Compare the hashed password with the one provided during sign-in
+      if (!user.password) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+      }
+
       const match = await bcrypt.compare(password, user.password);
       if (match) {
         // Generate a token valid for 1 hour
@@ -114,6 +118,9 @@ router.post('/signin', async (req, res) => {
     res.status(500).json({ message: 'An error occurred during sign-in' });
   }
 });
+
+
+
 
 
 module.exports = router;
