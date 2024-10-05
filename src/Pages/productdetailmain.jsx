@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Toaster, Position, Intent } from '@blueprintjs/core';
+import { Toaster, Position, Intent, Dialog } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './productdetailmain.css';
 
@@ -11,20 +11,20 @@ const toaster = Toaster.create({
 
 const ProductDetailMain = () => {
   const navigate = useNavigate();
-  const { name, id } = useParams(); // Get product name and ID from URL
-  const [product, setProduct] = useState(null); // State to store product details
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const [quantity, setQuantity] = useState(1); // State for product quantity
-  const [selectedColor, setSelectedColor] = useState('gold'); // State for selected color
-  const [isGuest, setIsGuest] = useState(false); // Guest state
-  const [guestEmail, setGuestEmail] = useState(''); // Guest email input
-  const [guestName, setGuestName] = useState(''); // Guest name input
+  const { name, id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedColor, setSelectedColor] = useState('gold');
+  const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
+  const [guestEmail, setGuestEmail] = useState('');
+  const [guestName, setGuestName] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/categories/${name}/products/${id}`); // Fetch product by ID
+        const response = await axios.get(`http://localhost:5000/api/categories/${name}/products/${id}`);
         setProduct(response.data);
         setLoading(false);
       } catch (error) {
@@ -34,10 +34,10 @@ const ProductDetailMain = () => {
     };
 
     fetchProduct();
-  }, [id, name]); // Add name to the dependency array
+  }, [id, name]);
 
   const changeQuantity = (value) => {
-    setQuantity((prev) => Math.max(1, prev + value)); // Ensure quantity doesn't go below 1
+    setQuantity((prev) => Math.max(1, prev + value));
   };
 
   const addToCart = async () => {
@@ -45,11 +45,10 @@ const ProductDetailMain = () => {
     
     try {
       if (!email) {
-        setIsGuest(true); // If no email is found, show guest input form
+        setIsGuestModalOpen(true);
         return;
       }
 
-      // Adding product to the cart for logged-in user
       await axios.post('http://localhost:5000/api/cartpost', {
         productId: product.id,
         color: selectedColor,
@@ -72,6 +71,15 @@ const ProductDetailMain = () => {
   };
 
   const handleGuestCheckout = async () => {
+    if (!guestName || !guestEmail) {
+      toaster.show({
+        intent: Intent.DANGER,
+        message: "Please fill in your name and email!",
+        timeout: 3000,
+      });
+      return;
+    }
+
     try {
       const response = await axios.post('http://localhost:5000/api/guest-cart', {
         name: guestName,
@@ -82,12 +90,11 @@ const ProductDetailMain = () => {
       });
 
       if (response.status === 200) {
-        const data = response.data; // Correctly access the data
-        // Save the token and email to local storage if provided
+        const data = response.data;
         if (data.token) {
           localStorage.setItem('token', data.token);
         }
-        localStorage.setItem('email', guestEmail); // Save guest email
+        localStorage.setItem('email', guestEmail);
 
         toaster.show({
           intent: Intent.SUCCESS,
@@ -95,8 +102,7 @@ const ProductDetailMain = () => {
           timeout: 3000,
         });
 
-        // Optionally navigate to another page after successful checkout
-        // navigate('/payment');
+        setIsGuestModalOpen(false);
       } else {
         toaster.show({
           intent: Intent.DANGER,
@@ -114,12 +120,12 @@ const ProductDetailMain = () => {
     }
   };
 
-  if (loading) return <div className="loading">Loading product...</div>;
-  if (error) return <div className="error">{error}</div>;
-
   return (
     <div className="product-detail-container">
-      {product ? (
+      {loading && <div className="loading">Loading product...</div>}
+      {error && <div className="error">{error}</div>}
+
+      {product && (
         <div className="product-detail">
           <div className="product-image">
             <img src={`http://localhost:5000${product.image}`} alt={product.name} />
@@ -132,10 +138,10 @@ const ProductDetailMain = () => {
 
             <div className="color-selection">
               <label>Choose Color: </label>
-              <select className="select" value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
-                <option style={{color:'white'}}value="gold">Gold</option>
-                <option  style={{color:'white'}} value="silver">Silver</option>
-                <option style={{color:'white'}}  value="black">Black</option>
+              <select style={{ backgroundColor: "black", color: "white" }} value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
+                <option value="gold">Gold</option>
+                <option value="silver">Silver</option>
+                <option value="black">Black</option>
               </select>
             </div>
 
@@ -148,30 +154,37 @@ const ProductDetailMain = () => {
 
             <div className="action-buttons">
               <button type="button" onClick={addToCart}>Add To Cart</button>
-              {isGuest && (
-                <div className="guest-checkout">
-                  <h3>Guest Checkout</h3>
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)} // Allow typing in input
-                  />
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={guestEmail}
-                    onChange={(e) => setGuestEmail(e.target.value)} // Allow typing in input
-                  />
-                  <button onClick={handleGuestCheckout}>Continue as Guest</button>
-                </div>
-              )}
             </div>
           </div>
         </div>
-      ) : (
-        <p>Product not found.</p>
       )}
+
+      <Dialog
+        isOpen={isGuestModalOpen}
+        onClose={() => setIsGuestModalOpen(false)}
+        title="Guest Checkout"
+      >
+        <div className="bp3-dialog-body">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={guestName}
+            onChange={(e) => setGuestName(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={guestEmail}
+            onChange={(e) => setGuestEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="bp3-dialog-footer">
+          <button className="bp3-button" onClick={handleGuestCheckout}>Continue as Guest</button>
+          <button className="bp3-button bp3-intent-danger" onClick={() => setIsGuestModalOpen(false)}>Cancel</button>
+        </div>
+      </Dialog>
     </div>
   );
 };

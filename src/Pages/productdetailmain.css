@@ -73,8 +73,9 @@ input[type="number"] {
   color:white;;
 }
 option{
-  color:black;
+  color:rgb(255, 255, 255);
 }
+
 .select{
   background-color: black;
   color:white;

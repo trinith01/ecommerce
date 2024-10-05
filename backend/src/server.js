@@ -1,6 +1,7 @@
 const express = require('express');
 
 const bodyParser = require('body-parser');
+// const dashboardRoutes = require('./routes/dashboard');
 const cors = require('cors');
 const path = require('path');
 const authRoutes = require('./routes/auth');
@@ -34,6 +35,7 @@ app.use('/api', payment);
 app.use('/api', uploadRoutes); // Image upload route
 // app.use('/api', guest);
 app.use('/api',profile);
+// app.use('/api', dashboardRoutes);
 
 // Start the server
 app.listen(port, () => {

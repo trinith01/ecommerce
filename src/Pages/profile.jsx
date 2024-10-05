@@ -1,7 +1,7 @@
-// Profile.js
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Toaster, Position, Intent } from '@blueprintjs/core';
+import axios from 'axios';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './profile.css';
 
@@ -11,51 +11,43 @@ const toaster = Toaster.create({
 
 const Profile = () => {
   const [userDetails, setUserDetails] = useState(null);
-  const [loading, setLoading] = useState(true); // Loading state
-  const [isEditing, setIsEditing] = useState(false); // Edit mode state
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', password: '' }); // Form data
+  const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', oldPassword: '', newPassword: '' });
+  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      // If there's no token, redirect to the sign-in page
       navigate('/signin');
       return;
     }
 
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/profile', {
-          method: 'GET',
+        const response = await axios.get('http://localhost:5000/api/profile', {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
         });
 
-        const data = await response.json();
-
-        if (response.ok) {
-          setUserDetails(data.user);
+        if (response.status === 200) {
+          const user = response.data.user;
+          setUserDetails(user);
           setFormData({
-            name: data.user.name,
-            email: data.user.email,
-            phone: data.user.phone,
-            password: '', // Reset password field
-          });
-        } else {
-          toaster.show({
-            intent: Intent.DANGER,
-            message: data.message,
-            timeout: 3000,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            oldPassword: '', // Clear old password field
+            newPassword: '', // Clear new password field
           });
         }
       } catch (error) {
-        console.error('Error:', error);
         toaster.show({
           intent: Intent.DANGER,
-          message: 'An error occurred while fetching user details.',
+          message: 'You Are Guest',
           timeout: 3000,
         });
       } finally {
@@ -72,41 +64,55 @@ const Profile = () => {
   };
 
   const handleUpdateProfile = async (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
+
+    const { oldPassword, newPassword, confirmPassword } = formData;
+
+    // Validate inputs
+    if (!oldPassword || !newPassword || !confirmPassword) {
+      toaster.show({
+        intent: Intent.DANGER,
+        message: 'All password fields are required.',
+        timeout: 3000,
+      });
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toaster.show({
+        intent: Intent.DANGER,
+        message: 'New passwords do not match.',
+        timeout: 3000,
+      });
+      return;
+    }
 
     const token = localStorage.getItem('token');
+
     try {
-      const response = await fetch('http://localhost:5000/api/profile', {
-        method: 'PUT',
+      const response = await axios.put('http://localhost:5000/api/profile', formData, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (response.status === 200) {
         setUserDetails((prev) => ({ ...prev, ...formData }));
-        setIsEditing(false); // Exit edit mode
+        localStorage.setItem('email', formData.email);
+        
+        setIsEditing(false);
+        navigate('/profile');
         toaster.show({
           intent: Intent.SUCCESS,
           message: 'Profile updated successfully',
           timeout: 3000,
         });
-      } else {
-        toaster.show({
-          intent: Intent.DANGER,
-          message: data.message,
-          timeout: 3000,
-        });
       }
     } catch (error) {
-      console.error('Error:', error);
       toaster.show({
         intent: Intent.DANGER,
-        message: 'An error occurred while updating the profile.',
+        message: 'Old Password does not match',
         timeout: 3000,
       });
     }
@@ -129,7 +135,7 @@ const Profile = () => {
             </div>
           ) : (
             <form onSubmit={handleUpdateProfile}>
-              <label>
+              <label style={{ color: "white" }}>
                 Name:
                 <input
                   type="text"
@@ -139,7 +145,7 @@ const Profile = () => {
                   required
                 />
               </label>
-              <label>
+              <label style={{ color: "white" }}>
                 Email:
                 <input
                   type="email"
@@ -149,7 +155,7 @@ const Profile = () => {
                   required
                 />
               </label>
-              <label>
+              <label style={{ color: "white" }}>
                 Phone:
                 <input
                   type="tel"
@@ -159,13 +165,34 @@ const Profile = () => {
                   required
                 />
               </label>
-              <label>
-                Password:
+              <label style={{ color: "white" }}>
+                Old Password:
                 <input
                   type="password"
-                  name="password"
-                  value={formData.password}
+                  name="oldPassword"
+                  value={formData.oldPassword}
                   onChange={handleChange}
+                  required
+                />
+              </label>
+              <label style={{ color: "white" }}>
+                New Password:
+                <input
+                  type="password"
+                  name="newPassword"
+                  value={formData.newPassword}
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+              <label style={{ color: "white" }}>
+                Confirm New Password:
+                <input
+                  type="password"
+                  name="confirmPassword" // Ensure this matches the formData property
+                  value={formData.confirmPassword} // Use formData.confirmPassword
+                  onChange={handleChange}
+                  required
                 />
               </label>
               <button type="submit">Update Profile</button>
@@ -174,10 +201,11 @@ const Profile = () => {
           )}
         </div>
       ) : (
-        <p>No user details available.</p>
+        <p>Loading user details...</p>
       )}
     </div>
   );
+
 };
 
 export default Profile;
