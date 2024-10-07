@@ -46,8 +46,8 @@ router.post('/signup', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Insert the user data into the database with the hashed password
-    const query = 'INSERT INTO customer (customer_id, password_hash, name, email, phone_number, address_id, is_guest) VALUES (?, ?, ?, ?)';
-    await db.query(query, [customer_id, password_hash, name, email, phone_number, address_id, is_guest]);
+    const query = 'INSERT INTO customer (name, email, password, phone) VALUES (?, ?, ?, ?)';
+    await db.query(query, [name, email, hashedPassword, phone]);
 
     // Compose the email to send after successful registration
     // var composemail = {
