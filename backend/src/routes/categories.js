@@ -33,7 +33,7 @@ router.get('/categories', async (req, res) => {
 router.get('/categories/:name/products', async (req, res) => {
   const categoryName = req.params.name;
 
-  const sql = 'SELECT V.*,P.* FROM variant V join product P on V.product_id=P.product_id join product_category PC on P.product_id=PC.product_id join category C on PC.category_id=C.category_id WHERE C.category_name = ?';
+  const sql = 'SELECT * FROM variant_search';
 
   try {
     const [products] = await db.query(sql, [categoryName]);
@@ -53,7 +53,7 @@ router.get('/categories/:name/products', async (req, res) => {
 router.get('/categories/:name/products/:id', async (req, res) => {
   const { id, name } = req.params;
 
-  const sql = 'SELECT V.*,P.*,C.* FROM variant V JOIN product P ON V.product_id=P.product_id JOIN product_category PC ON P.product_id=PC.product_id JOIN category C ON PC.category_id=C.category_id WHERE V.variant_id = ? AND C.category_name = ?';
+  const sql = 'SELECT * FROM categories_with_name_and_id';
 
   try {
     const [[product]] = await db.query(sql, [id, name]);
@@ -72,7 +72,7 @@ router.get('/categories/:name/products/:id', async (req, res) => {
 // Route to search products by name
 router.get('/search', async (req, res) => {
   const searchTerm = req.query.q || '';
-  const sql = 'SELECT V.*,P.* FROM variant V JOIN product P ON V.product_id=P.product_id WHERE P.product_name LIKE ?';
+  const sql = 'SELECT * FROM variants_with_name';
 
   try {
     const [results] = await db.query(sql, [`%${searchTerm}%`]);

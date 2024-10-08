@@ -9,7 +9,7 @@ router.get('/items', authenticateToken, async (req, res) => {
     console.log(email);
     
 
-    const sql = 'SELECT * FROM cart C join customer CU on C.customer_id=CU.customer_id WHERE CU.email = ?'; // Filter by user email
+    const sql = 'SELECT * FROM cart_with_email'; // Filter by user email
 
     try {
         // Pass the email as a parameter to the query
