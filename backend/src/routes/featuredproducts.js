@@ -7,12 +7,12 @@ router.get('/products', async (req, res) => {
   const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100); // Limit to a maximum of 100
   const offset = Math.max(parseInt(req.query.offset) || 0, 0); // No negative offset
   
-  const productsSql = 'SELECT * FROM products LIMIT ? OFFSET ?';
-  const countSql = 'SELECT COUNT(*) AS total FROM products';
+  // const productsSql = 'CALL sp_get_products(?, ?, @total); SELECT @total as total;';
+  // const countSql = 'SELECT COUNT(*) AS total FROM products';
 
   try {
     // Get total count of products
-    const [[{ total }]] = await db.query(countSql);
+    // const [[{ total }]] = await db.query(countSql);
     
     // Get paginated products
     const [results] = await db.query(productsSql, [limit, offset]);
@@ -33,7 +33,7 @@ router.get('/products', async (req, res) => {
 router.get('/products/:id', async (req, res) => {
   const productId = req.params.id;
 
-  const sql = 'SELECT * FROM products WHERE id = ?'; // Assuming your product table has an 'id' column
+  const sql = 'call product_by_id(?)'; // Assuming your product table has an 'id' column
 
   try {
     const [[product]] = await db.query(sql, [productId]);
