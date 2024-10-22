@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 var nodemailer = require('nodemailer');
-const db = require('../dbconnection'); // Import the database connection
+const db = require('../../dbconnection'); // Import the database connection
 const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const verifyToken = require('../middlewares/authMiddleware');
 
@@ -33,20 +33,20 @@ router.post('/signup', async (req, res) => {
   }
 
   try {
-    // Check if the email is already taken
-    const emailCheckQuery = 'SELECT email FROM users WHERE email = ?';
-    const [existingEmail] = await db.query(emailCheckQuery, [email]);
+    // // Check if the email is already taken
+    // const emailCheckQuery = 'SELECT email FROM users WHERE email = ?';
+    // const [existingEmail] = await db.query(emailCheckQuery, [email]);
 
-    if (existingEmail.length > 0) {
-      // Email already exists
-      return res.status(409).json({ message: 'Email is already taken' }); // 409 Conflict
-    }
+    // if (existingEmail.length > 0) {
+    //   // Email already exists
+    //   return res.status(409).json({ message: 'Email is already taken' }); // 409 Conflict
+    // }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Insert the user data into the database with the hashed password
-    const query = 'INSERT INTO users (name, email, password, phone) VALUES (?, ?, ?, ?)';
+    const query = 'CALL register_user(?, ?, ?, ?)';
     await db.query(query, [name, email, hashedPassword, phone]);
 
     // Compose the email to send after successful registration
@@ -89,7 +89,7 @@ router.post('/signin', async (req, res) => {
 
   try {
     // Check if the user exists
-    const query = 'SELECT * FROM users WHERE email = ?';
+    const query = 'CALL get_user_by_email(?)';
     const [rows] = await db.query(query, [email]);
 
     if (rows.length > 0) {
@@ -118,9 +118,6 @@ router.post('/signin', async (req, res) => {
     res.status(500).json({ message: 'An error occurred during sign-in' });
   }
 });
-
-
-
 
 
 module.exports = router;

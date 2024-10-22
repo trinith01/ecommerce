@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 const verifyToken = require('../middlewares/authMiddleware');
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
@@ -13,12 +13,12 @@ router.get('/protected-route', verifyToken, (req, res) => {
 
 // Route to add product to cart
 router.post('/cartpost', async (req, res) => {
-    const { productId, color, quantity, email } = req.body;
+    const { customerId, variantId, quantity } = req.body;
 
-    const sql = 'INSERT INTO cart (product_id, email, color, quantity) VALUES (?, ?, ?, ?)';
+    const sql = 'CALL Procedure_Add_To_Cart(?, ?, ?)';
 
     try {
-        const [result] = await db.query(sql, [productId, email, color, quantity]);
+        const [result] = await db.query(sql, [customerId, variantId, quantity]);
 
         if (result.affectedRows > 0) {
             res.json({ message: 'Product added to cart' });
