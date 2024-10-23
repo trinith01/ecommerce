@@ -16,16 +16,18 @@ router.post('/cartpost', async (req, res) => {
     const { customerId, variantId, quantity } = req.body;
 
 
-    const sql = 'CALL Procedure_Add_To_Cart(?, ?, ?);';
+    const sql = 'CALL Procedure_Add_To_Cart(?, ?, ?)';
 
     try {
         const [result] = await db.query(sql, [customerId, variantId, quantity]);
 
-        if (result.affectedRows > 0) {
+        // console.log(result);
+
+        // if (result.affectedRows > 0) {
             res.json({ message: 'Product added to cart' });
-        } else {
-            res.status(400).send('Failed to add product to cart');
-        }
+        // } else {
+        //     res.status(400).send('Failed to add product to cart');
+        // }
     } catch (err) {
         console.error('Error adding product to cart:', err);
         res.status(500).send('Error adding product to cart');

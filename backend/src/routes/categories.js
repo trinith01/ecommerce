@@ -33,7 +33,7 @@ router.get('/categories', async (req, res) => {
 router.get('/categories/:name/products', async (req, res) => {
   const categoryName = req.params.name;
 
-  const sql = 'SELECT * FROM products WHERE category = ?';
+  const sql = 'CALL get_categories_with_name(?)';
 
   try {
     const [products] = await db.query(sql, [categoryName]);
@@ -50,32 +50,35 @@ router.get('/categories/:name/products', async (req, res) => {
 });
 
 // Route to get product by ID
-router.get('/categories/:name/products/:id', async (req, res) => {
-  const { id, name } = req.params;
+// router.get('/categories/:name/products/:id', async (req, res) => {
+//   const { id, name } = req.params;
 
-  const sql = 'SELECT * FROM products WHERE id = ? AND category = ?';
+//   const sql = 'SELECT * FROM products WHERE id = ? AND category = ?';
 
-  try {
-    const [[product]] = await db.query(sql, [id, name]);
+//   try {
+//     const [[product]] = await db.query(sql, [id, name]);
 
-    if (product) {
-      res.json(product);
-    } else {
-      res.status(404).send('Product not found');
-    }
-  } catch (err) {
-    console.error('Error fetching product:', err);
-    res.status(500).send('Error fetching product');
-  }
-});
+//     if (product) {
+//       res.json(product);
+//     } else {
+//       res.status(404).send('Product not found');
+//     }
+//   } catch (err) {
+//     console.error('Error fetching product:', err);
+//     res.status(500).send('Error fetching product');
+//   }
+// });
 
 // Route to search products by name
 router.get('/search', async (req, res) => {
   const searchTerm = req.query.q || '';
-  const sql = 'SELECT * FROM products WHERE name LIKE ?';
+  const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100); // Limit to a maximum of 100
+  const offset = Math.max(parseInt(req.query.offset) || 0, 0); // No negative offset
+
+  const sql = 'CALL Search(?, ?, ?)';
 
   try {
-    const [results] = await db.query(sql, [`%${searchTerm}%`]);
+    const [results] = await db.query(sql, [`%${searchTerm}%`, limit, offset]);
 
     if (results.length > 0) {
       res.json(results);

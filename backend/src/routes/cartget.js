@@ -5,7 +5,7 @@ const authenticateToken = require('../middlewares/authMiddleware'); // Import th
 
 // Route to get all products in the cart
 router.get('/items', authenticateToken, async (req, res) => {
-    const email = req.user.email; // Get email from the authenticated user
+    const customer_id = req.customer_id; // Get customer id
     // const password=req.user.password;
     // console.log(password);
     // console.log(email);
