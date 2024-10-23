@@ -33,14 +33,6 @@ router.post('/signup', async (req, res) => {
   }
 
   try {
-    // // Check if the email is already taken
-    // const emailCheckQuery = 'SELECT email FROM users WHERE email = ?';
-    // const [existingEmail] = await db.query(emailCheckQuery, [email]);
-
-    // if (existingEmail.length > 0) {
-    //   // Email already exists
-    //   return res.status(409).json({ message: 'Email is already taken' }); // 409 Conflict
-    // }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
