@@ -25,7 +25,7 @@ const CartItems = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const removeFromCartById = (id, index) => {
+  const removeFromCartById = (id, index) => { 
     setCartItems((prevCart) => {
       const updatedItem = { ...prevCart[id] };
       updatedItem.size.splice(index, 1);
@@ -61,7 +61,7 @@ const CartItems = () => {
   };
 
   const checkoutSelectedItems = () => {
-
+    
   };
 
   return (

@@ -66,8 +66,7 @@ const RelatedProducts = (props) => {
 
   return (
     <div className='relatedproducts'>
-      <h1>Related</h1>
-      <h2>Products</h2>
+      <h1>Related Products</h1>
       <hr/>
       <div className="relatedproducts-item" ref={scrollContainerRef}>
         {relared.map((item, i)=>{

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './ProductDisplay.css';
-import minus from '../Assets/minus.png'
-import plus from '../Assets/plus.png'
+import { FaMinus, FaPlus } from 'react-icons/fa';
 
 // const useResponsiveStyles = () => {
 //   const [containerStyles, setContainerStyles] = useState({
@@ -124,6 +123,18 @@ const ProductDisplay = (props) => {
     }
   };
 
+  const [quantity, setQuantity] = useState(1);
+
+  // Function to handle decrement of quantity
+  const handleDecrement = () => {
+    setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1)); // Ensures the quantity doesn't go below 1
+  };
+
+  // Function to handle increment of quantity
+  const handleIncrement = () => {
+    setQuantity(prevQuantity => prevQuantity + 1);
+  };
+
   const slides = [];
   if (product.image) {
     slides.push(product.image);
@@ -167,7 +178,7 @@ const ProductDisplay = (props) => {
           )}
         </div>
         <div className='productdisplay-right-color'>
-          <h4>Select Color</h4>
+          <h4 className='text-lg'>Select Color</h4>
           <div className='productdisplay-right-colors'>
             {product.colors.map((color, index) => (
               <button
@@ -178,6 +189,7 @@ const ProductDisplay = (props) => {
                   border: color1 === color ? '2px solid black' : 'none',
                   position: 'relative',
                 }}
+                className='rounded-xl'
               >
                 {color1 === color && (
                   <svg
@@ -225,15 +237,38 @@ const ProductDisplay = (props) => {
         </div>
       </>
     ) : null} 
-    <div className='clz'>
-      <h4>Quantity: </h4>
-      <img src={minus} className='flex items-center justify-center' style={{borderRadius:100, width:'25px', height:'25px', cursor:'pointer'}} />
-      <div className="productdisplay-right-sizes-new">
-        <button className='active text-black'>1</button>
+    <div className='clz flex items-center'>
+      <h4 className='mr-2 text-lg'>Quantity: </h4>
+      <FaMinus
+        className='flex items-center justify-center'
+        style={{
+          borderRadius: '100%',
+          width: '25px',
+          height: '25px',
+          cursor: 'pointer',
+          backgroundColor: '#f0f0f0',
+          padding: '5px'
+        }}
+        onClick={handleDecrement} // Decrease the quantity on click
+      />
+      <div className="productdisplay-right-sizes-new mx-2">
+        <button className='active text-black font-bold'>
+          {quantity} {/* Display the current quantity */}
+        </button>
       </div>
-      <img src={plus} style={{borderRadius:100, width:'25px', height:'25px', cursor:'pointer'}} />
+      <FaPlus
+        style={{
+          borderRadius: '100%',
+          width: '25px',
+          height: '25px',
+          cursor: 'pointer',
+          backgroundColor: '#f0f0f0',
+          padding: '5px'
+        }}
+        onClick={handleIncrement} // Increase the quantity on click
+      />
     </div>
-    <h4>Stock Count: 30</h4>
+    <h4 className='text-lg'>Stock Count: 30</h4>
   </div>
         <div className="productdisplay-right-addtoCart ">
           <button onClick={() => { handleAction() }} className={!product.available ? 'unavailable-button' : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700'}>
