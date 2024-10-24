@@ -227,19 +227,19 @@ const ProductDisplay = (props) => {
     ) : null} 
     <div className='clz'>
       <h4>Quantity: </h4>
-      <img src={minus} style={{borderRadius:100, width:'25px', height:'25px', cursor:'pointer'}} />
+      <img src={minus} className='flex items-center justify-center' style={{borderRadius:100, width:'25px', height:'25px', cursor:'pointer'}} />
       <div className="productdisplay-right-sizes-new">
-        <button className='active'>1</button>
+        <button className='active text-black'>1</button>
       </div>
       <img src={plus} style={{borderRadius:100, width:'25px', height:'25px', cursor:'pointer'}} />
     </div>
     <h4>Stock Count: 30</h4>
   </div>
-        <div className="productdisplay-right-addtoCart">
-          <button onClick={() => { handleAction() }} className={!product.available ? 'unavailable-button' : ''}>
+        <div className="productdisplay-right-addtoCart ">
+          <button onClick={() => { handleAction() }} className={!product.available ? 'unavailable-button' : 'bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700'}>
             {product.available ? 'ADD TO CART' : 'UNAVAILABLE'}
           </button>
-          {alertMessage && <p className="alert-message">{alertMessage}</p>}
+          {alertMessage && <p className="alert-message bg-transparent hover:text-[#ff0000]">{alertMessage}</p>}
         </div>
       </div>
     </div>

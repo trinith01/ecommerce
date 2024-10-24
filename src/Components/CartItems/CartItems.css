@@ -4,7 +4,6 @@
     padding-top: 80px;
     display: flex;
     flex-direction: column;
-    background-color: #1e1e20;
     min-height: 100vh;
 }
 
@@ -86,13 +85,11 @@
     margin-left: 10px;
     width: 64px;
     height: 40px;
-    border: 2px solid #ebebeb;
-    background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     text-align: center;
     line-height: 36px;
     justify-self: center; 
-    color: #1e1e20;
+    color: white;
 }
 
 .cartitems-footer {
@@ -127,9 +124,7 @@
     align-items: center;
     gap: 5px;
     padding: 5px 10px;
-    border: 1px solid #5d5d5d;
     border-radius: 20px;
-    background-color: #f5f5f5;
     font-size: 15px;
     width: fit-content; /* Ensure capsule width fits content */
 }
@@ -144,7 +139,6 @@
     height: 50px;
     outline: none;
     border: none;
-    background: linear-gradient(90deg, #000000 0%, #130F40 100%);
     color: #fff;
     font-size: 13px;
     font-weight: 800;
@@ -388,7 +382,6 @@
         white-space: nowrap;
         width: 100%; /* Ensure capsule width fits content */
     }
-    
     .cartitems-remove-icon-small {
         width: 16px;
         height: 16px;

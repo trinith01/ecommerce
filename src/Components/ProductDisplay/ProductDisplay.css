@@ -158,7 +158,6 @@
     width: 100%;
     height: 65px;
     color: #ffffff;
-    background: linear-gradient(90deg, #000000 0%, #130F40 100%);
     border: 1px solid #ffffff;
     border-radius: 10px;
     cursor: pointer;
@@ -176,7 +175,6 @@
 }
 
 .productdisplay-right-addtoCart button.clicked {
-    background: black;/*linear-gradient(90deg, #0049BA 0%, #002980 100%); /* Reversed gradient */
     color: #cccccc; /* Lighter text color */
   }
 
