@@ -19,6 +19,7 @@ import Footer from './Components/Footer';
 import ShopCategory from './Pages/ShopCategory';
 import Cart from './Pages/Cart';
 import Product from './Pages/Product';
+import Order from './Pages/Order';
 
 function App() {
   return (
@@ -39,13 +40,13 @@ function App() {
           {/* <Route path="/cart" element={<CartItems />} /> */}
           <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
           <Route path='/electronics' element={<ShopCategory category="electronics" />} />
           <Route path='/toys' element={<ShopCategory category="toys" />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/product'>
             <Route path=':productId' element={<Product />} />
           </Route>
+          <Route path='/order' element={<Order />} />
         </Routes>
       </div>
       <Footer />

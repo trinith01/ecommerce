@@ -13,6 +13,18 @@ const CartItems = () => {
     5: { q: 3, size: ['XL', 'M'], color: ['red', 'green'] },
   });
 
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [isLargeViewport, setIsLargeViewport] = useState(window.innerWidth >= 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeViewport(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const removeFromCartById = (id, index) => {
     setCartItems((prevCart) => {
       const updatedItem = { ...prevCart[id] };
@@ -27,26 +39,57 @@ const CartItems = () => {
     });
   };
 
-  const cartHasMultipleItems = Object.values(cartItems).filter(item => item.q > 0).length >= 2;
+  const toggleSelectItem = (id) => {
+    setSelectedItems((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter((itemId) => itemId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
+  };
 
-  const [isLargeViewport, setIsLargeViewport] = useState(window.innerWidth >= 1024);
+  const removeSelectedItems = () => {
+    setCartItems((prevCart) => {
+      const updatedCart = { ...prevCart };
+      selectedItems.forEach((id) => {
+        updatedCart[id].q = 0;
+      });
+      return updatedCart;
+    });
+    setSelectedItems([]);
+  };
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeViewport(window.innerWidth >= 1024);
-    };
+  const checkoutSelectedItems = () => {
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  };
 
   return (
     <div className='cartpg'>
       <div className='cartitems mt-10'>
         <h2 className='mb-8'>Your Cart</h2>
+
+        {selectedItems.length > 0 && (
+          <div className="mb-4 flex gap-4">
+            <button
+              className="bg-red-500 hover:bg-red-400 text-white py-2 px-4 rounded-xl"
+              onClick={removeSelectedItems}
+            >
+              Remove Selected Items
+            </button>
+            <button
+              className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-xl"
+              onClick={checkoutSelectedItems}
+            >
+              Checkout Selected Items
+            </button>
+          </div>
+        )}
+
         {isLargeViewport ? (
           <>
             <div className="cartitems-header">
+              <p className='bg-transparent text-white'>Select</p>
               <p className='bg-transparent text-white'>Products</p>
               <p className='bg-transparent text-white'>Title</p>
               <p className='bg-transparent text-white'>Price</p>
@@ -60,6 +103,12 @@ const CartItems = () => {
                 return (
                   <div key={e.id}>
                     <div className="cartitems-row">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems.includes(e.id)}
+                        onChange={() => toggleSelectItem(e.id)}
+                        className="mr-2 w-5 h-5"
+                      />
                       <img src={e.image} alt='' className='carticon-product-icon' />
                       <p className='bg-transparent text-white'>{e.name}</p>
                       <p className='bg-transparent text-white'>Rs.{e.new_price}</p>
@@ -103,6 +152,12 @@ const CartItems = () => {
                   <div key={e.id}>
                     <div className='main-div'>
                       <div className="cartitems-row-left">
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.includes(e.id)}
+                          onChange={() => toggleSelectItem(e.id)}
+                          className="mr-2"
+                        />
                         <img src={e.image} alt='' className='carticon-product-icon' />
                       </div>
                       <div className="cartitems-row-right">
@@ -142,8 +197,6 @@ const CartItems = () => {
             })}
           </>
         )}
-
-        {cartHasMultipleItems && <h4>*You have to checkout each item separately!</h4>}
       </div>
     </div>
   );
