@@ -12,6 +12,7 @@ import CartPage from './Pages/CartPage';
 import CategoryPage from './Pages/categorypage';
 import CategoryDetail from './Pages/categorydetail';
 import ProductDetailMain from './Pages/productdetailmain';
+import Footer from './Pages/Footer';
 import ProductList from './Components/productList';
 // import CartItems from './Components/CartItems/CartItems';
 import OrderPage from './Pages/OrderPage';
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
+      <Footer/>
     </Router>
   );
 }

@@ -132,6 +132,7 @@ const Home = () => {
       {/* Categories Section */}
       <motion.section
         className="bg-gray-100 py-20"
+        style={{backgroundColor:'#0c0d1d'}}
         initial={{ opacity: 0 }}
         animate={controlsCategories} // Animated on scroll
         ref={categoriesRef}
@@ -180,21 +181,22 @@ const Home = () => {
           </motion.div>
         </div>
         <section className="text-center my-10">
-          <h2 className="text-2xl">Discover the Latest Trends</h2>
-          <Link to="/categories" className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded transition hover:bg-blue-600">
+          <h2 style={{color:'black'}}className="text-2xl">Discover the Latest Trends</h2>
+          <Link to="/categories" className="mt-4 inline-block no-underline bg-black text-white py-2 px-4 rounded transition hover:no-underline  hover:bg-white hover:text-black"
+          >
             Shop Now
           </Link> {/* Navigation to category page */}
         </section>
       </motion.section>
 
       {/* Featured Products Section */}
-      <section className="bg-gray-200 py-20">
+      <section style={{backgroundColor:"#1f1122"}} className="bg-gray-200 py-20">
         <div className="container mx-auto text-center">
           <h2 className="text-5xl font-bold mb-6">Featured Products</h2>
           {products.length === 0 ? (
             <p>No products available at the moment.</p>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div  className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {products.slice(0, visibleProductsCount).map((product) => (
                 <Link to={`../categories/${product.category}/products/${product.id}`} key={product.id} className="product-card bg-white p-4 rounded-lg shadow-lg">
                   <img src={`http://localhost:5000${product.image}`} alt={product.name} className="w-full h-40 object-cover rounded-md" />
@@ -208,12 +210,12 @@ const Home = () => {
           {/* Show More / Show Less button */}
           <div className="button-container mt-6 flex justify-center">
             {visibleProductsCount < products.length && (
-              <button onClick={handleShowMore} className="show-more bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              <button onClick={handleShowMore} className="mt-4 inline-block no-underline bg-black text-white py-2 px-4 rounded transition hover:no-underline  hover:bg-white hover:text-black">
                 Show More
               </button>
             )}
             {visibleProductsCount >= products.length && visibleProductsCount > 6 && (
-              <button onClick={handleShowLess} className="show-less bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 ml-4">
+              <button onClick={handleShowLess} className="mt-4 inline-block no-underline bg-black text-white py-2 px-4 rounded transition hover:no-underline  hover:bg-white hover:text-black">
                 Show Less
               </button>
             )}
@@ -268,9 +270,7 @@ const Home = () => {
         </div>
       </motion.section>
 
-      <footer className="footer text-center py-4 bg-gray-800">
-        <p>&copy; 2024 Our Store. All rights reserved.</p>
-      </footer>
+     
     </div>
   );
 };
