@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Toaster, Position, Intent } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './CSS/Signup.css';
+import signPageImage from '../Components/Assets/signPageImage.jpg';
 
 const toaster = Toaster.create({
   position: Position.TOP,
@@ -62,11 +63,12 @@ function SignUp() {
   };
 
   return (
-    <div id="background">
-      <form onSubmit={handleSubmit} style={{ border: '1px solid #ffffff', borderRadius: '10px' }}>
+    <div className="relative d-flex align-items-center justify-content-center">
+      <img src={signPageImage} alt="Sign Page" className="absolute top-0 left-0 w-full h-full object-cover" />
+      <form onSubmit={handleSubmit} className="relative p-4 rounded-2xl shadow-lg text-light right-52 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 my-32">
         <h1 style={{color:"white"}}>Sign Up</h1>
         <div className="mb-2">
-          <label htmlFor="name" className="form-label">Name</label>
+          <label htmlFor="name" className="form-label text-white">Name</label>
           <input
             type="text"
             className="form-control"
@@ -78,7 +80,7 @@ function SignUp() {
           />
         </div>
         <div className="mb-2">
-          <label htmlFor="email" className="form-label">Email address</label>
+          <label htmlFor="email" className="form-label text-white">Email address</label>
           <input
             type="email"
             className="form-control"
@@ -88,12 +90,9 @@ function SignUp() {
             onChange={handleChange}
             placeholder="Enter your email"
           />
-          <div className="form-text text-light">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-2">
-          <label htmlFor="password" className="form-label">Password</label>
+          <label htmlFor="password" className="form-label text-white">Password</label>
           <input
             type="password"
             className="form-control"
@@ -105,7 +104,7 @@ function SignUp() {
           />
         </div>
         <div className="mb-2">
-          <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+          <label htmlFor="confirmPassword" className="form-label text-white">Confirm Password</label>
           <input
             type="password"
             className="form-control"
@@ -117,7 +116,7 @@ function SignUp() {
           />
         </div>
         <div className="mb-2">
-          <label htmlFor="phone" className="form-label">Phone Number</label>
+          <label htmlFor="phone" className="form-label text-white">Phone Number</label>
           <input
             type="text"
             className="form-control"
@@ -129,10 +128,10 @@ function SignUp() {
           />
         </div>
         <div className="mb-2 form-check">
-          <Link to="/signin" className="link" style={{ textDecoration: 'none' }}>I already have an account</Link>
+          <Link to="/signin" className="link text-black" style={{ textDecoration: 'none' }}>I already have an account</Link>
         </div>
         <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary">Register</button>
+          <button type="submit" className="btn-primary bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 rounded-3xl px-4 border">Sign Up</button>
         </div>
       </form>
     </div>

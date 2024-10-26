@@ -1,6 +1,6 @@
 /* Background styles */
 #background {
-  background-image: url('../../Components/Assets/blackcart.jpg'); /* Ensure the image path is correct */
+  background-image: url('../../Components/Assets/signPageImage.jpg'); /* Ensure the image path is correct */
   background-size: cover;
   background-position: center;
   height: 700px; /* Full viewport height */

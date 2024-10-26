@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Toaster, Position, Intent } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import './CSS/Signup.css';
+import signPageImage from '../Components/Assets/signPageImage.jpg';
 
 const toaster = Toaster.create({
   position: Position.TOP,
@@ -63,11 +64,12 @@ function SignIn() {
   
 
   return (
-    <div className="d-flex align-items-center justify-content-center vh-100" id="background">
-      <form className="border p-4 rounded-2xl shadow-lg text-light" onSubmit={handleSubmit}>
+    <div className="relative d-flex align-items-center justify-content-center vh-100">
+      <img src={signPageImage} alt="Sign Page" className="absolute top-0 left-0 w-full h-full" />
+      <form className="relative p-4 rounded-2xl shadow-lg text-light right-52 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700" onSubmit={handleSubmit}>
         <h1 className="text-center text-light">Sign In</h1>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
+          <label htmlFor="exampleInputEmail1" className="form-label text-white">Email address</label>
           <input
             type="email"
             className="form-control"
@@ -77,12 +79,9 @@ function SignIn() {
             onChange={(e) => setEmail(e.target.value)}
             aria-describedby="emailHelp"
           />
-          <div id="emailHelp" className="form-text text-light">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+          <label htmlFor="exampleInputPassword1" className="form-label text-white">Password</label>
           <input
             type="password"
             className="form-control"
@@ -93,10 +92,10 @@ function SignIn() {
           />
         </div>
         <div className="mb-3 form-check">
-          <Link to="/signup" style={{ textDecoration: 'none' }}>Create an Account</Link>
+          <Link to="/signup" style={{ textDecoration: 'none' }} className="text-black">Create an Account</Link>
         </div>
         <div className="d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary">Sign In</button>
+          <button type="submit" className="btn-primary bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 rounded-3xl px-4 border">Sign In</button>
         </div>
       </form>
     </div>

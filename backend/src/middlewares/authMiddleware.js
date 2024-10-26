@@ -17,7 +17,7 @@ const verifyToken = (req, res, next) => {
         req.user = {
             userId: decoded.userId,
             email: decoded.email,
-            password:decoded.password
+            // password:decoded.password
              // Add email to req.user
 
         };

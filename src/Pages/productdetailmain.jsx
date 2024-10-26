@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Toaster, Position, Intent, Dialog } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
-import './productdetailmain.css';
+// import './productdetailmain.css'; // Keep any custom styles here
 
 const toaster = Toaster.create({
   position: Position.TOP,
@@ -121,39 +121,67 @@ const ProductDetailMain = () => {
   };
 
   return (
-    <div className="product-detail-container">
-      {loading && <div className="loading">Loading product...</div>}
-      {error && <div className="error">{error}</div>}
+    <div className="min-h-screen" style={{ backgroundColor: '#00143c' }}>
+    <div className="max-w-4xl mx-auto p-4" style={{ backgroundColor: '#0087d1' }} >
+      {loading && <div className="text-center text-xl">Loading product...</div>}
+      {error && <div className="text-red-500">{error}</div>}
 
       {product && (
-        <div className="product-detail">
-          <div className="product-image">
-            <img src={`http://localhost:5000${product.image}`} alt={product.name} />
+        <div className="flex flex-col md:flex-row bg-white rounded-lg shadow-md p-6" style={{ backgroundColor: '#0087d1' }}>
+          <div className="md:w-1/2 mb-4 md:mb-0">
+            <img className="w-full h-auto rounded-lg" src={`http://localhost:5000${product.image}`} alt={product.name} />
           </div>
-          <div className="product-info">
-            <h2>{product.name}</h2>
-            <p className="old-price">${product.old_price}</p>
-            <p className="new-price">${product.new_price}</p>
-            <p>{product.description}</p>
+          <div className="md:w-1/2 md:pl-6">
+            <h2 className="text-2xl font-bold">{product.name}</h2>
+            <p className="text-lg line-through text-gray-500">${product.old_price}</p>
+            <p className="text-2xl text-green-600">${product.new_price}</p>
+            <p className="mt-2">{product.description}</p>
 
-            <div className="color-selection">
-              <label>Choose Color: </label>
-              <select style={{ backgroundColor: "black", color: "white" }} value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
+            <div className="mt-4">
+              <label className="block text-sm font-medium">Choose Color:</label>
+              <select
+                className="mt-1 block w-full p-2 bg-black text-white rounded"
+                value={selectedColor}
+                onChange={(e) => setSelectedColor(e.target.value)}
+              >
                 <option value="gold">Gold</option>
                 <option value="silver">Silver</option>
                 <option value="black">Black</option>
               </select>
             </div>
 
-            <div className="quantity-selection">
-              <label>Quantity: </label>
-              <button onClick={() => changeQuantity(-1)}>-</button>
-              <input type="number" value={quantity} readOnly />
-              <button onClick={() => changeQuantity(1)}>+</button>
+            <div className="mt-4">
+              <label className="block text-sm font-medium">Quantity:</label>
+              <div className="flex items-center mt-1">
+                <button
+                  className="bg-gray-300 hover:bg-gray-400 rounded px-2"
+                  onClick={() => changeQuantity(-1)}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  className="mx-2 text-center border border-gray-300 rounded w-12"
+                  value={quantity}
+                  readOnly
+                />
+                <button
+                  className="bg-gray-300 hover:bg-gray-400 rounded px-2"
+                  onClick={() => changeQuantity(1)}
+                >
+                  +
+                </button>
+              </div>
             </div>
 
-            <div className="action-buttons">
-              <button type="button" onClick={addToCart}>Add To Cart</button>
+            <div className="mt-4">
+              <button
+                className="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700"
+                type="button"
+                onClick={addToCart}
+              >
+                Add To Cart
+              </button>
             </div>
           </div>
         </div>
@@ -170,6 +198,7 @@ const ProductDetailMain = () => {
             placeholder="Enter your name"
             value={guestName}
             onChange={(e) => setGuestName(e.target.value)}
+            className="bp3-input mb-2"
             required
           />
           <input
@@ -177,6 +206,7 @@ const ProductDetailMain = () => {
             placeholder="Enter your email"
             value={guestEmail}
             onChange={(e) => setGuestEmail(e.target.value)}
+            className="bp3-input mb-2"
             required
           />
         </div>
@@ -185,6 +215,7 @@ const ProductDetailMain = () => {
           <button className="bp3-button bp3-intent-danger" onClick={() => setIsGuestModalOpen(false)}>Cancel</button>
         </div>
       </Dialog>
+    </div>
     </div>
   );
 };

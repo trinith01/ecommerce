@@ -12,7 +12,7 @@ const categories = require('./routes/categories');
 const payment = require('./routes/payment');
 const uploadRoutes = require('./routes/upload');
 const profile=require('./routes/profile')
-// const guest =require('./routes/guest')
+const order =require('./routes/order')
 
 const app = express();
 const port = 5000;
@@ -33,7 +33,7 @@ app.use('/api', cartRouterPost);
 app.use('/api', cartRouterGet);
 app.use('/api', payment);
 app.use('/api', uploadRoutes); // Image upload route
-// app.use('/api', guest);
+app.use('/api', order);
 app.use('/api',profile);
 // app.use('/api', dashboardRoutes);
 

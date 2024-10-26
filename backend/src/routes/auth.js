@@ -22,6 +22,8 @@ const saltRounds = 10; // Define the number of salt rounds for hashing
 // Route to handle sign-up
 router.post('/signup', async (req, res) => {
   const { name, email, password, confirmPassword, phone } = req.body;
+  console.log(name);
+  
 
   // Basic validation
   if (!name || !email || !password || !confirmPassword || !phone) {

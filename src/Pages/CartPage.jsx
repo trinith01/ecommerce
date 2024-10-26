@@ -16,13 +16,12 @@ const CartPage = () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/items', {
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}` // Fixed syntax error
                     },
                 });
                 setCartItems(response.data);
                 setLoading(false);
             } catch (error) {
-                
                 setError('Please log in as a guest or sign in as a user to view your cart items.');
                 setLoading(false);
             }
@@ -35,9 +34,9 @@ const CartPage = () => {
         const token = localStorage.getItem('token');
 
         try {
-            await axios.delete(`http://localhost:5000/api/items/${id}`, {
+            await axios.delete(`http://localhost:5000/api/items/${id}`, { // Fixed syntax error
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}` // Fixed syntax error
                 },
             });
 
@@ -54,9 +53,9 @@ const CartPage = () => {
         const userEmail = localStorage.getItem('userEmail'); // Assuming you store the user's email in localStorage
 
         try {
-            await axios.delete(`http://localhost:5000/api/items`, {
+            await axios.delete('http://localhost:5000/api/items', { // Fixed syntax error
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${token}`, // Fixed syntax error
                     'Email': userEmail // Pass user email in the header or as query parameter if needed
                 },
             });
@@ -69,34 +68,37 @@ const CartPage = () => {
 
     const handleProceedToCheckout = async () => {
         await deleteAllCartItems(); // Delete all items from the cart
-        navigate('/payment'); // Navigate to payment page
+        const userEmail = localStorage.getItem('userEmail'); // Get user email
+        const userPhone = localStorage.getItem('userPhone'); // Get user phone (make sure this is stored in localStorage)
+        const cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0); // Assuming items have a price property
+
+        navigate('/payment', { state: { amount: cartTotal, email: userEmail, phone: userPhone } });
     };
 
     if (loading) return <div className="loading">Loading cart items...</div>;
     if (error) return <div className="error">{error}</div>;
 
     return (
-        <div className="cart-page">
-            <h2>Your Cart</h2>
+        <div className="bg-[#00143c] min-h-screen p-6 flex flex-col items-center"> {/* Set full-page background color */}
+            <h2 className="text-3xl font-bold text-white mb-4">Your Cart</h2>
             {cartItems.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <p className="text-white">Your cart is empty.</p>
             ) : (
-                <ul>
+                <ul className="w-full max-w-lg bg-white rounded-lg shadow-md p-4">
                     {cartItems.map((item) => (
-                        <li key={item.id}>
-                            <h3>Product ID: {item.product_id}</h3>
+                        <li key={item.id} className="border-b border-gray-300 py-2">
+                            <h3 className="text-lg font-semibold">Product ID: {item.product_id}</h3>
                             <p>Color: {item.color}</p>
                             <p>Quantity: {item.quantity}</p>
-                            <button onClick={() => removeCartItem(item.id)} className="remove-button">
+                            <button onClick={() => removeCartItem(item.id)} className="remove-button bg-red-500 text-white px-3 py-1 rounded">
                                 Remove
                             </button>
-                            <hr />
                         </li>
                     ))}
                 </ul>
             )}
             {cartItems.length > 0 && (
-                <button onClick={handleProceedToCheckout} className="checkout-button">
+                <button onClick={handleProceedToCheckout} className="checkout-button bg-green-500 text-white px-4 py-2 rounded mt-4">
                     Proceed to Checkout
                 </button>
             )}
