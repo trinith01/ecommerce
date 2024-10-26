@@ -46,27 +46,12 @@ const CartPage = () => {
         }
     };
 
-    const deleteAllCartItems = async () => {
-        const token = localStorage.getItem('token');
-        const userEmail = localStorage.getItem('userEmail');
-        try {
-            await axios.delete('http://localhost:5000/api/items', {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Email': userEmail 
-                },
-            });
-            setCartItems([]);
-        } catch (error) {
-            console.error('Error deleting all cart items:', error);
-            setError('Error deleting all cart items');
-        }
-    };
+    
 
     const handleProceedToCheckout = async () => {
-        await deleteAllCartItems();
-        const userEmail = localStorage.getItem('userEmail');
-        const userPhone = localStorage.getItem('userPhone');
+        // await deleteAllCartItems();
+        const userEmail = localStorage.getItem('email');
+        const userPhone = localStorage.getItem('phone');
         const cartTotal = cartItems.reduce((total, item) => total + (item.new_price * item.quantity), 0);
 
         navigate('/payment', { state: { amount: cartTotal, email: userEmail, phone: userPhone } });

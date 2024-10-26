@@ -1,14 +1,12 @@
 // PaymentGateway.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Toaster, Position, Intent } from '@blueprintjs/core';
-import '@blueprintjs/core/lib/css/blueprint.css';
 import { useNavigate, useLocation } from 'react-router-dom';
+import '@blueprintjs/core/lib/css/blueprint.css';
 
-const toaster = Toaster.create({
-  position: Position.TOP,
-});
+const toaster = Toaster.create({ position: Position.TOP });
 
 const PaymentGateway = () => {
   const [cardNumber, setCardNumber] = useState('');
@@ -16,51 +14,43 @@ const PaymentGateway = () => {
   const [cvv, setCvv] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, email, phone } = location.state || {}; // Destructure from state
+  const { amount, email, phone } = location.state || {};
+
+  const deleteAllCartItems = async () => {
+    const token = localStorage.getItem('token');
+    const userEmail = localStorage.getItem('email');
+    try {
+      await axios.delete('http://localhost:5000/api/items', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Email: userEmail,
+        },
+      });
+    } catch (error) {
+      console.error('Error deleting all cart items:', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const paymentData = {
-      cardNumber,
-      expirationDate,
-      cvv,
-      amount,
-    };
+    const paymentData = { cardNumber, expirationDate, cvv, amount };
 
     try {
+      await deleteAllCartItems();
       const response = await axios.post('http://localhost:5000/api/payment', paymentData);
+      toaster.show({ message: response.data.message, intent: Intent.SUCCESS, timeout: 3000 });
 
-      toaster.show({
-        message: response.data.message,
-        intent: Intent.SUCCESS,
-        timeout: 3000,
-      });
-
-      await fetch('http://localhost:5000/api/order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, phone })
-      });
+      await axios.post('http://localhost:5000/api/order', { email, phone });
 
       setCardNumber('');
       setExpirationDate('');
       setCvv('');
 
-      setTimeout(() => {
-        navigate('/categories');
-      }, 3000);
-      
+      setTimeout(() => navigate('/categories'), 3000);
     } catch (error) {
-      console.error('Error processing payment:', error);
       const errorMessage = error.response?.data?.message || 'Error processing payment!';
-      toaster.show({
-        message: errorMessage,
-        intent: Intent.DANGER,
-        timeout: 3000,
-      });
+      toaster.show({ message: errorMessage, intent: Intent.DANGER, timeout: 3000 });
     }
   };
 
