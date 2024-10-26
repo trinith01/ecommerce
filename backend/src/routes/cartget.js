@@ -11,7 +11,7 @@ router.get('/items', authenticateToken, async (req, res) => {
     // console.log(email);
     
 
-    const sql = 'SELECT * FROM cart WHERE email = ?'; // Filter by user email
+    const sql = 'SELECT * FROM cart_details WHERE email = ?'; // Filter by user email
 
     try {
         // Pass the email as a parameter to the query

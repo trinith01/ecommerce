@@ -1,26 +1,25 @@
-import React, { useState } from 'react';
+// PaymentGateway.js
+
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Toaster, Position, Intent } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const toaster = Toaster.create({
   position: Position.TOP,
 });
 
 const PaymentGateway = () => {
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expirationDate, setExpirationDate] = useState('');
   const [cvv, setCvv] = useState('');
-  const [amount, setAmount] = useState('');
-  const navigate = useNavigate(); // Use useNavigate for redirection
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { amount, email, phone } = location.state || {}; // Destructure from state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const phone = localStorage.getItem("phone");
-    const email = localStorage.getItem('email');
 
     const paymentData = {
       cardNumber,
@@ -31,36 +30,31 @@ const PaymentGateway = () => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/payment', paymentData);
-      
-      // Show success toaster notification
+
       toaster.show({
         message: response.data.message,
         intent: Intent.SUCCESS,
         timeout: 3000,
       });
 
-      const responseOrder = await fetch('http://localhost:5000/api/order', {
+      await fetch('http://localhost:5000/api/order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, phone })
       });
-      
-      // Clear form fields
+
       setCardNumber('');
       setExpirationDate('');
       setCvv('');
-      setAmount('');
 
-      // Navigate to the /categories page after a successful payment
       setTimeout(() => {
-        navigate('/categories'); // Redirect to categories page
-      }, 3000); // 3 seconds delay before navigation
+        navigate('/categories');
+      }, 3000);
       
     } catch (error) {
       console.error('Error processing payment:', error);
-      // Show error toaster notification
       const errorMessage = error.response?.data?.message || 'Error processing payment!';
       toaster.show({
         message: errorMessage,
@@ -113,10 +107,8 @@ const PaymentGateway = () => {
             <input
               className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-500"
               type="text"
-              placeholder="$0.00"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
+              value={`$${amount}`}
+              readOnly
             />
           </div>
           <button
@@ -131,4 +123,4 @@ const PaymentGateway = () => {
   );
 };
 
-export default PaymentGateway; 
+export default PaymentGateway;

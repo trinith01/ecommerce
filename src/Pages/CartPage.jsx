@@ -1,3 +1,5 @@
+// CartPage.js
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -12,11 +14,10 @@ const CartPage = () => {
     useEffect(() => {
         const fetchCartItems = async () => {
             const token = localStorage.getItem('token');
-
             try {
                 const response = await axios.get('http://localhost:5000/api/items', {
                     headers: {
-                        'Authorization': `Bearer ${token}` // Fixed syntax error
+                        'Authorization': `Bearer ${token}`
                     },
                 });
                 setCartItems(response.data);
@@ -32,34 +33,30 @@ const CartPage = () => {
 
     const removeCartItem = async (id) => {
         const token = localStorage.getItem('token');
-
         try {
-            await axios.delete(`http://localhost:5000/api/items/${id}`, { // Fixed syntax error
+            await axios.delete(`http://localhost:5000/api/items/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}` // Fixed syntax error
+                    'Authorization': `Bearer ${token}`
                 },
             });
-
-            setCartItems(cartItems.filter((item) => item.id !== id));
+            setCartItems(cartItems.filter((item) => item.cart_id !== id));
         } catch (error) {
             console.error('Error removing item from cart:', error);
             setError('Error removing item from cart');
         }
     };
 
-    // Function to delete all cart items
     const deleteAllCartItems = async () => {
         const token = localStorage.getItem('token');
-        const userEmail = localStorage.getItem('userEmail'); // Assuming you store the user's email in localStorage
-
+        const userEmail = localStorage.getItem('userEmail');
         try {
-            await axios.delete('http://localhost:5000/api/items', { // Fixed syntax error
+            await axios.delete('http://localhost:5000/api/items', {
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Fixed syntax error
-                    'Email': userEmail // Pass user email in the header or as query parameter if needed
+                    'Authorization': `Bearer ${token}`,
+                    'Email': userEmail 
                 },
             });
-            setCartItems([]); // Clear cart items from state
+            setCartItems([]);
         } catch (error) {
             console.error('Error deleting all cart items:', error);
             setError('Error deleting all cart items');
@@ -67,10 +64,10 @@ const CartPage = () => {
     };
 
     const handleProceedToCheckout = async () => {
-        await deleteAllCartItems(); // Delete all items from the cart
-        const userEmail = localStorage.getItem('userEmail'); // Get user email
-        const userPhone = localStorage.getItem('userPhone'); // Get user phone (make sure this is stored in localStorage)
-        const cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0); // Assuming items have a price property
+        await deleteAllCartItems();
+        const userEmail = localStorage.getItem('userEmail');
+        const userPhone = localStorage.getItem('userPhone');
+        const cartTotal = cartItems.reduce((total, item) => total + (item.new_price * item.quantity), 0);
 
         navigate('/payment', { state: { amount: cartTotal, email: userEmail, phone: userPhone } });
     };
@@ -79,18 +76,20 @@ const CartPage = () => {
     if (error) return <div className="error">{error}</div>;
 
     return (
-        <div className="bg-[#00143c] min-h-screen p-6 flex flex-col items-center"> {/* Set full-page background color */}
+        <div className="bg-[#00143c] min-h-screen p-6 flex flex-col items-center">
             <h2 className="text-3xl font-bold text-white mb-4">Your Cart</h2>
             {cartItems.length === 0 ? (
                 <p className="text-white">Your cart is empty.</p>
             ) : (
                 <ul className="w-full max-w-lg bg-white rounded-lg shadow-md p-4">
                     {cartItems.map((item) => (
-                        <li key={item.id} className="border-b border-gray-300 py-2">
+                        <li key={item.cart_id} className="border-b border-gray-300 py-2">
                             <h3 className="text-lg font-semibold">Product ID: {item.product_id}</h3>
+                            <p>Product: {item.product_name}</p>
                             <p>Color: {item.color}</p>
+                            <p>Price: {item.new_price}</p>
                             <p>Quantity: {item.quantity}</p>
-                            <button onClick={() => removeCartItem(item.id)} className="remove-button bg-red-500 text-white px-3 py-1 rounded">
+                            <button onClick={() => removeCartItem(item.cart_id)} className="remove-button bg-red-500 text-white px-3 py-1 rounded">
                                 Remove
                             </button>
                         </li>
