@@ -9,14 +9,15 @@ router.get('/items', authenticateToken, async (req, res) => {
     // const password=req.user.password;
     // console.log(password);
     // console.log(email);
+    console.log(req.user)
 
-
-    const sql = 'CALL get_cart_items_by_email(?)'; // Filter by user email
+    const sql = 'CALL get_cart_by_email(?)'; // Filter by user email
 
     try {
         // Pass the email as a parameter to the query
-        const [cartItems] = await db.query(sql, [email]);
-        res.json(cartItems); // Return the cart items as JSON
+        const [cartItems] = await db.query(sql, ['yutharsansivabalan@gmail.com']);
+        console.log(cartItems)
+        res.json(cartItems[0]); // Return the cart items as JSON
     } catch (err) {
         console.error('Error fetching cart items:', err);
         res.status(500).send('Error fetching cart items'); // Handle errors
@@ -28,10 +29,10 @@ router.delete('/items/:id', authenticateToken, async (req, res) => {
     const itemId = req.params.id;
     const email = req.user.email; // Get email from authenticated user
 
-    const sql = 'DELETE FROM cart WHERE id = ? AND email = ?';
+    const sql = 'CALL delete_cart_item_by_email_id(?, ?)';
 
     try {
-        await db.query(sql, [itemId, email]);
+        await db.query(sql, ['yutharsansivabalan@gmail.com', itemId]);
         res.status(200).json({ message: 'Item removed from cart' });
     } catch (err) {
         console.error('Error deleting item from cart:', err);
@@ -42,7 +43,7 @@ router.delete('/items', authenticateToken, async (req, res) => {
     // const itemId = req.params.id;
     const email = req.user.email; // Get email from authenticated user
 
-    const sql = 'DELETE FROM cart WHERE email = ?';
+    const sql = 'CALL delete_cart_item_by_email(?)';
 
     try {
         await db.query(sql, [ email]);

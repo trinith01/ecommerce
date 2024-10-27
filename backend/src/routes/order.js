@@ -28,11 +28,11 @@ router.get('/order', authenticateToken, async (req, res) => {
     // console.log(email);
 
 
-    const sql = 'SELECT * FROM orders WHERE contact_email = ?'; // Filter by user email
+    const sql = 'CALL get_order_by_email(?)' // Filter by user email
 
     try {
         // Pass the email as a parameter to the query
-        const [orderItems] = await db.query(sql, [email]);
+        const [orderItems] = await db.query(sql, ['john.doe@example.com']);
         res.json(orderItems); // Return the cart items as JSON
     } catch (err) {
         console.error('Error fetching order items:', err);
