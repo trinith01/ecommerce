@@ -1,19 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 
 // Route to get products with pagination support
 router.get('/products', async (req, res) => {
   const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100); // Limit to a maximum of 100
   const offset = Math.max(parseInt(req.query.offset) || 0, 0); // No negative offset
-  
-  const productsSql = 'SELECT * FROM products LIMIT ? OFFSET ?';
-  const countSql = 'SELECT COUNT(*) AS total FROM products';
+
+  const productsSql = 'CALL sp_get_products(?, ?)';
+  const countSql = 'CALL count_product()';
 
   try {
     // Get total count of products
     const [[{ total }]] = await db.query(countSql);
-    
+
     // Get paginated products
     const [results] = await db.query(productsSql, [limit, offset]);
 
@@ -21,7 +21,7 @@ router.get('/products', async (req, res) => {
       total,
       limit,
       offset,
-      products: results
+      products: results[0]
     });
   } catch (err) {
     console.error('Error fetching products:', err);

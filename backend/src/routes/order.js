@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 const authenticateToken = require('../middlewares/authMiddleware');
 
 router.post('/order', async (req, res) => {
@@ -22,11 +22,11 @@ router.post('/order', async (req, res) => {
 router.get('/order', authenticateToken, async (req, res) => {
     const email = req.user.email; // Get email from the authenticated user
     console.log(email);
-    
+
     // const password=req.user.password;
     // console.log(password);
     // console.log(email);
-    
+
 
     const sql = 'SELECT * FROM orders WHERE contact_email = ?'; // Filter by user email
 

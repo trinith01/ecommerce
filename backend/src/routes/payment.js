@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 
 // Route to process payment
 router.post('/payment', async (req, res) => {

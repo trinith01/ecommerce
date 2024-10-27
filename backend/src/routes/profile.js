@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection'); // Import the database connection
+const db = require('../../dbconnection'); // Import the database connection
 const verifyToken = require('../middlewares/authMiddleware');
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
