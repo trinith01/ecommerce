@@ -13,6 +13,7 @@ const payment = require('./src/routes/payment');
 const uploadRoutes = require('./src/routes/upload');
 const profile=require('./src/routes/profile')
 const order =require('./src/routes/order')
+const dashboardRoutes =require('./src/routes/dashboardRoutes')
 
 const app = express();
 const port = 5000;
@@ -35,7 +36,7 @@ app.use('/api', payment);
 app.use('/api', uploadRoutes); // Image upload route
 app.use('/api', order);
 app.use('/api',profile);
-// app.use('/api', dashboardRoutes);
+app.use('/api', dashboardRoutes);
 
 // Start the server
 app.listen(port, () => {

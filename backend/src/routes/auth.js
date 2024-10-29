@@ -97,4 +97,45 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.post('/adminsignin', async (req, res) => {
+  const { email, password } = req.body;
+
+  // Basic validation
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
+  }
+
+  try {
+    // Check if the user exists
+    const query = 'CALL get_admin_by_email(?)';
+    const [rows] = await db.query(query, [email]);
+
+    if (rows.length > 0) {
+      const user = rows[0][0];
+      // console.log(user.password_hash);
+      // Compare the hashed password with the one provided during sign-in
+      if (!user.password_hash) {
+        return res.status(401).json({ message: 'Invalid email or password' });
+      }
+
+      // const match = await bcrypt.compare(password, user.password_hash);
+      const match = password === user.password_hash;
+      if (match) {
+        // Generate a token valid for 1 hour
+        const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
+
+        // Send token and success message
+        return res.status(200).json({ message: 'Sign-in successful!', token });
+      } else {
+        return res.status(401).json({ message: 'Invalid email or password' });
+      }
+    } else {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({ message: 'An error occurred during sign-in' });
+  }
+});
+
 module.exports = router;

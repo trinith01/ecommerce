@@ -18,6 +18,8 @@ import ProductList from './Components/productList';
 import OrderPage from './Pages/OrderPage';
 import PaymentGateway from './Pages/PaymentGateway'; 
 import Profile from './Pages/profile';
+import AdminDashboard from './Pages/AdminDashboard';
+import AdminRoute from './Components/AdminRoute';
 
 function App() {
   return (
@@ -25,7 +27,7 @@ function App() {
       <Navbar /> {/* Place the Navbar inside the Router to ensure links work properly */}
       <div className='root'>
         <Routes>
-        <Route path="/Home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
@@ -41,7 +43,7 @@ function App() {
           {/* <Route path="/cart" element={<CartItems />} /> */}
           <Route path="/payment" element={<PaymentGateway />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/admin" element={<AdminRoute element={<AdminDashboard />} />} />
         </Routes>
       </div>
       <Footer/>

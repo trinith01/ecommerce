@@ -1,4 +1,4 @@
 .root {
-    background-color: #1e1e20;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(21,21,52,1) 10%, rgba(10,9,37,1) 24%, rgba(5,33,48,1) 84%, rgba(9,6,18,1) 100%);
     min-height: 100vh;
 }
