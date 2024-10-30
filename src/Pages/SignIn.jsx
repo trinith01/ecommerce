@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, Position, Intent } from '@blueprintjs/core';
 import '@blueprintjs/core/lib/css/blueprint.css';
@@ -47,7 +47,7 @@ function SignIn() {
         localStorage.setItem('role', userType); // Store role based on userType
 
         // Use navigate to redirect to the home page or admin dashboard
-        navigate(userType === 'admin' ? '/admin' : '/Home');
+        navigate(userType === 'admin' ? '/admin' : '/');
       } else {
         // Show error message
         toaster.show({
@@ -65,6 +65,12 @@ function SignIn() {
       });
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('email')) {
+      navigate('/');
+    }
+  }, [navigate]);
 
   return (
     <div className="relative d-flex align-items-center justify-content-center vh-100">
