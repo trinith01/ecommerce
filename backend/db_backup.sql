@@ -19,6 +19,10 @@
 -- Table structure for table `address`
 --
 
+drop database if exists c_commerce;
+create database c_ecommerce;
+use c_ecommerce;
+
 DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -133,7 +137,7 @@ DROP TABLE IF EXISTS `cart_product_details`;
 /*!50001 DROP VIEW IF EXISTS `cart_product_details`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `cart_product_details` AS SELECT 
+/*!50001 CREATE VIEW `cart_product_details` AS SELECT
  1 AS `cart_id`,
  1 AS `variant_id`,
  1 AS `product_id`,
@@ -156,7 +160,7 @@ DROP TABLE IF EXISTS `cart_with_email`;
 /*!50001 DROP VIEW IF EXISTS `cart_with_email`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `cart_with_email` AS SELECT 
+/*!50001 CREATE VIEW `cart_with_email` AS SELECT
  1 AS `cart_id`,
  1 AS `customer_id`,
  1 AS `created_at`,
@@ -172,7 +176,7 @@ DROP TABLE IF EXISTS `categories`;
 /*!50001 DROP VIEW IF EXISTS `categories`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `categories` AS SELECT 
+/*!50001 CREATE VIEW `categories` AS SELECT
  1 AS `id`,
  1 AS `name`*/;
 SET character_set_client = @saved_cs_client;
@@ -185,7 +189,7 @@ DROP TABLE IF EXISTS `categories_with_name_and_id`;
 /*!50001 DROP VIEW IF EXISTS `categories_with_name_and_id`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `categories_with_name_and_id` AS SELECT 
+/*!50001 CREATE VIEW `categories_with_name_and_id` AS SELECT
  1 AS `product_id`,
  1 AS `product_name`,
  1 AS `default_variant_id`,
@@ -334,7 +338,7 @@ DROP TABLE IF EXISTS `order_details`;
 /*!50001 DROP VIEW IF EXISTS `order_details`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `order_details` AS SELECT 
+/*!50001 CREATE VIEW `order_details` AS SELECT
  1 AS `order_id`,
  1 AS `user_id`,
  1 AS `address_id`,
@@ -460,7 +464,7 @@ DROP TABLE IF EXISTS `parent_categories`;
 /*!50001 DROP VIEW IF EXISTS `parent_categories`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `parent_categories` AS SELECT 
+/*!50001 CREATE VIEW `parent_categories` AS SELECT
  1 AS `id`,
  1 AS `name`*/;
 SET character_set_client = @saved_cs_client;
@@ -725,7 +729,7 @@ DROP TABLE IF EXISTS `variant_details_with_variant_id`;
 /*!50001 DROP VIEW IF EXISTS `variant_details_with_variant_id`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `variant_details_with_variant_id` AS SELECT 
+/*!50001 CREATE VIEW `variant_details_with_variant_id` AS SELECT
  1 AS `variant_id`,
  1 AS `product_id`,
  1 AS `sku`,
@@ -746,7 +750,7 @@ DROP TABLE IF EXISTS `variant_search`;
 /*!50001 DROP VIEW IF EXISTS `variant_search`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `variant_search` AS SELECT 
+/*!50001 CREATE VIEW `variant_search` AS SELECT
  1 AS `variant_id`,
  1 AS `product_id`,
  1 AS `sku`,
@@ -794,8 +798,8 @@ UNLOCK TABLES;
 /*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`yutharsan`@`localhost`*/ /*!50003 TRIGGER `trg_variant_stock_update` AFTER UPDATE ON `variant_warehouse` FOR EACH ROW BEGIN
-    
-    
+
+
     IF NEW.stock_count <= 0 THEN
         INSERT INTO stock_alerts (variant_id, warehouse_id, alert_type)
         VALUES (NEW.variant_id, NEW.warehouse_id, 'OUT_OF_STOCK');
@@ -815,7 +819,7 @@ DROP TABLE IF EXISTS `vw_product_details`;
 /*!50001 DROP VIEW IF EXISTS `vw_product_details`*/;
 SET @saved_cs_client     = @@character_set_client;
 /*!50503 SET character_set_client = utf8mb4 */;
-/*!50001 CREATE VIEW `vw_product_details` AS SELECT 
+/*!50001 CREATE VIEW `vw_product_details` AS SELECT
  1 AS `id`,
  1 AS `name`,
  1 AS `description`,
@@ -868,7 +872,7 @@ CREATE DEFINER=`yutharsan`@`localhost` FUNCTION `Check_Variant_Availability`(f_v
 BEGIN
     DECLARE available_quantity INT;
 
-    
+
     SELECT stock_count INTO available_quantity
     FROM variant_warehouse
     WHERE warehouse_id = f_warehouse_id AND variant_id = f_variant_id
@@ -907,7 +911,7 @@ BEGIN
     LIMIT 1;
 
     IF v_cart_id IS NULL THEN
-    
+
     SIGNAL SQLSTATE '45006' SET MESSAGE_TEXT = 'Cart does not exist for the customer.';
     END IF;
 
@@ -940,7 +944,7 @@ BEGIN
     LIMIT 1;
 
     IF v_customer_id IS NULL THEN
-    
+
     SIGNAL SQLSTATE '45006' SET MESSAGE_TEXT = 'Customer does not exist for the email.';
     END IF;
 
@@ -966,7 +970,7 @@ CREATE DEFINER=`yutharsan`@`localhost` FUNCTION `Get_Warehouse_Id`(f_variant_id 
     DETERMINISTIC
 BEGIN
     DECLARE v_warehouse_id INT;
-    
+
     SELECT warehouse_id INTO v_warehouse_id
     FROM variant_warehouse
     WHERE variant_id = f_variant_id
@@ -1004,12 +1008,12 @@ BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
-    
+
     INSERT INTO customer (customer_name, customer_email, is_guest)
     VALUES
     (p_customer_name, p_customer_email, 1);
 
-    
+
     SELECT LAST_INSERT_ID() AS customer_id;
 END ;;
 DELIMITER ;
@@ -1077,57 +1081,57 @@ BEGIN
 
     START TRANSACTION;
 
-    
+
     SELECT address_id INTO v_address_id
     FROM customer
     WHERE customer_id = p_customer_id
     FOR UPDATE;
 
-    
+
     SELECT price INTO v_price
     FROM variant
     WHERE variant_id = p_variant_id
     FOR UPDATE;
 
-    
+
     SELECT stock_count INTO v_stock_count
     FROM variant_warehouse
     WHERE variant_id = p_variant_id AND warehouse_id = p_warehouse_id
     FOR UPDATE;
 
-    
+
     IF v_stock_count < p_quantity THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Insufficient stock';
     END IF;
 
-    
+
     SET v_total_amount = v_price * p_quantity;
 
-    
+
     INSERT INTO payment (payment_method, amount)
     VALUES (p_payment_method, v_total_amount);
     SET v_payment_id = LAST_INSERT_ID();
 
-    
+
     INSERT INTO orders (customer_id, address_id, payment_id, delivery_method, contact_email, contact_phone)
     SELECT customer_id, v_address_id, v_payment_id, p_delivery_method, email, phone_number
     FROM customer
     WHERE customer_id = p_customer_id;
     SET v_order_id = LAST_INSERT_ID();
 
-    
+
     INSERT INTO order_items (order_id, variant_id, quantity)
     VALUES (v_order_id, p_variant_id, p_quantity);
 
-    
+
     UPDATE variant_warehouse
     SET stock_count = stock_count - p_quantity
     WHERE variant_id = p_variant_id AND warehouse_id = p_warehouse_id;
 
     COMMIT;
 
-    
+
     SELECT
         o.order_id,
         o.customer_id,
@@ -1184,14 +1188,14 @@ BEGIN
     DECLARE v_customer_name VARCHAR(100);
     DECLARE v_is_guest BOOLEAN;
 
-    
+
     SELECT customer_id, customer_name, is_guest
     INTO v_customer_id, v_customer_name, v_is_guest
     FROM customer
     WHERE email = p_email AND password_hash = p_password_hash
     LIMIT 1;
 
-    
+
     IF v_customer_id IS NOT NULL THEN
         SELECT
             v_customer_id AS customer_id,
@@ -1199,7 +1203,7 @@ BEGIN
             v_is_guest AS is_guest,
             'Login successful' AS message;
     ELSE
-        
+
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Invalid email or password';
     END IF;
@@ -1557,7 +1561,7 @@ BEGIN
         RESIGNAL;
     END;
 
-    
+
     SELECT * FROM customer where customer_email = p_customer_email;
 END ;;
 DELIMITER ;
@@ -1591,26 +1595,26 @@ BEGIN
         RESIGNAL;
     END;
 
-    
+
     IF p_quantity <= 0 THEN
         SIGNAL SQLSTATE '45004' SET MESSAGE_TEXT = 'Quantity must be a positive integer.';
     END IF;
 
     START TRANSACTION;
-        
+
         SELECT cart_id INTO v_cart_id
         FROM cart
         WHERE customer_id = p_customer_id
         LIMIT 1;
 
-        
+
         IF v_cart_id IS NULL THEN
             INSERT INTO cart (customer_id, created_at)
             VALUES (p_customer_id, NOW());
             SET v_cart_id = LAST_INSERT_ID();
         END IF;
 
-        
+
         INSERT INTO cart_items(cart_id, variant_id, quantity)
         VALUES (v_cart_id, p_variant_id, p_quantity)
         ON DUPLICATE KEY UPDATE
@@ -1636,7 +1640,7 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `Procedure_Checkout`(
     IN p_customer_id INT,
     IN p_payment_method VARCHAR(20),
     IN p_delivery_method VARCHAR(20),
-    
+
     IN p_contact_email VARCHAR(100),
     IN p_contact_phone VARCHAR(20)
 )
@@ -1661,12 +1665,12 @@ BEGIN
     END;
 
     START TRANSACTION;
-        
+
         SELECT address_id INTO v_address_id
         FROM customer
         WHERE customer_id = p_customer_id;
 
-        
+
         SELECT cart_id INTO v_cart_id
         FROM cart
         WHERE customer_id = p_customer_id
@@ -1676,17 +1680,17 @@ BEGIN
             SIGNAL SQLSTATE '45003' SET MESSAGE_TEXT = 'No items in cart';
         END IF;
 
-        
+
         INSERT INTO payment (payment_method, amount)
-        VALUES (p_payment_method, 0); 
+        VALUES (p_payment_method, 0);
         SET v_payment_id = LAST_INSERT_ID();
 
-        
+
         INSERT INTO orders(customer_id, address_id, payment_id, delivery_method, contact_email, contact_phone)
         VALUES (p_customer_id, v_address_id, v_payment_id, p_delivery_method, p_contact_email, p_contact_phone);
         SET v_order_id = LAST_INSERT_ID();
 
-        
+
         OPEN cart_cursor;
 
         read_loop: LOOP
@@ -1695,10 +1699,10 @@ BEGIN
                 LEAVE read_loop;
             END IF;
 
-            
+
             SET v_warehouse_id = GET_Warehouse_Id(v_variant_id);
 
-            
+
             SELECT stock_count INTO v_available_quantity
             FROM variant_warehouse
             WHERE variant_id = v_variant_id AND warehouse_id = v_warehouse_id
@@ -1706,25 +1710,25 @@ BEGIN
 
             IF v_available_quantity IS NULL THEN
                 ROLLBACK;
-                
+
             END IF;
 
             IF v_available_quantity < v_quantity THEN
                 ROLLBACK;
-                
+
             END IF;
 
-            
+
             CALL Update_Variant_Stock(v_variant_id, v_warehouse_id, v_quantity);
 
-            
+
             INSERT INTO order_items (order_id, variant_id, quantity)
             VALUES (v_order_id, v_variant_id, v_quantity);
         END LOOP;
 
         CLOSE cart_cursor;
 
-        
+
         UPDATE payment
         SET amount = (
             SELECT SUM(v.price * ci.quantity)
@@ -1734,7 +1738,7 @@ BEGIN
         )
         WHERE payment_id = v_payment_id;
 
-        
+
         DELETE FROM cart_items WHERE cart_id = v_cart_id;
         DELETE FROM cart WHERE cart_id = v_cart_id;
 
@@ -1759,7 +1763,7 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `procedure_fetch_product_inform
     IN p_product_id INT
 )
 BEGIN
-    
+
     SELECT
         p.product_id,
         p.product_name,
@@ -1769,7 +1773,7 @@ BEGIN
     WHERE
         p.product_id = p_product_id;
 
-    
+
     SELECT
         v.variant_id,
         v.sku,
@@ -1785,7 +1789,7 @@ BEGIN
     GROUP BY
         v.variant_id;
 
-    
+
     SELECT
         c.category_id,
         c.category_name
@@ -1795,7 +1799,7 @@ BEGIN
     WHERE
         pc.product_id = p_product_id;
 
-    
+
     SELECT
         vw.warehouse_id,
         vw.variant_id,
@@ -1838,41 +1842,41 @@ BEGIN
         RESIGNAL;
     END;
 
-    
+
     IF p_quantity_change = 0 THEN
         SIGNAL SQLSTATE '45005' SET MESSAGE_TEXT = 'Quantity change cannot be zero.';
     END IF;
 
     START TRANSACTION;
-        
+
         SET v_cart_id = get_cart_id(p_customer_id);
 
-        
+
         SELECT quantity INTO v_current_quantity
         FROM cart_items
         WHERE cart_id = v_cart_id AND variant_id = p_variant_id
         LIMIT 1;
 
         IF v_current_quantity IS NULL THEN
-            
+
             SIGNAL SQLSTATE '45007' SET MESSAGE_TEXT = 'Item not found in cart.';
         END IF;
 
-        
+
         SET v_new_quantity = v_current_quantity + p_quantity_change;
 
-        
+
         IF v_new_quantity < 0 THEN
             SIGNAL SQLSTATE '45008' SET MESSAGE_TEXT = 'Resulting quantity cannot be negative.';
         END IF;
 
-                
+
         IF v_new_quantity = 0 THEN
-            
+
             DELETE FROM cart_items
             WHERE cart_id = v_cart_id AND variant_id = p_variant_id;
         ELSE
-            
+
             UPDATE cart_items
             SET quantity = v_new_quantity
             WHERE cart_id = v_cart_id AND variant_id = p_variant_id;
@@ -1900,13 +1904,13 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `process_guest_order`(
     IN p_phone_number VARCHAR(20),
     IN p_payment_method VARCHAR(20),
     IN p_delivery_method VARCHAR(20),
-    
+
     IN p_line_1 VARCHAR(255),
     IN p_line_2 VARCHAR(255),
     IN p_city VARCHAR(100),
     IN p_district VARCHAR(100),
     IN p_zip_code VARCHAR(20),
-    
+
     IN p_cart_items JSON
 )
 BEGIN
@@ -1930,21 +1934,21 @@ BEGIN
 
     START TRANSACTION;
 
-    
+
     SET v_items_count = JSON_LENGTH(p_cart_items);
 
-    
+
     IF v_items_count = 0 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Cart is empty';
     END IF;
 
-    
+
     WHILE i < v_items_count DO
         SET v_variant_id = JSON_EXTRACT(p_cart_items, CONCAT('$[', i, '].variant_id'));
         SET v_quantity = JSON_EXTRACT(p_cart_items, CONCAT('$[', i, '].quantity'));
 
-        
+
         SELECT price INTO v_item_price
         FROM variant
         WHERE variant_id = v_variant_id;
@@ -1954,22 +1958,22 @@ BEGIN
             SET MESSAGE_TEXT = 'Invalid variant ID';
         END IF;
 
-        
+
         SET v_warehouse_id = GET_Warehouse_Id(v_variant_id);
 
-        
+
         SET v_total_amount = v_total_amount + (v_item_price * v_quantity);
 
         SET i = i + 1;
     END WHILE;
 
-    
+
     IF v_total_amount <= 0 THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Order total must be greater than 0';
     END IF;
 
-    
+
     INSERT INTO payment (
         payment_method,
         amount,
@@ -1981,7 +1985,7 @@ BEGIN
     );
     SET v_payment_id = LAST_INSERT_ID();
 
-    
+
     INSERT INTO customer (
         customer_name,
         customer_email,
@@ -1992,12 +1996,12 @@ BEGIN
         p_customer_name,
         p_customer_email,
         p_phone_number,
-        UUID(), 
+        UUID(),
         TRUE
     );
     SET v_customer_id = LAST_INSERT_ID();
 
-    
+
     INSERT INTO address (
         line_1,
         line_2,
@@ -2013,12 +2017,12 @@ BEGIN
     );
     SET v_address_id = LAST_INSERT_ID();
 
-    
+
     UPDATE customer
     SET address_id = v_address_id
     WHERE customer_id = v_customer_id;
 
-    
+
     INSERT INTO orders (
         customer_id,
         address_id,
@@ -2038,17 +2042,17 @@ BEGIN
     );
     SET v_order_id = LAST_INSERT_ID();
 
-    
+
     SET i = 0;
     WHILE i < v_items_count DO
         SET v_variant_id = JSON_EXTRACT(p_cart_items, CONCAT('$[', i, '].variant_id'));
         SET v_quantity = JSON_EXTRACT(p_cart_items, CONCAT('$[', i, '].quantity'));
 
-        
+
         SET v_warehouse_id = GET_Warehouse_Id(v_variant_id);
         CALL Update_Variant_Stock(v_variant_id, v_warehouse_id, v_quantity);
 
-        
+
         INSERT INTO order_items (
             order_id,
             variant_id,
@@ -2064,7 +2068,7 @@ BEGIN
 
     COMMIT;
 
-    
+
     SELECT
         o.order_id,
         o.delivery_estimate,
@@ -2136,12 +2140,12 @@ BEGIN
         ROLLBACK;
         RESIGNAL;
     END;
-    
+
     INSERT INTO customer (customer_name, customer_email, password_hash, customer_phone_number)
     VALUES
     (p_customer_name, p_customer_email, p_password_hash, p_phone_number);
 
-    
+
     SELECT LAST_INSERT_ID() AS customer_id;
 END ;;
 DELIMITER ;
@@ -2165,7 +2169,7 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `search`(
     IN p_offset INT
 )
 BEGIN
-    
+
     SET p_search_term = CONCAT('%', p_search_term, '%');
 
     SELECT * FROM product
@@ -2193,7 +2197,7 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `sp_get_products`(
     IN p_offset INT
 )
 BEGIN
-    
+
     SELECT * FROM vw_product_details
     LIMIT p_limit OFFSET p_offset;
 END ;;
@@ -2216,8 +2220,8 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `sp_get_product_by_id`(
     IN p_product_id INT
 )
 BEGIN
-    
-    SELECT 
+
+    SELECT
         p.*,
         c.category_name,
         GROUP_CONCAT(DISTINCT pc.category_id) as additional_categories
@@ -2226,17 +2230,17 @@ BEGIN
     LEFT JOIN Product_Category pc ON p.product_id = pc.product_id
     WHERE p.product_id = p_product_id
     GROUP BY p.product_id;
-    
-    
-    SELECT 
+
+
+    SELECT
         a.attribute_name,
         pa.attribute_value
     FROM Product_Attribute pa
     JOIN Attribute a ON pa.attribute_id = a.attribute_id
     WHERE pa.product_id = p_product_id;
-    
-    
-    SELECT 
+
+
+    SELECT
         v.variant_id,
         v.sku,
         v.price,
@@ -2277,22 +2281,22 @@ CREATE DEFINER=`yutharsan`@`localhost` PROCEDURE `sp_process_payment`(
 )
 BEGIN
     DECLARE v_payment_id INT;
-    
+
     START TRANSACTION;
-    
-    
+
+
     INSERT INTO Payment (payment_method, amount)
     VALUES (p_payment_method, p_amount);
-    
+
     SET v_payment_id = LAST_INSERT_ID();
-    
-    
-    UPDATE Orders 
+
+
+    UPDATE Orders
     SET payment_id = v_payment_id
     WHERE order_id = p_order_id;
-    
+
     COMMIT;
-    
+
     SELECT v_payment_id AS payment_id;
 END ;;
 DELIMITER ;
@@ -2355,36 +2359,36 @@ BEGIN
 
     START TRANSACTION;
 
-    
+
     IF NOT EXISTS (SELECT 1 FROM customer WHERE customer_id = p_customer_id) THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'customer does not exist';
     END IF;
 
-    
+
     IF NOT EXISTS (SELECT 1 FROM city WHERE city_name = p_city) THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'city does not exist';
     END IF;
 
-    
+
     SELECT address_id INTO v_address_id
     FROM customer
     WHERE customer_id = p_customer_id;
 
     IF v_address_id IS NULL THEN
-        
+
         INSERT INTO address (line_1, line_2, city, district, zip_code)
         VALUES (p_line_1, p_line_2, p_city, p_district, p_zip_code);
 
         SET v_address_id = LAST_INSERT_ID();
 
-        
+
         UPDATE customer
         SET address_id = v_address_id
         WHERE customer_id = p_customer_id;
     ELSE
-        
+
         UPDATE address
         SET
             line_1 = p_line_1,
@@ -2430,7 +2434,7 @@ BEGIN
         SET v_available_quantity = Check_Variant_Availability(p_variant_id, p_warehouse_id);
 
         IF v_available_quantity >= p_quantity THEN
-            
+
             UPDATE variant_warehouse
             SET stock_count = stock_count - p_quantity
             WHERE variant_id = p_variant_id AND warehouse_id = p_warehouse_id;

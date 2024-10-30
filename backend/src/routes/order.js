@@ -8,8 +8,8 @@ router.post('/order', async (req, res) => {
 
   try {
     // Prepare and execute the query to insert payment details
-    const query = 'INSERT INTO orders (contact_email, contact_phone) VALUES (?, ?)';
-    const result = await db.query(query, ['127@gmail.com', phone]);
+    const query = 'INSERT INTO order (, contact_phone) VALUES (?, ?)';
+    const result = await db.query(query, [email, phone]);
 
     // Send success response
     res.status(201).json({ message: "Ordered successfully", result });
@@ -32,7 +32,7 @@ router.get('/order', authenticateToken, async (req, res) => {
 
     try {
         // Pass the email as a parameter to the query
-        const [orderItems] = await db.query(sql, ['john.doe@example.com']);
+        const [orderItems] = await db.query(sql, [email]);
         res.json(orderItems); // Return the cart items as JSON
     } catch (err) {
         console.error('Error fetching order items:', err);

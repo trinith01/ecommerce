@@ -106,8 +106,12 @@ const ProductDetailMain = () => {
             quantity,
         });
 
+      console.log(response);
+
+
         if (response.status === 200) {
-            localStorage.setItem('email', guestEmail);
+          localStorage.setItem('email', guestEmail);
+          localStorage.setItem('token', response.data.token)
             toaster.show({
                 intent: Intent.SUCCESS,
                 message: 'Product added to cart for guest!',

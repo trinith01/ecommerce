@@ -5,7 +5,7 @@ const authenticateToken = require('../middlewares/authMiddleware'); // Import th
 
 // Route to get all products in the cart
 router.get('/items', authenticateToken, async (req, res) => {
-    const email = req.user.email; // Get email from the authenticated user
+    const email = req.user.email; // Get email from the authenticated userz
     // const password=req.user.password;
     // console.log(password);
     // console.log(email);
@@ -17,7 +17,7 @@ router.get('/items', authenticateToken, async (req, res) => {
 
     try {
         // Pass the email as a parameter to the query
-        const [cartItems] = await db.query(sql, ['127@gmail.com']);
+        const [cartItems] = await db.query(sql, [email]);
         res.json(cartItems); // Return the cart items as JSON
     } catch (err) {
         console.error('Error fetching cart items:', err);
@@ -33,7 +33,7 @@ router.delete('/items/:id', authenticateToken, async (req, res) => {
     const sql = 'CALL delete_cart_item_by_email_id(?, ?)';
 
     try {
-        await db.query(sql, [ "127@gmail.com",itemId]);
+        await db.query(sql, [ email,itemId]);
         res.status(200).json({ message: 'Item removed from cart' });
     } catch (err) {
         console.error('Error deleting item from cart:', err);
@@ -47,7 +47,7 @@ router.delete('/items', authenticateToken, async (req, res) => {
     const sql = 'CALL delete_cart_item_by_email(?)';
 
     try {
-        await db.query(sql, [ '127@gmail.com']);
+        await db.query(sql, [ email]);
         res.status(200).json({ message: 'Items are removed from cart' });
     } catch (err) {
         console.error('Error deleting item from cart:', err);

@@ -4,11 +4,17 @@ const db = require('../../dbconnection');
 
 // Route to process payment
 router.post('/payment', async (req, res) => {
-  const { cardNumber, expirationDate, cvv, amount } = req.body;
+  let { paymentMethod, amount } = req.body;
 
   // Validate the inputs
-  if (!cardNumber || !expirationDate || !cvv || !amount) {
+  if (!paymentMethod || !amount) {
     return res.status(400).json({ message: "All fields are required." });
+  }
+
+  if (paymentMethod === 'cash') {
+    paymentMethod = 'Cash On Delivery'
+  } else if (paymentMethod === 'card') {
+    paymentMethod = 'Card'
   }
 
   // Ensure the amount is a valid positive number
@@ -19,8 +25,9 @@ router.post('/payment', async (req, res) => {
 
   try {
     // Prepare and execute the query to insert payment details
-    const query = 'INSERT INTO payments (card_number, expiration_date, cvv, amount) VALUES (?, ?, ?, ?)';
-    const result = await db.query(query, [cardNumber, expirationDate, cvv, numericAmount]);
+    const query = 'INSERT INTO payment (payment_method, amount) VALUES (?, ?)';
+    const result = await db.query(query, [paymentMethod, numericAmount]);
+console.log(result);
 
     // Send success response
     res.status(201).json({ message: "Payment processed successfully", result });

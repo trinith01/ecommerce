@@ -51,59 +51,41 @@ router.post('/cartpost', async (req, res) => {
 });
 
 // Guest cart route
+// Guest cart route
 router.post('/guest-cart', async (req, res) => {
-    const { name, email, productId, variantId, color, quantity } = req.body;
-    console.log(email);
+    const { name, email, variantId, color, quantity } = req.body;
 
-    // if (!name || !email || !productId || !variantId || !quantity) {
-    //     return res.status(400).json({ message: 'Missing required fields' });
+    // console.log(email,variantId,quantity);
 
-
-    // }
 
     try {
-        // Check if the guest user already exists
-        // console.log('1');
+        // Check if the user already exists
+        const [existingUser] = await db.query('SELECT * FROM customer WHERE customer_email = ?', [email]);
 
-        const [existingUser] = await db.query('SELECT customer_email FROM  customer  WHERE customer_email = ?', [email]);
-        // console.log(existingUser.length);
-
-        if (existingUser.length > 0) {
-            return res.status(400).json({ message: 'User already exists with this email' });
+        if (!existingUser.length) {
+            // If user doesn't exist, create a new guest user
+            const sqlInsertUser = 'CALL add_guest_user(?, ?)';
+            await db.query(sqlInsertUser, [name, email]);
         }
 
-        // Add new guest user
-        // console.log('2');
-
-        const sqlInsertUser = 'CALL add_guest_user(?, ?)';
-        const [userResult] = await db.query(sqlInsertUser, [name, email]);
-
-        const userAffectedRows = userResult?.[0]?.affectedRows || 0;
-        console.log(userAffectedRows);
+        // Add the product to the cart
+        const sqlInsertCart = 'CALL add_to_cart_email(?, ?, ?)';
+        const [result] = await db.query(sqlInsertCart, [email, variantId, quantity]);
+        // console.log(result[0]);
 
 
-        if (userAffectedRows === 1) {
-            return res.status(400).json({ message: 'Failed to add guest user' });
-        }
-        // console.log('3');
+        if (result[0][0].affectedRows === 0) {
+            // Generate a token after successfully adding to
+            const token = jwt.sign({ email: email }, secretKey, { expiresIn: '1h' });
+            console.log(token);
 
-        // Add product to guest cart
-        const sqlInsertCart = `
-            CALL add_to_cart_email(?, ?, ?)
-        `;
-        const [cartResult] = await db.query(sqlInsertCart, [email, variantId, quantity]);
-        // console.log(cartResult.affectedRows);
-
-
-        if (cartResult.affectedRows === 1) {
-            const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
-            res.status(200).json({ message: 'Product added to cart as guest', token });
+            return res.status(200).json({ message: 'Sign in as Guest!', token });
         } else {
-            res.status(400).json({ message: 'Failed to add product to cart' });
+            res.status(400).send('Failed to add product to cart');
         }
     } catch (err) {
-        console.error('Error during guest checkout:', err);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('Error adding product to cart:', err);
+        res.status(500).send('Error adding product to cart');
     }
 });
 

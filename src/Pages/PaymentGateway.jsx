@@ -17,17 +17,17 @@ const PaymentGateway = () => {
   const [paymentMethod, setPaymentMethod] = useState('card'); // State to manage payment method
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, email, phone } = location.state || {};
+  const { amount, email, phone } = location.state || {}; // Destructure state from route
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (paymentMethod === 'card') {
+    if (paymentMethod === 'card' || paymentMethod === 'cash') {
       const paymentData = {
-        cardNumber,
-        expirationDate,
-        cvv,
+        paymentMethod,
         amount,
+        // cvv,
+        // amount,
       };
 
       try {
@@ -44,7 +44,7 @@ const PaymentGateway = () => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ email, phone })
+          body: JSON.stringify({ email, phone }),
         });
 
         setCardNumber('');
@@ -54,7 +54,6 @@ const PaymentGateway = () => {
         setTimeout(() => {
           navigate('/categories');
         }, 3000);
-
       } catch (error) {
         console.error('Error processing payment:', error);
         const errorMessage = error.response?.data?.message || 'Error processing payment!';
@@ -72,7 +71,7 @@ const PaymentGateway = () => {
         timeout: 3000,
       });
 
-      // You can navigate or perform further actions for cash payment
+      // Navigate or perform further actions for cash payment
       setTimeout(() => {
         navigate('/categories');
       }, 3000);
@@ -83,6 +82,7 @@ const PaymentGateway = () => {
     <div className="min-h-screen flex items-center justify-center bg-[#00143c] p-6">
       <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
         <h2 className="text-2xl font-semibold text-center mb-6">Secure Payment Gateway</h2>
+
         <div className="mb-4">
           <label className="mr-2">
             <input
@@ -93,7 +93,7 @@ const PaymentGateway = () => {
             />
             Card Payment
           </label>
-          <label>
+          <label className="ml-4">
             <input
               type="radio"
               value="cash"
@@ -103,7 +103,10 @@ const PaymentGateway = () => {
             Cash Payment
           </label>
         </div>
+
         <form className="payment-form" onSubmit={handleSubmit}>
+
+
           {paymentMethod === 'card' && (
             <>
               <div className="form-group mb-4">
@@ -117,6 +120,7 @@ const PaymentGateway = () => {
                   required
                 />
               </div>
+
               <div className="form-group mb-4">
                 <label className="form-label block text-sm font-medium text-gray-700">Expiration Date (MM/YY)</label>
                 <input
@@ -128,6 +132,7 @@ const PaymentGateway = () => {
                   required
                 />
               </div>
+
               <div className="form-group mb-4">
                 <label className="form-label block text-sm font-medium text-gray-700">CVV</label>
                 <input
@@ -139,19 +144,31 @@ const PaymentGateway = () => {
                   required
                 />
               </div>
+
+              <div className="form-group mb-4">
+            <label className="form-label block text-sm font-medium text-gray-700">Total Amount</label>
+            <input
+              className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+              type="text"
+              value={amount}
+              readOnly
+            />
+          </div>
             </>
           )}
+
           {paymentMethod === 'cash' && (
-            <div className="form-group mb-4">
-              <label className="form-label block text-sm font-medium text-gray-700">Total Amount</label>
-              <input
-                className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-                type="text"
-                value={amount}
-                readOnly
-              />
-            </div>
+                          <div className="form-group mb-4">
+                          <label className="form-label block text-sm font-medium text-gray-700">Total Amount</label>
+                          <input
+                            className="form-input mt-1 block w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+                            type="text"
+                            value={amount}
+                            readOnly
+                          />
+                        </div>
           )}
+
           <button
             type="submit"
             className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition duration-200"

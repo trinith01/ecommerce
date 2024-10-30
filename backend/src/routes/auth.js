@@ -81,7 +81,11 @@ router.post('/signin', async (req, res) => {
       const match = await bcrypt.compare(password, user.password_hash);
       if (match) {
         // Generate a token valid for 1 hour
-        const token = jwt.sign({ userId: user.id, email: user.email }, secretKey, { expiresIn: '1h' });
+        console.log(user.customer_email);
+
+        const token = jwt.sign({ userId: user.customer_id, email: user.customer_email }, secretKey, { expiresIn: '1h' });
+        // console.log(token);
+
 
         // Send token and success message
         return res.status(200).json({ message: 'Sign-in successful!', token });
