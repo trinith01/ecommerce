@@ -4,12 +4,27 @@ const db = require('../../dbconnection');
 const authenticateToken = require('../middlewares/authMiddleware');
 
 router.post('/order', async (req, res) => {
-  const { email, phone } = req.body;
+  const { amount, address, email, phone, deliveryMethod, paymentMethod } = req.body;
+  const { line1, line2, city, District, zip } = address;
 
   try {
     // Prepare and execute the query to insert payment details
-    const query = 'INSERT INTO order (, contact_phone) VALUES (?, ?)';
-    const result = await db.query(query, [email, phone]);
+    const query = 'CALL add_order(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+    // CREATE PROCEDURE `add_order`(
+    //   IN p_amount DECIMAL(5, 2),
+    //   IN p_email VARCHAR(100),
+    //   IN p_phone VARCHAR(100),
+    //   IN p_delivery_method VARCHAR(100),
+    //   IN p_payment_method VARCHAR(100),
+    //   IN p_line1 VARCHAR(255),
+    //   IN p_line2 VARCHAR(255),
+    //   IN p_city VARCHAR(255),
+    //   IN p_state VARCHAR(255),
+    //   IN p_zip VARCHAR(255)
+    // )
+
+    const result = await db.query(query, [amount, email, phone, deliveryMethod, paymentMethod, line1, line2, city, District, zip]);
 
     // Send success response
     res.status(201).json({ message: "Ordered successfully", result });

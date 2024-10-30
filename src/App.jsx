@@ -16,9 +16,10 @@ import Footer from './Pages/Footer';
 import ProductList from './Components/productList';
 // import CartItems from './Components/CartItems/CartItems';
 import OrderPage from './Pages/OrderPage';
-import PaymentGateway from './Pages/PaymentGateway'; 
+import PaymentGateway from './Pages/PaymentGateway';
 import Profile from './Pages/profile';
-
+import AdminDashboard from './Pages/AdminDashboard';
+import AdminRoute from './Components/AdminRoute';
 function App() {
   return (
     <Router>
@@ -26,12 +27,12 @@ function App() {
       <div className='root'>
         <Routes>
         <Route path="/Home" element={<Home />} />
-        
+
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/categories" element={<CategoryPage />} />
           <Route path="/categories/:name/products" element={<CategoryDetail />} />
-          
+
           <Route path="/categories/:name/products/:id" element={<ProductDetailMain />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/order" element={<OrderPage />} />
@@ -40,6 +41,7 @@ function App() {
           {/* <Route path="/dashboard" element={<Dashboard />} /> */}
           {/* <Route path="/cart" element={<CartItems />} /> */}
           <Route path="/payment" element={<PaymentGateway />} />
+          <Route path="/admin" element={<AdminRoute element={<AdminDashboard />} />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/" element={<Home />} />
         </Routes>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faWhatsapp ,faFacebook} from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope ,faPhone} from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
   return (
@@ -25,8 +26,19 @@ const Footer = () => {
         </div>
         <div>
           <h3 className='bg-transparent text-white'>Contact Us</h3>
-          <p className='text-left text-sm bg-transparent text-white mt-6'>Email: Cexpress@gmail.com</p>
-          <p className='text-left text-sm bg-transparent text-white'>Phone: +1 (415) 555-0198</p>
+          <a href="mailto:Cexpress@gmail.com" className='no-underline hover:no-underline'>
+  <p className='text-left text-sm bg-transparent text-white mt-6'>
+    <FontAwesomeIcon icon={faEnvelope} size="2x" /> Cexpress@gmail.com
+  </p>
+</a>
+
+
+<a href="tel:+14155550198" className='no-underline hover:no-underline'>
+  <p className='text-left text-sm bg-transparent text-white mt-4'>
+    <FontAwesomeIcon icon={faPhone} size="2x" /> +1 (415) 555-0198
+  </p>
+</a>
+
         </div>
       </div>
       <div className="text-center mt-8">

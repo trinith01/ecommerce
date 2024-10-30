@@ -17,7 +17,7 @@ function SignUp() {
     password: '',
     confirmPassword: '',
     phone: ''
-    
+
   });
 
   const handleChange = (e) => {
@@ -30,7 +30,7 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     try {
       const response = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
@@ -39,8 +39,8 @@ function SignUp() {
         },
         body: JSON.stringify(formData),
       });
-      // localStorage.setItem('name', formData.name);
-  
+      localStorage.setItem('phone', formData.phone);
+
       const data = await response.json();
       if (response.ok) {
         toaster.show({
@@ -48,7 +48,7 @@ function SignUp() {
           message: data.message,
           timeout: 3000
         });
-        
+
         navigate('/signin'); // Redirect after successful sign-up
       } else {
         toaster.show({

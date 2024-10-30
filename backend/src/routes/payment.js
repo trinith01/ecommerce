@@ -4,7 +4,9 @@ const db = require('../../dbconnection');
 
 // Route to process payment
 router.post('/payment', async (req, res) => {
-  let { paymentMethod, amount } = req.body;
+  let { paymentMethod, amount, deliveryMethod } = req.body;
+  console.log(paymentMethod,deliveryMethod,amount);
+  
 
   // Validate the inputs
   if (!paymentMethod || !amount) {
