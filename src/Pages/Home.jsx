@@ -118,14 +118,9 @@ const Home = () => {
             Shop with us <br />
             where quality meets ease
           </h1>
-          <motion.p
-            className="text-2xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-          >
+          <h3 className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-xl no-underline hover:no-underline text-lg border" >
             Buy Whatever You Want
-          </motion.p>
+          </h3>
         </div>
       </motion.section>
 
@@ -138,7 +133,7 @@ const Home = () => {
         ref={categoriesRef}
       >
         <div className="container mx-auto text-center">
-          <h2 className="text-5xl font-bold mb-6">Categories</h2>
+          <h2 className="text-5xl font-bold mb-10">Categories</h2>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-2 gap-12"
             initial={{ opacity: 0 }} // Initially hidden
@@ -175,14 +170,14 @@ const Home = () => {
                 <div className="absolute inset-0 bg-black opacity-50 rounded-3xl"></div>
                 {/* Content on top of the overlay */}
                 <h3 className="relative text-5xl font-bold text-white mb-9 ">{category.name}</h3>
-                <p className="relative text-lg bg-transparent text-white z-10">{category.description}</p>
+                <h5 className="relative text-lg bg-transparent text-white z-10">{category.description}</h5>
               </motion.div>
             ))}
           </motion.div>
         </div>
         <section className="text-center my-10">
-          <h2 style={{color:'black'}}className="text-2xl">Discover the Latest Trends</h2>
-          <Link to="/categories" className="mt-4 inline-block no-underline bg-black text-white py-2 px-4 rounded transition hover:no-underline  hover:bg-white hover:text-black"
+          <h2 style={{color:'white'}}className="text-2xl">Discover the Latest Trends</h2>
+          <Link to="/categories" className="mt-4 inline-block no-underline bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-xl transition hover:no-underline  hover:bg-white hover:text-black"
           >
             Shop Now
           </Link> {/* Navigation to category page */}
@@ -201,8 +196,10 @@ const Home = () => {
                 <Link to={`../categories/${product.category}/products/${product.id}`} key={product.id} className="product-card bg-white p-4 rounded-lg shadow-lg">
                   <img src={`http://localhost:5000${product.image}`} alt={product.name} className="w-full h-40 object-cover rounded-md" />
                   <h3 className="text-black">{product.name}</h3>
-                  <p className="text-gray-500 line-through">${product.old_price}</p>
-                  <p className="text-xl font-bold">${product.new_price}</p>
+                  <div className="flex items-center justify-center gap-20">
+                    <h5 className="text-xl font-bold">${product.new_price}</h5>
+                    <h5 className="text-gray-500 line-through">${product.old_price}</h5>
+                  </div>
                 </Link>
               ))}
             </div>
@@ -210,12 +207,12 @@ const Home = () => {
           {/* Show More / Show Less button */}
           <div className="button-container mt-6 flex justify-center">
             {visibleProductsCount < products.length && (
-              <button onClick={handleShowMore} className="mt-4 inline-block no-underline bg-black text-white py-2 px-4 rounded transition hover:no-underline  hover:bg-white hover:text-black">
+              <button onClick={handleShowMore} className="mt-4 inline-block no-underline bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-xl transition hover:no-underline  hover:bg-white hover:text-black">
                 Show More
               </button>
             )}
             {visibleProductsCount >= products.length && visibleProductsCount > 6 && (
-              <button onClick={handleShowLess} className="mt-4 inline-block no-underline bg-black text-white py-2 px-4 rounded transition hover:no-underline  hover:bg-white hover:text-black">
+              <button onClick={handleShowLess} className="mt-4 inline-block no-underline bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-xl transition hover:no-underline  hover:bg-white hover:text-black">
                 Show Less
               </button>
             )}
@@ -239,7 +236,7 @@ const Home = () => {
           >
             Special Monthly Offers
           </motion.h2>
-          <div className="flex justify-center items-center flex-col md:flex-row px-10">
+          <div className="flex justify-center items-center flex-col gap-24 md:flex-row px-10">
             <motion.div
               initial={{ x: -100, opacity: 0 }} // Initially off-screen
               animate={controlsOffers} // Animated on scroll
@@ -247,25 +244,33 @@ const Home = () => {
               whileHover={{ scale: 1.05 }} // Scale on hover
               className="mb-6 md:mb-0"
             >
-              <img src={iphone} alt="iphone" className="w-48 h-auto" />
+              <img src={iphone} alt="iphone" className="w-80 h-auto" />
             </motion.div>
-            <div className="text-center p-10 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white rounded-3xl">
-              <h3 className="text-3xl font-bold mb-4">Rs.24500.00</h3>
-              <p className="text-xl mb-2 hover:bg-transparent text-white">25% OFF</p>
-              <p className="text-lg mb-4 hover:bg-transparent text-white">Feel the beat, Live the Moment</p>
-              <motion.button
-                className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-3xl border border-white"
-                whileHover={{ scale: 1.1 }}
-              >
-                Buy Now
-              </motion.button>
-              <motion.button
-                className="ml-4 bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded-3xl"
-                whileHover={{ scale: 1.1 }}
-              >
-                Add to Cart
-              </motion.button>
-            </div>
+            <motion.div
+              initial={{ x: -100, opacity: 0 }} // Initially off-screen
+              animate={controlsOffers} // Animated on scroll
+              transition={{ duration: 0.5 }}
+              whileHover={{ scale: 1.05 }} // Scale on hover
+              className="mb-6 md:mb-0"
+            >
+              <div className="text-center p-10 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white rounded-3xl">
+                <h3 className="text-3xl font-bold mb-4">Rs.24500.00</h3>
+                <h5 className="text-xl mb-2 hover:bg-transparent text-black">25% OFF</h5>
+                <h5 className="text-lg mb-4 hover:bg-transparent text-black">Feel the beat, Live the Moment</h5>
+                <motion.button
+                  className="bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white py-2 px-4 rounded-3xl border border-white"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  Buy Now
+                </motion.button>
+                <motion.button
+                  className="ml-4 bg-gray-800 hover:bg-gray-600 text-white py-2 px-4 rounded-3xl"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  Add to Cart
+                </motion.button>
+              </div>
+            </motion.div>
           </div>
         </div>
       </motion.section>

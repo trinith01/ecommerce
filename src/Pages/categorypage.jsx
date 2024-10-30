@@ -29,7 +29,7 @@ const CategoryPage = () => {
   if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div style={{ backgroundColor: '#00143c' }} className="bg-blue-500 min-h-screen py-10"> {/* Set red background */}
+    <div style={{ backgroundColor: '#00143c' }} className="bg-blue-500 min-h-screen py-10 mt-16"> {/* Set red background */}
       <header className="text-center mb-10">
         <h1 className="text-4xl font-bold text-white">Product Categories</h1>
       </header>
