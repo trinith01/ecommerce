@@ -4,24 +4,24 @@ const db = require('../../dbconnection');
 
 // Route to get categories with pagination support
 router.get('/categories', async (req, res) => {
-  const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100); // Limit to a maximum of 100
+  const limit = Math.min(Math.max(parseInt(req.query.limit) || 10, 1), 100); // Limit to max of 100
   const offset = Math.max(parseInt(req.query.offset) || 0, 0); // No negative offset
 
-  const categoriesSql = 'CALL get_categories(?, ?)'
-  const countSql = 'CALL get_categories_count()';
+  const categoriesSql = 'SELECT * FROM categories LIMIT ? OFFSET ?';
+  const countSql = 'SELECT COUNT(*) AS total FROM categories';
 
   try {
     // Get total count of categories
     const [[{ total }]] = await db.query(countSql);
 
     // Get paginated categories
-    const [results] = await db.query(categoriesSql, [limit, offset]);
+    const [categories] = await db.query(categoriesSql, [limit, offset]);
 
     res.json({
       total,
       limit,
       offset,
-      categories: results[0]
+      categories
     });
   } catch (err) {
     console.error('Error fetching categories:', err);
@@ -32,14 +32,14 @@ router.get('/categories', async (req, res) => {
 // Route to get products by category name
 router.get('/categories/:name/products', async (req, res) => {
   const categoryName = req.params.name;
-
   const sql = 'CALL get_product_by_category(?)';
 
   try {
     const [products] = await db.query(sql, [categoryName]);
+    console.log(products)
 
     if (products.length > 0) {
-      res.json(products[0]); // Return the array of products
+      res.json(products[0]);
     } else {
       res.status(404).send('No products found for this category');
     }
@@ -49,27 +49,34 @@ router.get('/categories/:name/products', async (req, res) => {
   }
 });
 
-// Route to get product by ID
+// Route to get product details by ID, using procedure_fetch_product_information
+// Example Error Handling in Product Fetch Route
 router.get('/categories/:name/products/:id', async (req, res) => {
-  const { id, name } = req.params;
-
-  const sql = 'SELECT * FROM vw_product_details vw WHERE vw.id = ?';
+  const { id } = req.params;
 
   try {
-    const [[product]] = await db.query(sql, [id]);
+    const [results] = await db.query('CALL procedure_fetch_product_information(?)', [id]);
 
-    if (product) {
-      res.json(product);
+    const [productDetails, variants, categories, stockInfo] = results;
+
+    if (productDetails.length > 0) {
+      res.json({
+        product: productDetails[0],
+        variants,
+        categories,
+        stockInfo
+      });
     } else {
-      res.status(404).send('Product not found');
+      res.status(404).json({ error: 'Product not found' });
     }
   } catch (err) {
     console.error('Error fetching product:', err);
-    res.status(500).send('Error fetching product');
+    res.status(500).json({ error: 'Error fetching product', details: err.message });
   }
 });
 
-// Route to search products by name
+
+// Route to search products by name with partial match
 router.get('/search', async (req, res) => {
   const searchTerm = req.query.q || '';
   const sql = 'SELECT * FROM products WHERE name LIKE ?';

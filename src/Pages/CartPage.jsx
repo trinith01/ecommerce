@@ -1,5 +1,3 @@
-// CartPage.js
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -14,16 +12,31 @@ const CartPage = () => {
     useEffect(() => {
         const fetchCartItems = async () => {
             const token = localStorage.getItem('token');
+
+            if (!token) {
+                setError('Please log in to view your cart items.');
+                setLoading(false);
+                return;
+            }
+
             try {
                 const response = await axios.get('http://localhost:5000/api/items', {
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}`,
                     },
                 });
-                setCartItems(response.data);
-                setLoading(false);
+
+                // Assuming the cart items are in the first element of the response array
+                const cartData = response.data[0] || [];
+                setCartItems(cartData);
             } catch (error) {
-                setError('Please log in as a guest or sign in as a user to view your cart items.');
+                console.error('Error fetching cart items:', error);
+                setError(
+                    error.response?.status === 401
+                        ? 'Session expired. Please log in again.'
+                        : 'Unable to fetch cart items. Please try again later.'
+                );
+            } finally {
                 setLoading(false);
             }
         };
@@ -36,40 +49,43 @@ const CartPage = () => {
         try {
             await axios.delete(`http://localhost:5000/api/items/${id}`, {
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
                 },
             });
-            setCartItems(cartItems.filter((item) => item.cart_id !== id));
+            setCartItems(cartItems.filter((item) => item.variant_id !== id));
         } catch (error) {
             console.error('Error removing item from cart:', error);
-            setError('Error removing item from cart');
+            setError('Error removing item from cart. Please try again.');
         }
     };
 
     const deleteAllCartItems = async () => {
         const token = localStorage.getItem('token');
-        const userEmail = localStorage.getItem('userEmail');
         try {
             await axios.delete('http://localhost:5000/api/items', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Email': userEmail 
                 },
             });
             setCartItems([]);
         } catch (error) {
             console.error('Error deleting all cart items:', error);
-            setError('Error deleting all cart items');
+            setError('Error deleting all cart items. Please try again.');
         }
     };
 
     const handleProceedToCheckout = async () => {
-        await deleteAllCartItems();
+        // await deleteAllCartItems();
         const userEmail = localStorage.getItem('userEmail');
         const userPhone = localStorage.getItem('userPhone');
-        const cartTotal = cartItems.reduce((total, item) => total + (item.new_price * item.quantity), 0);
+        const cartTotal = cartItems.reduce(
+            (total, item) => total + parseFloat(item.new_price) * item.quantity,
+            0
+        );
 
-        navigate('/payment', { state: { amount: cartTotal, email: userEmail, phone: userPhone } });
+        navigate('/payment', {
+            state: { amount: cartTotal, email: userEmail, phone: userPhone },
+        });
     };
 
     if (loading) return <div className="loading">Loading cart items...</div>;
@@ -84,12 +100,21 @@ const CartPage = () => {
                 <ul className="w-full max-w-lg bg-white rounded-lg shadow-md p-4">
                     {cartItems.map((item) => (
                         <li key={item.cart_id} className="border-b border-gray-300 py-2">
-                            <h3 className="text-lg font-semibold">Product ID: {item.product_id}</h3>
-                            <p>Product: {item.product_name}</p>
-                            <p>Color: {item.color}</p>
-                            <p>Price: {item.new_price}</p>
+                            <h3 className="text-lg font-semibold">
+                                {item.product_name}
+                            </h3>
+                            <p>Product ID: {item.product_id}</p>
+                            {/* <p>Variant ID: {item.variant_id}</p> */}
+
+                            <p>Category: {item.category}</p>
+                            <p>Description: {item.description}</p>
+                            <p>Color: {item.color || 'N/A'}</p>
+                            <p>Price: ${item.new_price}</p>
                             <p>Quantity: {item.quantity}</p>
-                            <button onClick={() => removeCartItem(item.cart_id)} className="remove-button bg-red-500 text-white px-3 py-1 rounded">
+                            <button
+                                onClick={() => removeCartItem(item.variant_id)}
+                                className="remove-button bg-red-500 text-white px-3 py-1 rounded"
+                            >
                                 Remove
                             </button>
                         </li>
@@ -97,7 +122,10 @@ const CartPage = () => {
                 </ul>
             )}
             {cartItems.length > 0 && (
-                <button onClick={handleProceedToCheckout} className="checkout-button bg-green-500 text-white px-4 py-2 rounded mt-4">
+                <button
+                    onClick={handleProceedToCheckout}
+                    className="checkout-button bg-green-500 text-white px-4 py-2 rounded mt-4"
+                >
                     Proceed to Checkout
                 </button>
             )}

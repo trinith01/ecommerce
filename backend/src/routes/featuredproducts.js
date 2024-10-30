@@ -32,8 +32,10 @@ router.get('/products', async (req, res) => {
 // Route to get a product by ID
 router.get('/products/:id', async (req, res) => {
   const productId = req.params.id;
+  console.log(productId);
 
-  const sql = 'SELECT * FROM products WHERE id = ?'; // Assuming your product table has an 'id' column
+
+  const sql = 'CALL procedure_fetch_product_information(?)' // Assuming your product table has an 'id' column
 
   try {
     const [[product]] = await db.query(sql, [productId]);

@@ -9,7 +9,7 @@ router.post('/order', async (req, res) => {
   try {
     // Prepare and execute the query to insert payment details
     const query = 'INSERT INTO orders (contact_email, contact_phone) VALUES (?, ?)';
-    const result = await db.query(query, [email, phone]);
+    const result = await db.query(query, ['127@gmail.com', phone]);
 
     // Send success response
     res.status(201).json({ message: "Ordered successfully", result });
