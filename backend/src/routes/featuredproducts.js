@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 
 // Route to get products with pagination support
 router.get('/products', async (req, res) => {
@@ -14,6 +14,7 @@ router.get('/products', async (req, res) => {
     // Get total count of products
     // const [[{ total }]] = await db.query(countSql);
     
+
     // Get paginated products
     const [results] = await db.query(productsSql, [limit, offset]);
 
@@ -21,7 +22,7 @@ router.get('/products', async (req, res) => {
       total,
       limit,
       offset,
-      products: results
+      products: results[0]
     });
   } catch (err) {
     console.error('Error fetching products:', err);

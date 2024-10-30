@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './categorypage.css'; // Your CSS for styling
 
 const CategoryPage = () => {
   const [categories, setCategories] = useState([]); // State to store categories
@@ -26,29 +25,34 @@ const CategoryPage = () => {
     fetchCategories();
   }, []);
 
-  if (loading) return <div className="loading">Loading categories...</div>;
-  if (error) return <div className="error">{error}</div>;
+  if (loading) return <div className="text-center text-gray-700">Loading categories...</div>;
+  if (error) return <div className="text-center text-red-500">{error}</div>;
 
   return (
-    <div className="category-page">
-      <header className="category-header">
-        <h1>Product Categories</h1> {/* Heading for categories */}
+    <div style={{ backgroundColor: '#00143c' }} className="bg-blue-500 min-h-screen py-10"> {/* Set red background */}
+      <header className="text-center mb-10">
+        <h1 className="text-4xl font-bold text-white">Product Categories</h1>
       </header>
 
-      <main className="category-list">
+      <main className="max-w-6xl mx-auto px-4">
         {categories.length === 0 ? (
-          <p>No categories available.</p>
+          <p className="text-center text-white">No categories available.</p>
         ) : (
-          <div className="category-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {categories.map((category) => (
-              <Link
-                to={`/categories/${category.name}/products`} // Link to the products page of the category
-                key={category.id}
-                className="category-card"
-              >
-                <h3>{category.name}</h3>
-              </Link>
-            ))}
+  <Link
+    to={`/categories/${category.name}/products`} // Link to the products page of the category
+    key={category.id}
+    className="bg-white shadow-md rounded-lg overflow-hidden transition-transform transform hover:scale-105 mb-4" // Added mb-4 for bottom margin
+  >
+    <div className="p-6">
+      <h3 className="text-lg font-semibold text-center text-gray-800">{category.name}</h3>
+    </div>
+    <div className="bg-gradient-to-r from-purple-500 to-indigo-600 h-1 w-full"> <br /></div>
+  </Link>
+  
+))}
+
           </div>
         )}
       </main>

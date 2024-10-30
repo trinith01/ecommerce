@@ -12,13 +12,13 @@
 }
 
 .nav-link {
-  color: rgb(240, 240, 240); /* Ensure the link text color is white */
+  color: rgb(181, 33, 33); /* Ensure the link text color is white */
   text-decoration: none; /* Remove underline */
   padding: 0.5rem 1rem; /* Add padding for clickable area */
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.938); /* Optional hover effect */
+  /* background-color: #00e5fe; Optional hover effect */
   border-radius: 4px; /* Optional: rounded corners on hover */
   text-decoration: none;
 }
@@ -43,4 +43,7 @@
   color: #3498db;       /* Change link color */
   font-weight: bold;    /* Make the link bold */
 }
-
+.bp3-dark{
+  color:#000218;
+  background-color: #00e5fd;
+}

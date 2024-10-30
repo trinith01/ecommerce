@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 const authenticateToken = require('../middlewares/authMiddleware'); // Import the middleware
 
 // Route to get all products in the cart
@@ -9,9 +9,9 @@ router.get('/items', authenticateToken, async (req, res) => {
     // const password=req.user.password;
     // console.log(password);
     // console.log(email);
-    
 
-    const sql = 'SELECT * FROM cart WHERE email = ?'; // Filter by user email
+
+    const sql = 'CALL get_cart_items_by_email(?)'; // Filter by user email
 
     try {
         // Pass the email as a parameter to the query

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../dbconnection');
+const db = require('../../dbconnection');
 const verifyToken = require('../middlewares/authMiddleware');
 const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 
@@ -13,18 +13,19 @@ router.get('/protected-route', verifyToken, (req, res) => {
 
 // Route to add product to cart
 router.post('/cartpost', async (req, res) => {
-    const { productId, color, quantity, email } = req.body;
+    const { email, productId, quantity } = req.body;
 
-    const sql = 'INSERT INTO cart (product_id, email, color, quantity) VALUES (?, ?, ?, ?)';
+
+    const sql = 'CALL add_to_cart_email(?, ?, ?)';
 
     try {
-        const [result] = await db.query(sql, [productId, email, color, quantity]);
+        const [result] = await db.query(sql, [email, productId, quantity]);
 
-        if (result.affectedRows > 0) {
+        // if (result.affectedRows > 0) {
             res.json({ message: 'Product added to cart' });
-        } else {
-            res.status(400).send('Failed to add product to cart');
-        }
+        // } else {
+        //     res.status(400).send('Failed to add product to cart');
+        // }
     } catch (err) {
         console.error('Error adding product to cart:', err);
         res.status(500).send('Error adding product to cart');
@@ -36,14 +37,12 @@ router.post('/guest-cart', async (req, res) => {
     const { name, email, productId, color, quantity } = req.body;
 
     try {
-        // Check if the user already exists
-        const [existingUser] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        // // Check if the user already exists
+        // const [existingUser] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
 
-        if (!existingUser.length) {
-            // If user doesn't exist, create a new guest user
-            const sqlInsertUser = 'INSERT INTO users (name, email, is_guest) VALUES (?, ?, 1)';
-            await db.query(sqlInsertUser, [name, email]);
-        }
+        // If user doesn't exist, create a new guest user
+        const sqlInsertUser = 'CALL add_guest_user(?, ?)';
+        await db.query(sqlInsertUser, [name, email]);
 
         // Add the product to the cart
         const sqlInsertCart = 'INSERT INTO cart (product_id, email, color, quantity) VALUES (?, ?, ?, ?)';

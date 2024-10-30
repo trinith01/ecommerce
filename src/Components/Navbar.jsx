@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Alignment } from '@blueprintjs/core';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
 import { faUser, faSignOutAlt, faShoppingCart, faHome } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.css';
 
@@ -17,7 +18,7 @@ const NavBar = () => {
   };
 
   return (
-    <Navbar className="bp3-dark">
+    <Navbar  style={{ backgroundColor: "#0071c1" }}  className="bp3-dark m-0 p-0" >
       <Navbar.Group align={Alignment.LEFT}>
         
         <Link to="/home" className="logo"> <FontAwesomeIcon icon={faHome} />&nbsp;C-Ex</Link>
@@ -34,6 +35,9 @@ const NavBar = () => {
           <FontAwesomeIcon icon={faShoppingCart} />Cart
         </Link>
         <Navbar.Divider />
+        <Link to="/order" className="nav-link" title="Cart">
+          <FontAwesomeIcon icon={faClipboardList} />Orders
+        </Link>
       </Navbar.Group>
 
       <Navbar.Group align={Alignment.RIGHT}>
@@ -46,7 +50,7 @@ const NavBar = () => {
           
         )}
         </Link>
-        <button className="nav-link signout-button" title="Sign Out" onClick={handleSignOut}>
+        <button className=" signout-button" title="Sign Out" onClick={handleSignOut}>
           <FontAwesomeIcon icon={faSignOutAlt} /> Sign out
         </button>
       </Navbar.Group>
